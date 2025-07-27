@@ -5,7 +5,7 @@
 - 🎓 I am a student passionate about programming and exploring new technologies.  
   我是一名学生，热爱编程与技术探索。
 - 💡 Currently learning **Python** and **JavaScript**, aiming to master more cutting-edge skills.  
-  目前正在学习 **Python** 和 **JavaScript**，希望深入了解更多前沿技术。
+  目前正在学习 **web前端** 和 **Spring boot**，希望深入了解更多前沿技术。
 - 🤝 Eager to join the open-source community, meet like-minded friends, and grow together!  
   希望加入开源大家庭，结识志同道合的小伙伴，共同进步！
 
