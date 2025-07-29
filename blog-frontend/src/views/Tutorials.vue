@@ -135,8 +135,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
-  Search, Calendar, Clock, View, Document,
-  Monitor, Code, Cpu, Trophy, Grid
+  Search, Calendar, Clock, View, Document
 } from '@element-plus/icons-vue'
 
 interface Tutorial {
@@ -388,7 +387,7 @@ const setActiveCategory = (categoryId: string) => {
   router.replace({ query })
 }
 
-const handlesearch = () => {
+const handleSearch = () => {
   currentPage.value = 1
   
   // 更新URL
@@ -403,13 +402,13 @@ const handlesearch = () => {
   router.replace({ query })
 }
 
-const handlepagechange = (page: number) => {
+const handlePageChange = (page: number) => {
   currentPage.value = page
   // 滚动到顶部
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const gototutorial = (tutorial: Tutorial) => {
+const goToTutorial = (tutorial: Tutorial) => {
   router.push(`/tutorials/${tutorial.categoryId}/${tutorial.id}`)
 }
 

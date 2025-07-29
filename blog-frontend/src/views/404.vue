@@ -50,11 +50,11 @@
             <el-icon><House /></el-icon>
             返回首页
           </el-button>
-          <el-button size="large" @click="goBack">
+          <el-button size="large" @click="goHome">
             <el-icon><ArrowLeft /></el-icon>
             返回上页
           </el-button>
-          <el-button size="large" @click="searchSite">
+          <el-button size="large" @click="goHome">
             <el-icon><Search /></el-icon>
             搜索内容
           </el-button>
@@ -172,25 +172,9 @@ const goHome = () => {
   router.push('/')
 }
 
-const goback = () => {
-  if (window.history.length > 1) {
-    router.go(-1)
-  }
 
- else {
-    router.push('/')
-  }
-}
 
-const searchsite = () => {
-  // 跳转到搜索页面或显示搜索框
-  const searchSection = document.querySelector('.search-section')
-  if (searchSection) {
-    searchSection.scrollIntoView({ behavior: 'smooth' })
-  }
-}
-
-const handlesearch = () => {
+const handleSearch = () => {
   if (!searchKeyword.value.trim()) {
     ElMessage.warning('请输入搜索关键词')
     return

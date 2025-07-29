@@ -287,8 +287,7 @@ import type { FormInstance, FormRules }
  from 'element-plus'
 import {
   Message, Clock, Star, ArrowRight, User, Document,
-  Position, Refresh, Phone, Location, Link, ChatDotRound,
-  QuestionFilled, TrendCharts, Tools, Promotion
+  Position, Refresh
 } from '@element-plus/icons-vue'
 
 // 表单引用
@@ -367,11 +366,17 @@ const contactForm = reactive({
 // 表单验证规则
 const formRules: FormRules = {
   name: [
-    {;
+    { required: true, message: '请输入姓名', trigger: 'blur' },
+    { min: 2, max: 20, message: '姓名长度应在2-20个字符', trigger: 'blur' }
+  ],
   email: [
-    {;
+    { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+    { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
+  ],
   subject: [
-    {
+    { required: true, message: '请输入主题', trigger: 'blur' },
+    { min: 5, max: 100, message: '主题长度应在5-100个字符', trigger: 'blur' }
+  ],
   message: [
     { required: true, min: 10, max: 1000, message: '消息内容应在10-1000个字符', trigger: 'blur' }
   ]

@@ -209,16 +209,14 @@ import {
   View,
   Star,
   Clock,
-  Search,
   Document,
   Monitor,
-  Mobile,
   Setting
 }
 
  from '@element-plus/icons-vue'
 
-interface tutorial {
+interface Tutorial {
   id: number;
   title: string;
   description: string;
@@ -274,7 +272,7 @@ const categoryIcon = computed(() => {
   const iconMap: Record<string, any> = {
     'frontend': Monitor,
     'backend': Setting,
-    'mobile': Mobile,
+    'mobile': Monitor,
     'devops': Setting,
     'tools': Document
   }
@@ -291,14 +289,14 @@ const difficultyLevels = [
 
 // 热门标签
 const popularTags = computed(() => {
-  const allTags = tutorials.value.flatMap(t => t.tags)
-  const tagCount = allTags.reduce((acc, tag) => {
+  const allTags = tutorials.value.flatMap((t: Tutorial) => t.tags)
+  const tagCount = allTags.reduce((acc: Record<string, number>, tag: string) => {
     acc[tag] = (acc[tag] || 0) + 1
     return acc
   }, {} as Record<string, number>)
   
   return Object.entries(tagCount)
-    .sort(([,a], [,b]) => b - a)
+    .sort(([,a], [,b]) => (b as number) - (a as number))
     .slice(0, 10)
     .map(([tag]) => tag)
 })
@@ -310,27 +308,27 @@ const filteredTutorials = computed(() => {
   // 搜索筛选
   if (searchKeyword.value) {
     const keyword = searchKeyword.value.toLowerCase()
-    filtered = filtered.filter(tutorial =>
+    filtered = filtered.filter((tutorial: any) =>
       tutorial.title.toLowerCase().includes(keyword) ||
       tutorial.description.toLowerCase().includes(keyword) ||
-      tutorial.tags.some(tag => tag.toLowerCase().includes(keyword))
+      tutorial.tags.some((tag: string) => tag.toLowerCase().includes(keyword))
     )
   }
 
   // 难度筛选
   if (selectedDifficulty.value) {
-    filtered = filtered.filter(tutorial => tutorial.difficulty === selectedDifficulty.value)
+    filtered = filtered.filter((tutorial: any) => tutorial.difficulty === selectedDifficulty.value)
   }
 
   // 标签筛选
   if (selectedTags.value.length > 0) {
-    filtered = filtered.filter(tutorial =>
-      selectedTags.value.some(tag => tutorial.tags.includes(tag))
+    filtered = filtered.filter((tutorial: any) =>
+      selectedTags.value.some((tag: string) => tutorial.tags.includes(tag))
     )
   }
 
   // 排序
-  filtered.sort((a, b) => {
+  filtered.sort((a: any, b: any) => {
     switch (sortBy.value) {
       case 'views':
         return b.views - a.views
@@ -361,7 +359,7 @@ const totalPages = computed(() => {
 })
 
 const totalViews = computed(() => {
-  return tutorials.value.reduce((sum, tutorial) => sum + tutorial.views, 0)
+  return tutorials.value.reduce((sum: number, tutorial: any) => sum + tutorial.views, 0)
 })
 
 // 方法
@@ -451,25 +449,27 @@ const handlePageChange = (page: number) => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const gototutorial = (id: number) => {
+const goToTutorial = (id: number) => {
   router.push(`/tutorials/${id}`)
 }
 
-const getdifficultytype = (difficulty: string) => {
-  const typeMap: Record<string, string> = {,
+const getDifficultyType = (difficulty: string) => {
+  const typeMap: Record<string, string> = {
+    '初级': 'success',
+    '中级': 'warning',
     '高级': 'danger'
   }
   return typeMap[difficulty] || 'info'
 }
 
-const formatnumber = (num: number) => {
+const formatNumber = (num: number) => {
   if (num >= 1000) {
     return (num / 1000).toFixed(1) + 'k'
   }
   return num.toString()
 }
 
-const formatdate = (dateStr: string) => {
+const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
   const now = new Date()
   const diff = now.getTime() - date.getTime()

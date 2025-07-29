@@ -182,7 +182,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import {
   Document, Folder, ArrowRight, View,
-  Monitor, Code, Cpu, Trophy
+  Monitor
 } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
@@ -198,21 +198,21 @@ const features = ref([
   },
   {
     id: 2,
-    icon: Code,
+    icon: Document,
     title: 'CSS样式',
     description: '学习CSS样式设计，让网页变得美观动人',
     link: '/tutorials/css'
   },
   {
     id: 3,
-    icon: Cpu,
+    icon: Monitor,
     title: 'JavaScript',
     description: '掌握JavaScript编程，为网页添加交互功能',
     link: '/tutorials/javascript'
   },
   {
     id: 4,
-    icon: Trophy,
+    icon: View,
     title: 'Vue框架',
     description: '学习Vue.js框架，构建现代化的前端应用',
     link: '/tutorials/vue'

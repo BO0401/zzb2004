@@ -439,12 +439,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElImageViewer } from 'element-plus'
 import {
   View, Star, Download, Calendar, Link, TopRight,
-  Document, DocumentCopy, Check, Setting, Mobile
+  Document, DocumentCopy
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -600,8 +600,6 @@ const fetchProjectDetail = async () => {
             code: 'npm run dev'
           }
         ]
-      }
-
       },
       changelog: [
         {
@@ -742,7 +740,16 @@ const toggleStar = async () => {
     project.value.isStarred = !project.value.isStarred
     project.value.stars += project.value.isStarred ? 1 : -1
     
-    elmessage.success(project.value.isstarred ? '点赞成功' : '取消点赞')模拟API调用awaitnewPromiseresolvesetTimeoutproject.value.isStarred!project.value.isStarredproject.value.starsproject.value.isStarred1
+    ElMessage.success(project.value.isStarred ? '点赞成功' : '取消点赞')
+    
+    // 模拟API调用
+    await new Promise(resolve => {
+      setTimeout(() => {
+        project.value.isStarred = !project.value.isStarred
+        project.value.stars += project.value.isStarred ? 1 : -1
+        resolve(undefined)
+      }, 500)
+    })
   } catch (error) {
     ElMessage.error('操作失败')
   }

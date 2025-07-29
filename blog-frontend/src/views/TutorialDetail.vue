@@ -271,7 +271,7 @@
             <div class="comment-form">
               <div class="form-header">
                 <div class="user-avatar">
-                  <img src="/default-avatar.jpg" alt="用户头像" />
+                  <img src="/avatar.jpg" alt="用户头像" />
                 </div>
                 <div class="form-content">
                   <el-input
@@ -637,7 +637,16 @@ const toggleLike = async () => {
     tutorial.value.isLiked = !tutorial.value.isLiked
     tutorial.value.likes += tutorial.value.isLiked ? 1 : -1
     
-    elmessage.success(tutorial.value.isliked ? '点赞成功' : '取消点赞')模拟API调用awaitnewPromiseresolvesetTimeouttutorial.value.isLiked!tutorial.value.isLikedtutorial.value.likestutorial.value.isLiked1
+    ElMessage.success(tutorial.value.isLiked ? '点赞成功' : '取消点赞')
+    
+    // 模拟API调用
+    await new Promise(resolve => {
+      setTimeout(() => {
+        tutorial.value.isLiked = !tutorial.value.isLiked
+        tutorial.value.likes += tutorial.value.isLiked ? 1 : -1
+        resolve(undefined)
+      }, 500)
+    })
   } catch (error) {
     ElMessage.error('操作失败')
   }
@@ -708,9 +717,9 @@ const submitComment = async () => {
       id: Date.now().toString(),
       user: {
         name: '当前用户',
-        avatar: '/default-avatar.jpg'
+        avatar: '/avatar.jpg'
       },
-      content: newcomment.value,
+      content: newComment.value,
       likes: 0,
       isLiked: false,
       createdAt: new Date().toISOString(),
@@ -737,7 +746,16 @@ const toggleCommentLike = async (comment: any) => {
     await new Promise(resolve => setTimeout(resolve, 300))
     
     comment.isLiked = !comment.isLiked
-    comment.likes += comment.isLiked ? 1 : -1模拟API调用awaitnewPromiseresolvesetTimeoutcomment.isLiked!comment.isLikedcomment.likescomment.isLiked1
+    comment.likes += comment.isLiked ? 1 : -1
+    
+    // 模拟API调用
+    await new Promise(resolve => {
+      setTimeout(() => {
+        comment.isLiked = !comment.isLiked
+        comment.likes += comment.isLiked ? 1 : -1
+        resolve(undefined)
+      }, 500)
+    })
   } catch (error) {
     ElMessage.error('操作失败')
   }
@@ -755,7 +773,7 @@ const replyToComment = (comment: any) => {
         id: Date.now().toString(),
         user: {
           name: '当前用户',
-          avatar: '/default-avatar.jpg'
+          avatar: '/avatar.jpg'
         },
         content: value,
         createdAt: new Date().toISOString()
@@ -775,7 +793,7 @@ const replyToComment = (comment: any) => {
 
 // 加载更多评论
 const loadMoreComments = async () => {
-  loadingcomments.value = true
+  loadingComments.value = true
   
   try {
     // 模拟API调用

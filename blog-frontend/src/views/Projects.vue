@@ -220,7 +220,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import {
   Search, Calendar, View, Folder, Grid, List,
-  Star, Fork, Link, Monitor, Code, Cpu, Trophy, Mobile
+  Star, Link
 } from '@element-plus/icons-vue'
 
 interface Project {
@@ -489,7 +489,7 @@ const setActiveCategory = (categoryId: string) => {
   router.replace({ query })
 }
 
-const handlesearch = () => {
+const handleSearch = () => {
   currentPage.value = 1
   
   // 更新URL
@@ -504,12 +504,12 @@ const handlesearch = () => {
   router.replace({ query })
 }
 
-const handlepagechange = (page: number) => {
+const handlePageChange = (page: number) => {
   currentPage.value = page
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const gotoproject = (project: Project) => {
+const goToProject = (project: Project) => {
   router.push(`/projects/${project.id}`)
 }
 

@@ -246,9 +246,7 @@ import { ElMessage }
 
  from 'element-plus'
 import {
-  Message, Link, Code, Monitor, Cpu, Trophy,
-  Calendar, Star, Book, Camera, Music, Game,
-  Phone, Location, Clock
+  Message, Link
 } from '@element-plus/icons-vue'
 
 // 个人统计数据
