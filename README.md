@@ -67,11 +67,25 @@ zzb2004/
    # Modify according to your server environment
    ```
 
-3. **查看详细指南 | Detailed Guide**
+3. **性能优化 | Performance Optimization**
+   ```bash
+   # 前端构建优化（已配置代码分割、压缩等）
+   cd blog-frontend
+   npm run build
    
-   请查看 [SECURITY.md](./SECURITY.md) 获取完整的安全配置指南。
+   # 服务器监控
+   ./scripts/monitor.sh monitor
    
-   Please check [SECURITY.md](./SECURITY.md) for complete security configuration guide.
+   # 快速状态检查
+   ./scripts/monitor.sh quick
+   ```
+
+4. **查看详细指南 | Detailed Guide**
+   
+   - [SECURITY.md](./SECURITY.md) - 安全配置指南 | Security Configuration Guide
+   - [docs/PERFORMANCE.md](./docs/PERFORMANCE.md) - 性能优化指南 | Performance Optimization Guide
+   
+   Please check the guides above for detailed configuration instructions.
 
 ### 重要提醒 | Important Notice
 

@@ -79,18 +79,29 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
+# 设置Node.js内存限制（针对2G内存服务器）
+export NODE_OPTIONS="--max-old-space-size=1024"
+
 # 安装依赖
 log "安装/更新依赖..."
 if command -v npm >/dev/null 2>&1; then
-    npm ci --production=false
+    # 使用npm ci进行快速安装，并限制并发数
+    npm ci --production=false --maxsockets=3 --prefer-offline
     log_success "依赖安装完成"
 else
     log_error "npm 命令不存在"
     exit 1
 fi
 
+# 清理npm缓存以释放空间
+log "清理npm缓存..."
+npm cache clean --force 2>/dev/null || true
+
 # 构建项目
 log "构建项目..."
+# 设置构建环境变量
+export NODE_ENV=production
+export GENERATE_SOURCEMAP=false
 npm run build
 log_success "项目构建完成"
 
