@@ -22,6 +22,25 @@
 
 - CSDN: [https://blog.csdn.net/yzxyy_zzb?spm=1000.2115.3001.5343](https://blog.csdn.net/yzxyy_zzb?spm=1000.2115.3001.5343)
 
+## 📁 项目结构 | Project Structure
+
+```
+zzb2004/
+├── blog-frontend/          # Vue.js 前端应用
+│   ├── src/               # 源代码
+│   ├── public/            # 静态资源
+│   └── dist/              # 构建输出
+├── docs/                  # 文档和教程
+│   ├── html-tutorials/    # HTML 学习教程
+│   └── development/       # 开发文档
+├── scripts/               # 部署和配置脚本
+│   ├── deploy.example.sh  # 部署脚本模板
+│   └── webhook.example.php # Webhook 模板
+├── .env.example           # 环境变量模板
+├── SECURITY.md            # 安全配置指南
+└── README.md              # 项目说明
+```
+
 ## 🔒 安全配置 | Security Configuration
 
 本项目已实施安全保护措施，敏感信息不会暴露在公共仓库中。
@@ -41,8 +60,8 @@
 2. **部署配置 | Deployment Setup**
    ```bash
    # 复制部署脚本模板
-   cp deploy.example.sh deploy.sh
-   cp webhook.example.php webhook.php
+   cp scripts/deploy.example.sh scripts/deploy.sh
+   cp scripts/webhook.example.php scripts/webhook.php
    
    # 根据你的服务器环境修改配置
    # Modify according to your server environment
