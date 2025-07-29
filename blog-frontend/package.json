@@ -1,0 +1,36 @@
+{
+  "name": "zzb2004-blog",
+  "version": "1.0.0",
+  "description": "ZZB2004个人博客前端 - 基于Vue3的前端教学与项目展示平台",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "serve": "vite preview",
+    "lint:style": "stylelint \"src/**/*.{vue,css,scss}\" --fix"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.6.0",
+    "element-plus": "^2.4.4",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^14.0.0",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^13.0.7",
+    "@types/node": "^20.10.5",
+    "@types/nprogress": "^0.2.3",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "postcss-html": "^1.8.0",
+    "sass": "^1.69.5",
+    "stylelint": "^16.23.0",
+    "stylelint-config-standard": "^39.0.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vue-tsc": "^1.8.25"
+  }
+}
