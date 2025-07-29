@@ -22,6 +22,44 @@
 
 - CSDN: [https://blog.csdn.net/yzxyy_zzb?spm=1000.2115.3001.5343](https://blog.csdn.net/yzxyy_zzb?spm=1000.2115.3001.5343)
 
+## 🔒 安全配置 | Security Configuration
+
+本项目已实施安全保护措施，敏感信息不会暴露在公共仓库中。
+
+### 快速开始 | Quick Start
+
+1. **环境配置 | Environment Setup**
+   ```bash
+   # 复制环境变量模板
+   cp .env.example .env
+   
+   # 编辑配置文件，填入你的真实信息
+   # Edit the config file with your real information
+   vim .env
+   ```
+
+2. **部署配置 | Deployment Setup**
+   ```bash
+   # 复制部署脚本模板
+   cp deploy.example.sh deploy.sh
+   cp webhook.example.php webhook.php
+   
+   # 根据你的服务器环境修改配置
+   # Modify according to your server environment
+   ```
+
+3. **查看详细指南 | Detailed Guide**
+   
+   请查看 [SECURITY.md](./SECURITY.md) 获取完整的安全配置指南。
+   
+   Please check [SECURITY.md](./SECURITY.md) for complete security configuration guide.
+
+### 重要提醒 | Important Notice
+
+⚠️ **请勿将包含真实敏感信息的文件提交到公共仓库！**
+
+⚠️ **Never commit files containing real sensitive information to public repositories!**
+
 ## 🌟 Looking for More Opportunities | 寻找更多成长机会
 
 - Open to learning, collaborating, and sharing!  
