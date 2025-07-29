@@ -1343,10 +1343,11 @@ onMounted(() => {
         line-height: 1.4;
         display: -webkit-box;
         /* stylelint-disable-next-line property-no-vendor-prefix */
-        -webkit-line-clamp: 2;
-        /* stylelint-disable-next-line property-no-vendor-prefix */
         -webkit-box-orient: vertical;
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-line-clamp: 2;
         overflow: hidden;
+        text-overflow: ellipsis;
       }
       
       .related-meta {
