@@ -457,8 +457,8 @@ const fetchTutorialDetail = async () => {
       readTime: 15,
       isLiked: false,
       isBookmarked: false,
-      createdAt: '2024-01-15',
-      updatedAt: '2024-01-20',
+      createdAt: '2025-07-29',
+      updatedAt: '2025-07-29',
       tags: ['Vue 3', 'Composition API', 'JavaScript', 'Frontend'],
       content: `
         <h2 id="introduction">介绍</h2>
@@ -488,21 +488,21 @@ const fetchTutorialDetail = async () => {
         title: 'Vue 3 响应式原理深度解析',
         cover: '/tutorial-2.jpg',
         views: 8900,
-        createdAt: '2024-01-10'
+        createdAt: '2025-07-29'
       },
       {
         id: '3',
         title: 'Pinia 状态管理实战指南',
         cover: '/tutorial-3.jpg',
         views: 6700,
-        createdAt: '2024-01-08'
+        createdAt: '2025-07-29'
       },
       {
         id: '4',
         title: 'Vue Router 4 路由配置详解',
         cover: '/tutorial-4.jpg',
         views: 5400,
-        createdAt: '2024-01-05'
+        createdAt: '2025-07-29'
       }
     ]
     
@@ -528,7 +528,7 @@ const fetchTutorialDetail = async () => {
         content: '这篇教程写得很详细，对我理解 Composition API 很有帮助！',
         likes: 12,
         isLiked: false,
-        createdAt: '2024-01-21',
+        createdAt: '2025-07-29',
         replies: [
           {
             id: '1-1',
@@ -537,7 +537,7 @@ const fetchTutorialDetail = async () => {
               avatar: '/avatar.jpg'
             },
             content: '谢谢你的反馈！很高兴这篇教程对你有帮助。',
-            createdAt: '2024-01-21'
+            createdAt: '2025-07-29'
           }
         ]
       },
@@ -550,7 +550,7 @@ const fetchTutorialDetail = async () => {
         content: '能否再详细讲解一下 computed 和 watch 的区别？',
         likes: 8,
         isLiked: false,
-        createdAt: '2024-01-20',
+        createdAt: '2025-07-29',
         replies: []
       }
     ]

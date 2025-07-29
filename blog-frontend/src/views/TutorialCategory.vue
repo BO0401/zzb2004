@@ -382,7 +382,7 @@ const fetchTutorials = async () => {
         tags: ['Vue3', '组件', '前端'],
         views: 1250,
         likes: 89,
-        createdAt: '2024-01-15',
+        createdAt: '2025-07-29',
         category: 'frontend'
       },
       {
@@ -394,7 +394,7 @@ const fetchTutorials = async () => {
         tags: ['TypeScript', 'JavaScript', '类型系统'],
         views: 2100,
         likes: 156,
-        createdAt: '2024-01-10',
+        createdAt: '2025-07-29',
         category: 'frontend'
       },
       {
@@ -406,7 +406,7 @@ const fetchTutorials = async () => {
         tags: ['Vite', '构建工具', '性能优化'],
         views: 890,
         likes: 67,
-        createdAt: '2024-01-08',
+        createdAt: '2025-07-29',
         category: 'frontend'
       }
     ].filter(tutorial => tutorial.category === category)

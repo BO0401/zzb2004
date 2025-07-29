@@ -482,8 +482,8 @@ const fetchProjectDetail = async () => {
       stars: 156,
       downloads: 89,
       isStarred: false,
-      createdAt: '2024-01-01',
-      updatedAt: '2024-01-20',
+      createdAt: '2025-07-29',
+      updatedAt: '2025-07-29',
       developmentTime: '2个月',
       license: 'MIT',
       demoUrl: 'https://blog-demo.example.com',
@@ -620,7 +620,7 @@ const fetchProjectDetail = async () => {
         },
         {
           version: '1.5.0',
-          date: '2024-01-10',
+          date: '2025-07-29',
           changes: [
             '新增评论系统',
             '增加文章分享功能',

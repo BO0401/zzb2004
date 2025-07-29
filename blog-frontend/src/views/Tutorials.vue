@@ -189,7 +189,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'html',
     level: 'beginner',
     tags: ['HTML5', '语义化', '基础'],
-    date: new Date('2024-01-20'),
+    date: new Date('2025-07-29'),
     duration: '2小时',
     views: 1520
   },
@@ -202,7 +202,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'html',
     level: 'intermediate',
     tags: ['表单', '表格', '数据'],
-    date: new Date('2024-01-18'),
+    date: new Date('2025-07-29'),
     duration: '1.5小时',
     views: 980
   },
@@ -215,7 +215,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'css',
     level: 'beginner',
     tags: ['CSS3', '选择器', '样式'],
-    date: new Date('2024-01-15'),
+    date: new Date('2025-07-29'),
     duration: '3小时',
     views: 2340
   },
@@ -228,7 +228,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'css',
     level: 'intermediate',
     tags: ['Flexbox', '布局', '响应式'],
-    date: new Date('2024-01-12'),
+    date: new Date('2025-07-29'),
     duration: '2.5小时',
     views: 1890
   },
@@ -241,7 +241,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'css',
     level: 'advanced',
     tags: ['Grid', '网格', '二维布局'],
-    date: new Date('2024-01-10'),
+    date: new Date('2025-07-29'),
     duration: '3.5小时',
     views: 1456
   },
@@ -254,7 +254,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'javascript',
     level: 'beginner',
     tags: ['JavaScript', '语法', '基础'],
-    date: new Date('2024-01-08'),
+    date: new Date('2025-07-29'),
     duration: '4小时',
     views: 3210
   },
@@ -267,7 +267,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'javascript',
     level: 'intermediate',
     tags: ['DOM', '事件', '交互'],
-    date: new Date('2024-01-05'),
+    date: new Date('2025-07-29'),
     duration: '3小时',
     views: 2780
   },
@@ -280,7 +280,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'javascript',
     level: 'advanced',
     tags: ['ES6', '箭头函数', '模块'],
-    date: new Date('2024-01-03'),
+    date: new Date('2025-07-29'),
     duration: '5小时',
     views: 2156
   },
@@ -293,7 +293,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'vue',
     level: 'beginner',
     tags: ['Vue3', '组件', '响应式'],
-    date: new Date('2024-01-01'),
+    date: new Date('2025-07-29'),
     duration: '4小时',
     views: 4520
   },
@@ -306,7 +306,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'vue',
     level: 'intermediate',
     tags: ['Composition API', 'setup', 'hooks'],
-    date: new Date('2023-12-28'),
+    date: new Date('2025-07-29'),
     duration: '3.5小时',
     views: 3890
   },
@@ -319,7 +319,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'vue',
     level: 'intermediate',
     tags: ['Vue Router', '路由', 'SPA'],
-    date: new Date('2023-12-25'),
+    date: new Date('2025-07-29'),
     duration: '2.5小时',
     views: 2340
   },
@@ -332,7 +332,7 @@ const tutorials = ref<Tutorial[]>([
     categoryId: 'vue',
     level: 'advanced',
     tags: ['Pinia', '状态管理', 'Store'],
-    date: new Date('2023-12-22'),
+    date: new Date('2025-07-29'),
     duration: '3小时',
     views: 1980
   }
