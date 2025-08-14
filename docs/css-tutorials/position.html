@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 定位 position 完全指南</title>
+  <style>
+    :root { --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#94a3b8; --accent:#22d3ee; --border:#1f2937; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;background:var(--bg);color:var(--text)}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    h1{margin:0;font-size:28px}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    code,kbd{background:#0b1220;border:1px solid #0f1b2d;padding:0 6px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+    .stage{position:relative;background:#0b1220;border:1px dashed #23324b;border-radius:10px;padding:14px;min-height:160px;overflow:hidden}
+    .box{width:80px;height:80px;background:#10b981;color:#06281f;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:700}
+    .note{font-size:14px;color:#cbd5e1}
+    .tag{display:inline-block;border:1px solid #1e293b;border-radius:999px;padding:2px 8px;margin-right:6px;background:#0b1220;color:#93c5fd}
+    .sticky-header{position:sticky;top:0;background:#334155;color:#e2e8f0;padding:8px 10px;border-radius:6px;margin:-8px -8px 10px}
+    .ribbon{position:absolute;right:-10px;top:12px;background:#f59e0b;color:#111827;padding:4px 10px;transform:rotate(12deg);border-radius:6px;font-weight:700}
+    .badge{position:absolute;bottom:10px;left:10px;background:#22c55e;color:#052e1a;padding:4px 8px;border-radius:6px;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 定位 position 完全指南</h1>
+    <p class="note">涵盖 static / relative / absolute / fixed / sticky、偏移属性、包含块、z-index 与堆叠上下文，附可视化示例与练习。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 五种定位模式</h2>
+      <div class="card">
+        <p>
+          <span class="tag">static</span> 默认值，不参与偏移；
+          <span class="tag">relative</span> 相对自身原位置偏移；
+          <span class="tag">absolute</span> 脱离文档流，相对最近的非 static 祖先定位；
+          <span class="tag">fixed</span> 相对视口定位，常用于固定导航；
+          <span class="tag">sticky</span> 在阈值前为 static，越过阈值后粘在视口边。
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 偏移属性与包含块</h2>
+      <p>偏移使用 top/right/bottom/left；absolute 元素会寻找最近的非 static 祖先作为包含块，若无则相对初始包含块（视口或根元素）。</p>
+      <div class="grid">
+        <div class="card">
+          <h3>relative + absolute</h3>
+          <div class="stage" style="height:180px">
+            <div class="box" style="position:relative;left:12px;top:8px">R</div>
+            <div class="box" style="position:absolute;right:12px;bottom:12px;background:#60a5fa">A</div>
+            <span class="badge">容器是包含块</span>
+          </div>
+          <pre><code>.container{ position:relative; }
+.child{ position:absolute; right:12px; bottom:12px; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>fixed 固定定位</h3>
+          <div class="stage" style="height:180px">
+            <div class="box" style="position:fixed;right:20px;bottom:20px;background:#f472b6">F</div>
+            <span class="ribbon">相对视口</span>
+          </div>
+          <p class="note">滚动页面时仍保持在视口固定位置。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. sticky 粘性定位</h2>
+      <div class="card">
+        <div class="sticky-header">向下滚动到阈值时会粘住（演示容器内滚动）</div>
+        <div style="max-height:160px;overflow:auto;border:1px solid #1f2937;border-radius:8px;padding:8px">
+          <div style="position:sticky;top:0;background:#1f2937;color:#e5e7eb;padding:6px 8px;border-radius:4px;margin-bottom:8px">目录（position: sticky; top:0）</div>
+          <p>内容段落 1 …</p>
+          <p>内容段落 2 …</p>
+          <p>内容段落 3 …</p>
+          <p>内容段落 4 …</p>
+          <p>内容段落 5 …</p>
+          <p>内容段落 6 …</p>
+        </div>
+      </div>
+      <p class="note">sticky 需要一个可滚动的祖先容器且必须设置 top/left/right/bottom 中的一个阈值。</p>
+    </section>
+
+    <section>
+      <h2>4. z-index 与堆叠上下文</h2>
+      <div class="card">
+        <p>开启定位（非 static）后，可通过 <code>z-index</code> 控制层级；某些属性（如 <code>transform</code>、<code>filter</code>、<code>opacity&lt;1</code>）也会创建新的堆叠上下文，影响层叠顺序。</p>
+        <div class="stage" style="height:180px">
+          <div class="box" style="position:absolute;left:20px;top:20px;background:#22d3ee;z-index:1">1</div>
+          <div class="box" style="position:absolute;left:40px;top:40px;background:#f59e0b;z-index:2">2</div>
+          <div class="box" style="position:absolute;left:60px;top:60px;background:#a78bfa;transform:translateZ(0)">3</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 实战建议</h2>
+      <ul>
+        <li>布局优先使用现代方案（Flex/Grid），定位用于装饰、浮层、徽标等。</li>
+        <li>absolute 元素常配合 <code>position: relative</code> 的容器，确保可控的包含块。</li>
+        <li>sticky 对「滚动容器」与阈值依赖较强，调试时先确认生效条件。</li>
+        <li>谨慎使用过多层叠上下文，避免 z-index 竞争失控。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>实现一个固定在右下角的「返回顶部」按钮（fixed）。</li>
+        <li>为卡片加上「NEW」对角丝带（absolute + transform）。</li>
+        <li>在文章目录中实现粘性标题（sticky）。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 阴影与发光 shadows 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#22d3ee;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .tile{height:120px;border-radius:12px;background:#0b1220;display:flex;align-items:center;justify-content:center;font-weight:800;color:#0b1220}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 阴影与发光 shadows 完全指南</h1>
+    <p>掌握 box-shadow / text-shadow、多重阴影、内阴影、柔光与霓虹发光效果。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. box-shadow 语法</h2>
+      <pre><code>box-shadow: offset-x offset-y blur-radius spread-radius color inset;</code></pre>
+      <p>可逗号分隔实现多重阴影；inset 表示内阴影。</p>
+    </section>
+
+    <section>
+      <h2>2. 示例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>卡片阴影</h3>
+          <div class="tile" style="box-shadow:0 8px 24px rgba(2,6,23,.45)">A</div>
+        </div>
+        <div class="card">
+          <h3>多重发光</h3>
+          <div class="tile" style="background:#0b1220; box-shadow:0 0 20px rgba(34,211,238,.6), 0 0 40px rgba(167,139,250,.4)">B</div>
+          <pre><code>.glow{ box-shadow:0 0 20px #22d3ee99, 0 0 40px #a78bfa66; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>内阴影</h3>
+          <div class="tile" style="box-shadow: inset 0 6px 18px rgba(0,0,0,.55)">C</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. text-shadow 文本发光</h2>
+      <div class="card">
+        <p style="font-size:36px;color:#93c5fd;text-shadow:0 0 8px #93c5fd80,0 0 16px #22d3ee80">Neon Text</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 实战建议</h2>
+      <ul>
+        <li>阴影颜色建议使用带透明度的深色，避免“脏”。</li>
+        <li>移动端应控制阴影模糊半径与层数，减少重绘成本。</li>
+        <li>发光效果可结合背景渐变/滤镜获得更自然的视觉。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>制作一个悬浮卡片的悬停过渡阴影。</li>
+        <li>实现按钮的霓虹发光边框效果（内外发光叠加）。</li>
+        <li>给标题添加柔和 text-shadow，让字重更清晰。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

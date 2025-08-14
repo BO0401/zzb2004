@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 调试与排错：系统方法与常见坑位</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#ef4444;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .demo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .pane{border:1px dashed #23324b;border-radius:10px;padding:12px;background:#0b1220}
+    .bad{outline:2px dashed #ef4444}
+    .good{outline:2px dashed #10b981}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 调试与排错：系统方法与常见坑位</h1>
+    <p>建立“先验证再结论”的调试流程，掌握定位技巧、可视化辅助、常见布局与层叠问题、跨浏览器排查。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 调试流程（五步法）</h2>
+      <ol>
+        <li>复现：最小化重现（Isolation），去除无关样式。</li>
+        <li>定位：查看计算后样式（Computed）与盒模型（Layout）。</li>
+        <li>验证：逐条启用/禁用规则（Toggle）验证假设。</li>
+        <li>修复：优先最小变更，避免“以多胜少”的层叠战。</li>
+        <li>回归：补上测试样例或注释，防止再次引入。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>2. 可视化与工具</h2>
+      <ul>
+        <li>outline 辅助：.debug *{ outline:1px solid rgba(255,0,0,.2) }</li>
+        <li>开发者工具：检查样式来源、查看层叠顺序与优先级（specificity）。</li>
+        <li>Rendering/Accessibility 面板：调试对比度、可见性、焦点顺序。</li>
+      </ul>
+      <pre><code>.debug *{ outline:1px solid rgba(255,0,0,.2) }</code></pre>
+    </section>
+
+    <section>
+      <h2>3. 常见布局问题</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>父元素高度塌陷</h3>
+          <p>原因：子元素 float 脱离正常文档流。</p>
+          <pre><code>.clearfix::after{ content:""; display:block; clear:both }</code></pre>
+        </div>
+        <div class="card">
+          <h3>margin 合并</h3>
+          <p>解决：给父元素建立 BFC：overflow:auto 或 display:flow-root。</p>
+          <pre><code>.container{ display: flow-root }</code></pre>
+        </div>
+        <div class="card">
+          <h3>绝对定位包含块异常</h3>
+          <p>确保最近的定位祖先（position 非 static）作为包含块。</p>
+          <pre><code>.parent{ position:relative }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 层叠上下文与覆盖问题</h2>
+      <ul>
+        <li>z-index 作用于同一层叠上下文；transform/opacity/filter 等可能创建新的上下文。</li>
+        <li>优先减少 z-index 竞赛，调整层叠上下文结构或合并上下文。</li>
+      </ul>
+      <pre><code>.modal{ position:fixed; inset:0; z-index:50 }
+.modal .dialog{ position:relative; z-index:10 }</code></pre>
+    </section>
+
+    <section>
+      <h2>5. 跨浏览器与兼容性</h2>
+      <ul>
+        <li>查阅支持矩阵，提供渐进增强（progressive enhancement）。</li>
+        <li>避免非标准前缀特性，或为其提供合理降级样式。</li>
+        <li>利用特性查询 @supports 来做条件加载。</li>
+      </ul>
+      <pre><code>@supports(backdrop-filter: blur(6px)){
+  .glass{ backdrop-filter: blur(6px) }
+}
+@supports not (display: grid){
+  .layout{ float:left; width:50% }
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>制作一个最小复现，演示 margin 合并导致的外距异常，并用 flow-root 修复。</li>
+        <li>构建一个多层弹窗与下拉菜单场景，理清层叠上下文并解决遮挡问题。</li>
+        <li>用 @supports 为 backdrop-filter 提供渐进增强与降级方案。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

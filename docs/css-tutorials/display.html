@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>display 属性全解析</title>
+  <style>
+    :root{ --primary:#0ea5e9; --text:#111827; --bg:#f0f9ff; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:var(--bg); }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+    .card{ background:#fff; border:1px solid #bae6fd; border-radius:10px; padding:14px; }
+    .demo{ padding:10px; background:#f8fafc; border:1px dashed #93c5fd; border-radius:6px; }
+    .block{ display:block; background:#93c5fd; margin:6px 0; padding:6px; }
+    .inline span{ background:#86efac; margin:6px; padding:6px; }
+    .inline-block span{ display:inline-block; background:#fca5a5; margin:6px; padding:6px; width:120px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>display 属性全解析</h1>
+    <p>控制元素的外部显示类型：是否换行、是否可设置宽高、是否参与文档流等。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 常见值</h2>
+      <div class="row">
+        <div class="card">
+          <strong>block（块级）</strong>
+          <div class="demo">
+            <div class="block">块级元素会独占一行</div>
+            <div class="block">可以设置宽高与上下外边距</div>
+          </div>
+        </div>
+        <div class="card">
+          <strong>inline（行内）</strong>
+          <div class="demo inline">
+            <span>行内1</span><span>行内2</span><span>行内3</span>
+            <p>行内元素不换行、不接受宽高，上下 margin 无效。</p>
+          </div>
+        </div>
+        <div class="card">
+          <strong>inline-block（行内块）</strong>
+          <div class="demo inline-block">
+            <span>可设置宽高</span><span>且不独占一行</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. none 与 visibility</h2>
+      <div class="card">
+        <ul>
+          <li><strong>display:none</strong>：元素不占据空间，完全从文档流中移除。</li>
+          <li><strong>visibility:hidden</strong>：元素不可见，但仍占据空间。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. flow-root 与格式化上下文</h2>
+      <div class="card">
+        <p><strong>display:flow-root</strong> 可建立独立的 BFC（块级格式化上下文），常用于包裹浮动元素或避免外边距折叠。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 表格与列表显示</h2>
+      <div class="card">
+        <p>表格相关：table、table-row、table-cell；列表：list-item。通常不建议手写这些 display 值去模拟元素，语义优先。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>将一组标签使用 inline-block 做成多行换行的标签云。</li>
+        <li>使用 flow-root 包裹浮动元素，观察高度塌陷是否被修复。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

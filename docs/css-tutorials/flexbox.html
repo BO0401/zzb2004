@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flexbox 弹性布局完全指南</title>
+  <style>
+    :root{ --primary:#8b5cf6; --text:#111827; --bg:#f5f3ff; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:var(--bg); }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1200px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px; }
+    .card{ background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:14px; }
+    .code{ background:#0b1220; color:#e5e7eb; padding:10px; border-radius:6px; font-family:ui-monospace,Consolas,monospace; }
+    .demo{ padding:8px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0; }
+    .flex-demo{ display:flex; gap:8px; background:#fef3c7; padding:12px; border-radius:6px; }
+    .item{ background:#374151; color:#fff; padding:8px 10px; border-radius:4px; text-align:center; }
+    .wide{ flex:1; } .fixed{ flex:0 0 80px; } .grow{ flex-grow:2; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Flexbox 弹性布局完全指南</h1>
+    <p>现代CSS布局的核心技术，掌握轴向、对齐、空间分配与实战技巧。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本概念</h2>
+      <div class="grid">
+        <div class="card">
+          <p><strong>容器（Container）</strong>：设置 display:flex 的元素。</p>
+          <p><strong>项目（Items）</strong>：容器的直接子元素。</p>
+          <p><strong>主轴（Main Axis）</strong>：主要方向，默认水平。</p>
+          <p><strong>交叉轴（Cross Axis）</strong>：垂直于主轴的方向。</p>
+        </div>
+        <div class="card">
+          <div class="code">/* 基本设置 */
+.container{
+  display: flex;
+}</div>
+          <div class="flex-demo">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 容器属性</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>flex-direction</strong>
+          <div class="code">/* 主轴方向 */
+row | row-reverse | column | column-reverse</div>
+        </div>
+        <div class="card">
+          <strong>flex-wrap</strong>
+          <div class="code">/* 换行控制 */
+nowrap | wrap | wrap-reverse</div>
+        </div>
+        <div class="card">
+          <strong>justify-content</strong>
+          <div class="code">/* 主轴对齐 */
+flex-start | center | flex-end
+space-between | space-around | space-evenly</div>
+        </div>
+        <div class="card">
+          <strong>align-items</strong>
+          <div class="code">/* 交叉轴对齐 */
+stretch | flex-start | center
+flex-end | baseline</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 项目属性</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>flex-grow</strong>
+          <p>定义放大比例，默认0（不放大）。</p>
+          <div class="code">.item{ flex-grow: 1; }</div>
+        </div>
+        <div class="card">
+          <strong>flex-shrink</strong>
+          <p>定义缩小比例，默认1（允许缩小）。</p>
+          <div class="code">.item{ flex-shrink: 0; }</div>
+        </div>
+        <div class="card">
+          <strong>flex-basis</strong>
+          <p>分配剩余空间前的初始大小。</p>
+          <div class="code">.item{ flex-basis: 200px; }</div>
+        </div>
+        <div class="card">
+          <strong>flex 简写</strong>
+          <div class="code">/* flex: grow shrink basis */
+flex: 1; /* 1 1 0% */
+flex: auto; /* 1 1 auto */
+flex: none; /* 0 0 auto */</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 实战案例</h2>
+      <div class="card">
+        <h3>经典三栏布局</h3>
+        <div class="code">.header, .footer{ flex: 0 0 auto; }
+.main{ flex: 1; }</div>
+        <div class="demo">
+          <div style="display:flex; height:120px; gap:8px;">
+            <div style="flex:0 0 80px; background:#f87171; border-radius:4px; display:grid; place-items:center; color:#fff;">左固定</div>
+            <div style="flex:1; background:#34d399; border-radius:4px; display:grid; place-items:center; color:#000;">中间自适应</div>
+            <div style="flex:0 0 80px; background:#60a5fa; border-radius:4px; display:grid; place-items:center; color:#fff;">右固定</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>居中对齐</h3>
+        <div class="code">.center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}</div>
+        <div style="display:flex; justify-content:center; align-items:center; height:80px; background:#e5e7eb; border-radius:6px;">
+          <div style="background:#6366f1; color:#fff; padding:8px 12px; border-radius:4px;">居中内容</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 常见问题与解决</h2>
+      <ul>
+        <li><strong>最小宽度问题</strong>：项目默认不会收缩小于内容宽度，使用 min-width:0 或 overflow:hidden 解决。</li>
+        <li><strong>高度对齐</strong>：align-items:stretch 可让项目填满容器高度。</li>
+        <li><strong>换行布局</strong>：结合 flex-wrap:wrap 与 align-content 控制多行对齐。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>制作响应式卡片网格：小屏幕单列，中屏双列，大屏三列。</li>
+        <li>实现底部对齐的导航栏（图标+文字）。</li>
+        <li>创建可变宽度的标签云，使用 flex-wrap。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 性能与渲染优化实战指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#10b981;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .tile{height:120px;border-radius:10px;border:1px dashed #23324b;background:#0b1220;display:flex;align-items:center;justify-content:center}
+    .warn{color:#f59e0b}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 性能与渲染优化实战指南</h1>
+    <p>理解浏览器渲染流水线、动画性能最佳实践、选择器与层叠影响、图片与字体优化、Runtime 调试清单。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 渲染流水线与昂贵操作</h2>
+      <ul>
+        <li>顺序：JavaScript → Style → Layout（重排）→ Paint（重绘）→ Composite（合成）。</li>
+        <li>避免频繁触发 Layout 与 Paint，优先在 Composite 层完成动画（transform/opacity）。</li>
+        <li>使用 will-change 或 transform 建立合成层，但要谨慎，不要滥用。</li>
+      </ul>
+      <pre><code>.card:hover{ transform: translateY(-4px); will-change: transform; }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. 动画性能与交互</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>推荐动画属性</h3>
+          <ul>
+            <li>transform：translate/scale/rotate/skew</li>
+            <li>opacity</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>谨慎属性</h3>
+          <ul>
+            <li class="warn">width/height/top/left 等会触发重排</li>
+            <li class="warn">box-shadow/filter 可能重绘开销较大</li>
+          </ul>
+        </div>
+      </div>
+      <p>控制动画时长（150–300ms）与缓动，避免“all”导致的意外过渡。</p>
+    </section>
+
+    <section>
+      <h2>3. 选择器与层叠成本</h2>
+      <ul>
+        <li>保持选择器短而稳定，避免过深的后代选择器链。</li>
+        <li>减少无用样式与重复覆盖，按“基线 → 组件 → 工具类”组织。</li>
+        <li>避免通配选择器在大范围使用，谨慎使用 :has 等昂贵选择器。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 图片与字体优化</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>图片</h3>
+          <ul>
+            <li>优先选择 SVG/渐变/图标字体等矢量或 CSS 方案。</li>
+            <li>使用合适尺寸与现代格式（如 webp/avif），结合 srcset/sizes 响应式。</li>
+            <li>懒加载（loading=lazy），占位骨架，避免首屏抖动。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>字体</h3>
+          <ul>
+            <li>子集化与可变字体（variable font）减少体积。</li>
+            <li>font-display 设置加载策略（swap/fallback/optional）。</li>
+            <li>控制自定义字体数量与字重变体。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 调试与度量清单</h2>
+      <ul>
+        <li>开发者工具 Performance/Rendering 面板：查看重排/重绘、层合成边界。</li>
+        <li>开启“Paint Flashing/Layer Borders”辅助观察。</li>
+        <li>用 Lighthouse/ Web Vitals 指标评估 LCP/CLS/INP，持续优化。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>将一个“宽度变化”的动画改造为 transform（scaleX/translate）实现。</li>
+        <li>为图片列表加入响应式与懒加载，观察 LCP 的变化。</li>
+        <li>用 Performance 面板对比有/无 will-change 的动效差异，避免过多层。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 边框与圆角 borders 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#f59e0b;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .tile{height:120px;border-radius:10px;border:3px solid #334155;background:#0b1220}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 边框与圆角 borders 完全指南</h1>
+    <p>掌握 border 宽度/样式/颜色、边框图片、圆角与椭圆角、轮廓 outline、阴影的对比。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基础属性</h2>
+      <ul>
+        <li>border-width / border-style / border-color，或使用简写 border。</li>
+        <li>单侧边框：border-top/right/bottom/left-*</li>
+        <li>圆角：border-radius（支持每个角、椭圆角）</li>
+        <li>边框图片：border-image</li>
+        <li>轮廓：outline（不占空间，不会影响布局）</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. 示例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>不同样式</h3>
+          <div class="tile" style="border-style:dashed"></div>
+          <div class="tile" style="border-style:dotted"></div>
+          <div class="tile" style="border-style:double"></div>
+        </div>
+        <div class="card">
+          <h3>椭圆圆角</h3>
+          <div class="tile" style="border-radius:30px/12px"></div>
+          <pre><code>.pill{ border-radius: 999px / 24px; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>边框图片</h3>
+          <div class="tile" style="border:12px solid transparent;border-image:linear-gradient(45deg,#22d3ee,#a78bfa) 1"></div>
+          <pre><code>.img-border{ border:12px solid transparent; border-image: linear-gradient(45deg,#22d3ee,#a78bfa) 1; }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 实战建议</h2>
+      <ul>
+        <li>优先使用 border-radius 构建卡片与徽章，配合阴影获得层次感。</li>
+        <li>outline 用于可访问性焦点高亮，不要滥用取消它。</li>
+        <li>边框图片在高分屏上表现良好，注意与背景的对比。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>实现一个胶囊按钮（椭圆角 + 渐变边框）。</li>
+        <li>制作卡片 hover 时边框色平滑过渡（结合 transition）。</li>
+        <li>给输入框提供可访问性的键盘焦点 outline 效果。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

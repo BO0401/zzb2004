@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 动画 animations 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#a78bfa;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .loader{width:40px;height:40px;border-radius:50%;border:4px solid #334155;border-top-color:#22d3ee;animation:spin 1s linear infinite;margin:10px auto}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .pulse{width:100px;height:100px;border-radius:12px;background:#22d3ee44;animation:pulse 1.2s ease-in-out infinite alternate}
+    @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.08);background:#22d3ee66}}
+    .marquee{white-space:nowrap;overflow:hidden}
+    .marquee span{display:inline-block;padding-left:100%;animation:slide 8s linear infinite}
+    @keyframes slide{to{transform:translateX(-100%)}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 动画 animations 完全指南</h1>
+    <p>掌握 @keyframes、animation-* 系列属性、循环播放与方向、填充模式、性能建议与可访问性。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本语法</h2>
+      <pre><code>@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.box{ animation-name: fade-in; animation-duration:.6s; animation-timing-function:ease; animation-delay:0s; animation-iteration-count:1; animation-direction:normal; animation-fill-mode:both; animation-play-state:running; }
+/* 简写 */
+.box{ animation: fade-in .6s ease both; }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. 示例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>加载旋转</h3>
+          <div class="loader"></div>
+        </div>
+        <div class="card">
+          <h3>心跳脉冲</h3>
+          <div class="pulse"></div>
+        </div>
+        <div class="card">
+          <h3>无缝横幅</h3>
+          <div class="marquee"><span>这是一段循环滚动的无缝横幅 · 这是一段循环滚动的无缝横幅 · </span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 实战建议</h2>
+      <ul>
+        <li>尽量动画化 transform 和 opacity，减少布局/绘制开销。</li>
+        <li>为 prefers-reduced-motion 用户提供降级：尽量缩短或禁用动画。</li>
+        <li>避免长时间、强对比、全屏范围的动画，以免造成眩晕。</li>
+      </ul>
+      <pre><code>@media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }</code></pre>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>实现 Toast 弹出淡入与上移的组合动画。</li>
+        <li>制作一个循环的骨架屏 Loading 动画。</li>
+        <li>实现卡片「进入视口」时渐显上移（配合 IntersectionObserver 在 JS 阶段扩展）。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

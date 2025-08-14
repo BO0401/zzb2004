@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>响应式设计</title>
+  <style>
+    :root{ --primary:#0891b2; --text:#111827; --bg:#ecfeff; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:var(--bg); }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .card{ background:#fff; border:1px solid #a5f3fc; border-radius:10px; padding:14px; margin-bottom:16px; }
+    .code{ background:#0b1220; color:#e5e7eb; padding:10px; border-radius:6px; font-family:ui-monospace,Consolas,monospace; }
+    .demo{ border:2px dashed #22d3ee; padding:16px; border-radius:8px; text-align:center; }
+    .responsive-demo{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:8px; }
+    .box{ background:#06b6d4; color:#fff; padding:16px; border-radius:6px; }
+    
+    /* 响应式示例 */
+    @media (max-width:768px){
+      .mobile-text::after{ content:" (移动端)"; color:#ef4444; }
+    }
+    @media (min-width:769px) and (max-width:1024px){
+      .tablet-text::after{ content:" (平板端)"; color:#f59e0b; }
+    }
+    @media (min-width:1025px){
+      .desktop-text::after{ content:" (桌面端)"; color:#10b981; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>响应式设计</h1>
+    <p>适配不同设备屏幕，创建跨平台一致的用户体验。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基础概念</h2>
+      <div class="card">
+        <p>响应式设计通过媒体查询（Media Queries）、弹性布局、可缩放图片等技术，让网页在不同屏幕尺寸下都有良好体验。</p>
+        <p><strong>viewport meta 标签</strong>是响应式的前提：</p>
+        <div class="code">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 媒体查询语法</h2>
+      <div class="card">
+        <div class="code">/* 基本语法 */
+@media 媒体类型 and (条件) {
+  /* 样式规则 */
+}
+
+/* 常用示例 */
+@media screen and (max-width: 768px) {
+  .mobile-only { display: block; }
+}
+
+@media (min-width:769px) and (max-width:1024px) {
+  .tablet-layout { grid-template-columns: 1fr 1fr; }
+}</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 断点策略</h2>
+      <div class="card">
+        <strong>常见断点：</strong>
+        <ul>
+          <li>小于 480px：超小屏（手机）</li>
+          <li>480px - 768px：小屏（大手机/小平板）</li>
+          <li>768px - 1024px：中屏（平板）</li>
+          <li>1024px+：大屏（桌面）</li>
+        </ul>
+        <div class="demo">
+          <p class="mobile-text">当前屏幕</p>
+          <p class="tablet-text">当前屏幕</p>
+          <p class="desktop-text">当前屏幕</p>
+          <small>（调整浏览器窗口宽度观察变化）</small>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 移动优先 vs 桌面优先</h2>
+      <div class="card">
+        <p><strong>移动优先</strong>：从小屏开始设计，逐步增强。</p>
+        <div class="code">/* 移动优先 */
+.container { width: 100%; }
+@media (min-width: 768px) {
+  .container { width: 750px; }
+}</div>
+        <p><strong>桌面优先</strong>：从大屏开始，逐步简化。</p>
+        <div class="code">/* 桌面优先 */
+.container { width: 1200px; }
+@media (max-width: 767px) {
+  .container { width: 100%; }
+}</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 实用技巧</h2>
+      <div class="card responsive-demo">
+        <div class="box">弹性网格</div>
+        <div class="box">自动换行</div>
+        <div class="box">最小宽度</div>
+      </div>
+      <div class="code">/* 弹性网格 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}</div>
+    </section>
+
+    <section>
+      <h2>6. 图片响应式</h2>
+      <div class="card">
+        <div class="code">/* 响应式图片 */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 或使用 picture 元素 */
+&lt;picture&gt;
+  &lt;source media="(max-width:768px)" srcset="mobile.jpg"&gt;
+  &lt;img src="desktop.jpg" alt="..."&gt;
+&lt;/picture&gt;</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>7. 练习</h2>
+      <ol>
+        <li>创建一个响应式导航：移动端汉堡菜单，桌面端水平导航。</li>
+        <li>设计三栏布局：移动端垂直堆叠，桌面端水平分布。</li>
+        <li>实现响应式字体大小，结合 clamp() 函数。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

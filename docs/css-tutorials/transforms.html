@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 变换 transforms 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#34d399;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .tile{height:120px;border-radius:10px;border:1px dashed #23324b;background:#0b1220;display:flex;align-items:center;justify-content:center;transition:transform .4s}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 变换 transforms 完全指南</h1>
+    <p>掌握 translate/scale/rotate/skew、transform-origin、3D 变换与合成层优化。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本用法</h2>
+      <pre><code>.box{ transform: translate(10px, 0) scale(1.05) rotate(3deg); transform-origin: center; will-change: transform; }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. 示例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>平移</h3>
+          <div class="tile" onmouseenter="this.style.transform='translateY(-8px)'" onmouseleave="this.style.transform='none'">translate</div>
+        </div>
+        <div class="card">
+          <h3>缩放</h3>
+          <div class="tile" onmouseenter="this.style.transform='scale(1.06)'" onmouseleave="this.style.transform='none'">scale</div>
+        </div>
+        <div class="card">
+          <h3>旋转</h3>
+          <div class="tile" onmouseenter="this.style.transform='rotate(6deg)'" onmouseleave="this.style.transform='none'">rotate</div>
+        </div>
+        <div class="card">
+          <h3>3D 视角</h3>
+          <div class="tile" style="transform-style:preserve-3d;perspective:800px" onmouseenter="this.style.transform='rotateY(18deg) rotateX(6deg)'" onmouseleave="this.style.transform='none'">3D</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 实战建议</h2>
+      <ul>
+        <li>合成层优化：必要时使用 <code>will-change: transform</code> 或 <code>transform: translateZ(0)</code>，避免滥用。</li>
+        <li>与 transition/animation 组合获得高性能动效。</li>
+        <li>注意变换不影响文档流尺寸，必要时结合 layout 属性调整。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>实现 3D 卡片轻微倾斜的悬停效果。</li>
+        <li>制作旋转徽章并在 hover 时放大。</li>
+        <li>将 transforms 与 transitions 结合，完成进入/离开过渡。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

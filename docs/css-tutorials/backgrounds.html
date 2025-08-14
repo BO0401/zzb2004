@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 背景 backgrounds 全面指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#93c5fd;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .tile{height:140px;border-radius:10px;border:1px dashed #23324b}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 背景 backgrounds 全面指南</h1>
+    <p>掌握 background-color/image/position/size/repeat/attachment/origin/clip 与多重背景、渐变。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基础属性</h2>
+      <ul>
+        <li>background-color 背景色</li>
+        <li>background-image 背景图或渐变</li>
+        <li>background-repeat 是否平铺</li>
+        <li>background-position 位置</li>
+        <li>background-size 尺寸（contain/cover/具体值）</li>
+        <li>background-attachment 滚动行为（scroll/fixed/local）</li>
+        <li>background-origin/clip 绘制区域</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. 示例</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>渐变背景</h3>
+          <div class="tile" style="background:linear-gradient(135deg,#22d3ee,#a78bfa)"></div>
+          <pre><code>.box{ background: linear-gradient(135deg,#22d3ee,#a78bfa); }</code></pre>
+        </div>
+        <div class="card">
+          <h3>cover 与居中</h3>
+          <div class="tile" style="background:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22%3E%3Crect width=%22160%22 height=%22160%22 fill=%22%2360a5fa%22/%3E%3Ctext x=%2280%22 y=%2285%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-size=%2232%22 fill=%22%2305212b%22%3EIMG%3C/text%3E%3C/svg%3E') center/cover no-repeat;border:1px solid #1f2937"></div>
+          <pre><code>.hero{ background: url(hero.jpg) center/cover no-repeat; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>多重背景</h3>
+          <div class="tile" style="background:
+            radial-gradient( circle at top left, rgba(34,211,238,.6), transparent 60%),
+            radial-gradient( circle at bottom right, rgba(167,139,250,.6), transparent 60%),
+            #0b1220;"></div>
+          <pre><code>.card{ background: radial-gradient(...), radial-gradient(...), #0b1220; }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 实战建议</h2>
+      <ul>
+        <li>优先使用 SVG/渐变实现装饰，减少位图体积。</li>
+        <li>大图使用 cover，注意焦点区域可配合 <code>object-position</code>（在 img/video）。</li>
+        <li>使用多重背景实现光斑/纹理等效果，减少额外元素。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>制作一个具有光斑渐变的卡片背景。</li>
+        <li>实现一个固定视差背景区块（background-attachment: fixed）。</li>
+        <li>实现一个图标平铺的无缝纹理背景。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
