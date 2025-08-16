@@ -108,7 +108,7 @@
                 <el-select v-model="sortBy" placeholder="排序方式" @change="handleSort">
                   <el-option label="最新发布" value="date" />
                   <el-option label="最多阅读" value="views" />
-                  <el-option label="最多点赞" value="likes" />
+
                   <el-option label="难度等级" value="difficulty" />
                 </el-select>
               </div>
@@ -158,11 +158,7 @@
                       {{ formatNumber(tutorial.views) }}
 
                     </span>
-                    <span class="meta-item">
-                      <el-icon><Star /></el-icon>
-                      {{ formatNumber(tutorial.likes) }}
 
-                    </span>
                     <span class="meta-item">
                       <el-icon><Clock /></el-icon>
                       {{ formatDate(tutorial.createdAt) }}
@@ -207,14 +203,11 @@ import { ElMessage }
  from 'element-plus'
 import {
   View,
-  Star,
   Clock,
   Document,
   Monitor,
   Setting
-}
-
- from '@element-plus/icons-vue'
+} from '@element-plus/icons-vue'
 
 interface Tutorial {
   id: number;
@@ -224,7 +217,7 @@ interface Tutorial {
   difficulty: string;
   tags: string[];
   views: number;
-  likes: number;
+
   createdAt: Date;
   category: string
 }
@@ -332,8 +325,7 @@ const filteredTutorials = computed(() => {
     switch (sortBy.value) {
       case 'views':
         return b.views - a.views
-      case 'likes':
-        return b.likes - a.likes
+
       case 'difficulty':
         const difficultyOrder = { '入门': 1, '进阶': 2, '高级': 3 }
         return (difficultyOrder[a.difficulty as keyof typeof difficultyOrder] || 0) - 
@@ -377,11 +369,11 @@ const fetchTutorials = async () => {
         id: 1,
         title: 'Vue 3 组件开发指南',
         description: '深入学习 Vue 3 组件开发的最佳实践，包括组合式 API、响应式系统等',
-        cover: 'https://picsum.photos/300/200?random=1',
+        cover: '/logo.svg',
         difficulty: '进阶',
         tags: ['Vue3', '组件', '前端'],
         views: 1250,
-        likes: 89,
+
         createdAt: new Date('2025-07-29'),
         category: 'frontend'
       },
@@ -389,11 +381,11 @@ const fetchTutorials = async () => {
         id: 2,
         title: 'TypeScript 实战教程',
         description: '从基础到高级，全面掌握 TypeScript 开发技能',
-        cover: 'https://picsum.photos/300/200?random=2',
+        cover: '/logo.svg',
         difficulty: '入门',
         tags: ['TypeScript', 'JavaScript', '类型系统'],
         views: 2100,
-        likes: 156,
+
         createdAt: new Date('2025-07-29'),
         category: 'frontend'
       },
@@ -401,11 +393,11 @@ const fetchTutorials = async () => {
         id: 3,
         title: 'Vite 构建工具详解',
         description: '学习使用 Vite 构建现代前端项目，提升开发效率',
-        cover: 'https://picsum.photos/300/200?random=3',
+        cover: '/logo.svg',
         difficulty: '进阶',
         tags: ['Vite', '构建工具', '性能优化'],
         views: 890,
-        likes: 67,
+
         createdAt: new Date('2025-07-29'),
         category: 'frontend'
       }

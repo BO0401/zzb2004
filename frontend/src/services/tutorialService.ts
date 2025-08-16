@@ -14,11 +14,8 @@ export interface Tutorial {
   updatedAt: Date;
   readTime: number;
   views: number;
-  likes: number;
   content?: string;
   cover: string;
-  isLiked?: boolean;
-  isBookmarked?: boolean;
   status: 'published' | 'draft';
 }
 
@@ -44,7 +41,6 @@ const htmlTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 15,
     views: 1520,
-    likes: 89,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -59,7 +55,6 @@ const htmlTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 8,
     views: 880,
-    likes: 45,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -74,7 +69,6 @@ const htmlTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 12,
     views: 1200,
-    likes: 67,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -89,7 +83,6 @@ const htmlTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 20,
     views: 980,
-    likes: 56,
     cover: '/logo.svg',
     status: 'published'
   }
@@ -108,7 +101,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 18,
     views: 2340,
-    likes: 142,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -123,7 +115,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 25,
     views: 1850,
-    likes: 98,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -138,7 +129,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 30,
     views: 1890,
-    likes: 134,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -153,7 +143,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 35,
     views: 1456,
-    likes: 89,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -168,7 +157,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 22,
     views: 1320,
-    likes: 78,
     cover: '/logo.svg',
     status: 'published'
   },
@@ -183,7 +171,6 @@ const cssTutorials: Tutorial[] = [
     updatedAt: new Date('2025-01-20'),
     readTime: 28,
     views: 1150,
-    likes: 65,
     cover: '/logo.svg',
     status: 'published'
   }
@@ -228,24 +215,14 @@ const categories: TutorialCategory[] = [
 // 所有教程
 const allTutorials = [...htmlTutorials, ...cssTutorials]
 
-// 加载教程内容（从 docs 目录）
-export async function loadTutorialContent(category: string, id: string): Promise<string> {
-  try {
-    // 构建文件路径
-    const filePath = `/docs/tutorials/${category === 'html' ? 'html' : 'css'}/${id}.html`
-    
-    // 使用 fetch 加载文件内容
-    const response = await fetch(filePath)
-    if (!response.ok) {
-      throw new Error(`Failed to load tutorial: ${response.statusText}`)
-    }
-    
-    const content = await response.text()
-    return content
-  } catch (error) {
-    // 统一由上层捕获处理
-    throw error
-  }
+// 获取教程内容
+export async function getTutorialContent(category: string, id: string): Promise<string> {
+  // 模拟教程内容
+  return `
+    <h2>教程内容</h2>
+    <p>这是 ${category} 分类下 ${id} 教程的内容。</p>
+    <p>教程内容正在开发中，敬请期待。</p>
+  `
 }
 
 // 获取所有教程

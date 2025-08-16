@@ -299,11 +299,11 @@ const contactMethods = ref([
     type: 'email',
     title: '邮箱联系',
     description: '发送邮件给我，适合详细的技术讨论',
-    value: 'zzb2004@example.com',
+    value: '',
     icon: 'Message',
     status: 'online',
     statusText: '24小时内回复',
-    action: 'mailto:zzb2004@example.com'
+    action: '#'
   },
   {
     type: 'github',

@@ -124,7 +124,7 @@
               <img :src="project.image" :alt="project.title" />
               <div class="project-overlay">
                 <div class="project-actions">
-                  <a :href="project.demo" target="_blank" class="action-btn" title="在线预览">
+                  <a href="#" class="action-btn" title="在线预览">
                     <el-icon><View /></el-icon>
                   </a>
                   <a :href="project.github" target="_blank" class="action-btn" title="查看源码">
@@ -258,7 +258,6 @@ const featuredProjects = ref([
     description: '基于Vue 3和TypeScript开发的现代化博客系统',
     image: '/logo.svg',
     technologies: ['Vue 3', 'TypeScript', 'Vite'],
-    demo: 'https://demo.example.com',
     github: 'https://github.com/zzb2004/blog'
   },
   {
@@ -267,7 +266,6 @@ const featuredProjects = ref([
     description: '简洁高效的任务管理工具，支持拖拽排序和分类管理',
     image: '/logo.svg',
     technologies: ['Vue 3', 'Element Plus', 'Pinia'],
-    demo: 'https://demo.example.com',
     github: 'https://github.com/zzb2004/todo'
   },
   {
@@ -275,9 +273,8 @@ const featuredProjects = ref([
     title: '天气预报应用',
     description: '实时天气查询应用，支持多城市天气预报和历史数据',
     image: '/logo.svg',
-    technologies: ['Vue 3', 'Axios', 'Chart.js'],
-    demo: 'https://demo.example.com',
-    github: 'https://github.com/zzb2004/weather'
+    technologies: ['Vue 3', 'Chart.js'],
+        github: 'https://github.com/zzb2004/weather'
   }
 ])
 

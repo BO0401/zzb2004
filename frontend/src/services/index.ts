@@ -3,40 +3,17 @@
  * 提供项目中所有服务的统一入口
  */
 
-// 导出 API 服务
-export * from './api'
-export { default as apiService } from './api'
+
 
 // 导出教程服务
 export * from './tutorialService'
 
 // 导出类型定义
-export interface BaseService {
-  get<T = any>(id: string | number): Promise<T>
-  list<T = any>(params?: any): Promise<T[]>
-  create<T = any>(data: any): Promise<T>
-  update<T = any>(id: string | number, data: any): Promise<T>
-  delete(id: string | number): Promise<void>
-}
 
-export interface PaginatedResponse<T> {
-  data: T[]
-  total: number
-  page: number
-  pageSize: number
-  totalPages: number
-}
 
-export interface SearchParams {
-  keyword?: string
-  category?: string
-  tags?: string[]
-  status?: string
-  page?: number
-  pageSize?: number
-  sortBy?: string
-  sortOrder?: 'asc' | 'desc'
-}
+
+
+
 
 // 服务工厂
 export class ServiceFactory {

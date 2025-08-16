@@ -53,12 +53,7 @@
 
  阅读</span>
                 </div>
-                <div class="stat-item">
-                  <el-icon><Star /></el-icon>
-                  <span>{{ formatNumber(tutorial.likes) }}
 
- 点赞</span>
-                </div>
                 <div class="stat-item">
                   <el-icon><Clock /></el-icon>
                   <span>{{ tutorial.readTime }}
@@ -73,35 +68,7 @@
                 </div>
               </div>
               
-              <div class="tutorial-actions">
-                <el-button 
-                  type="primary" 
-                  size="large"
-                  @click="toggleLike"
-                  :loading="liking"
-                >
-                  <el-icon><Star /></el-icon>
-                  {{ tutorial.isLiked ? '已点赞' : '点赞' }}
 
-                </el-button>
-                
-                <el-button 
-                  size="large"
-                  @click="toggleBookmark"
-                  :loading="bookmarking"
-                >
-                  <el-icon><Collection /></el-icon>
-                  {{ tutorial.isBookmarked ? '已收藏' : '收藏' }}
-                </el-button>
-                
-                <el-button 
-                  size="large"
-                  @click="shareArticle"
-                >
-                  <el-icon><Share /></el-icon>
-                  分享
-                </el-button>
-              </div>
             </div>
           </div>
         </div>
@@ -199,10 +166,7 @@
 </span>
                       <span class="stat-label">阅读</span>
                     </div>
-                    <div class="stat">
-                      <span class="stat-number">{{ formatNumber(authorStats.likes) }}</span>
-                      <span class="stat-label">点赞</span>
-                    </div>
+
                   </div>
                   <el-button type="primary" size="small" class="follow-btn">
                     <el-icon><Plus /></el-icon>
@@ -261,115 +225,7 @@
         </div>
       </section>
       
-      <!-- 评论区域 -->
-      <section class="comments-section">
-        <div class="container">
-          <div class="comments-container">
-            <h3 class="comments-title">
-              评论 ({{ comments.length }})
-            </h3>
-            
-            <!-- 评论表单 -->
-            <div class="comment-form">
-              <div class="form-header">
-                <div class="user-avatar">
-                  <img src="/avatar.svg" alt="用户头像" />
-                </div>
-                <div class="form-content">
-                  <el-input
-                    v-model="newComment"
-                    type="textarea"
-                    :rows="4"
-                    placeholder="写下你的评论..."
-                    maxlength="500"
-                    show-word-limit
-                  />
-                  <div class="form-actions">
-                    <el-button 
-                      type="primary" 
-                      @click="submitComment"
-                      :loading="commenting"
-                      :disabled="!newComment.trim()"
-                    >
-                      发表评论
-                    </el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 评论列表 -->
-            <div class="comments-list">
-              <div 
-                v-for="comment in comments" 
-                :key="comment.id"
-                class="comment-item"
-              >
-                <div class="comment-avatar">
-                  <img :src="comment.user.avatar" :alt="comment.user.name" />
-                </div>
-                <div class="comment-content">
-                  <div class="comment-header">
-                    <span class="comment-author">{{ comment.user.name }}
 
-</span>
-                    <span class="comment-date">{{ formatDate(comment.createdAt) }}
-
-</span>
-                  </div>
-                  <div class="comment-text">{{ comment.content }}</div>
-                  <div class="comment-actions">
-                    <button 
-                      class="action-btn"
-                      @click="toggleCommentLike(comment)"
-                      :class="{ liked: comment.isLiked }"
-                    >
-                      <el-icon><Star /></el-icon>
-                      {{ comment.likes }}
-
-                    </button>
-                    <button class="action-btn" @click="replyToComment(comment)">
-                      <el-icon><ChatDotRound /></el-icon>
-                      回复
-                    </button>
-                  </div>
-                  
-                  <!-- 回复列表 -->
-                  <div v-if="comment.replies && comment.replies.length > 0" class="replies-list">
-                    <div 
-                      v-for="reply in comment.replies" 
-                      :key="reply.id"
-                      class="reply-item"
-                    >
-                      <div class="reply-avatar">
-                        <img :src="reply.user.avatar" :alt="reply.user.name" />
-                      </div>
-                      <div class="reply-content">
-                        <div class="reply-header">
-                          <span class="reply-author">{{ reply.user.name }}
-
-</span>
-                          <span class="reply-date">{{ formatDate(reply.createdAt) }}
-
-</span>
-                        </div>
-                        <div class="reply-text">{{ reply.content }}</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 加载更多评论 -->
-            <div v-if="hasMoreComments" class="load-more">
-              <el-button @click="loadMoreComments" :loading="loadingComments">
-                加载更多评论
-              </el-button>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
     
     <!-- 错误状态 -->
@@ -396,7 +252,7 @@
 import { ref, reactive, onMounted, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { 
-  loadTutorialContent, 
+  getTutorialContent, 
   getTutorialById, 
   getRelatedTutorials,
   getAllTutorials,
@@ -406,10 +262,10 @@ import {
   getStatusText,
   type Tutorial
 } from '../services/tutorialService'
-import { ElMessage, ElMessageBox } from 'element-plus'
+
 import {
-  View, Star, Clock, Calendar, Collection, Share,
-  ArrowLeft, ArrowRight, Plus, ChatDotRound
+  View, Clock, Calendar,
+  ArrowLeft, ArrowRight, Plus
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -424,18 +280,8 @@ const tableOfContents = ref<any[]>([])
 const activeSection = ref('')
 const contentRef = ref<HTMLElement>()
 
-// 交互状态
-const liking = ref(false)
-const bookmarking = ref(false)
-const commenting = ref(false)
-const loadingComments = ref(false)
-const hasMoreComments = ref(true)
 const showError = ref(false)
 const errorMessage = ref('')
-
-// 评论相关
-const newComment = ref('')
-const comments = ref<any[]>([])
 
 // 相关数据
 const prevTutorial = ref<any>(null)
@@ -466,7 +312,7 @@ const loadTutorial = async () => {
     tutorial.value = tutorialData
     
     // 加载教程内容
-    content.value = await loadTutorialContent(tutorialData.category, tutorialId)
+    content.value = await getTutorialContent(tutorialData.category, tutorialId)
     
     // 获取相关教程
     relatedTutorials.value = getRelatedTutorials(tutorialData, 3)
@@ -497,43 +343,7 @@ const loadTutorial = async () => {
       nextTutorial.value = null
     }
     
-    // 模拟评论数据
-    comments.value = [
-      {
-        id: '1',
-        user: {
-          name: '张三',
-          avatar: '/avatar.svg'
-        },
-        content: '这篇教程写得很详细，对我理解很有帮助！',
-        likes: 12,
-        isLiked: false,
-        createdAt: new Date('2025-01-29'),
-        replies: [
-          {
-            id: '1-1',
-            user: {
-              name: 'ZZB2004',
-              avatar: '/avatar.svg'
-            },
-            content: '谢谢你的反馈！很高兴这篇教程对你有帮助。',
-            createdAt: new Date('2025-01-29')
-          }
-        ]
-      },
-      {
-        id: '2',
-        user: {
-          name: '李四',
-          avatar: '/avatar.svg'
-        },
-        content: '能否再详细讲解一下相关的实践应用？',
-        likes: 8,
-        isLiked: false,
-        createdAt: new Date('2025-01-29'),
-        replies: []
-      }
-    ]
+
     
     // 生成目录
     await nextTick()
@@ -578,68 +388,7 @@ const scrollToSection = (id: string) => {
 }
 
 
-// 点赞
-const toggleLike = async () => {
-  if (!tutorial.value) return
-  
-  liking.value = true
-  
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    const isLiked = !tutorial.value.isLiked
-    tutorial.value.isLiked = isLiked
-    tutorial.value.likes += isLiked ? 1 : -1
-    
-    ElMessage.success(isLiked ? '点赞成功' : '取消点赞')
-  } catch (error) {
-    ElMessage.error('操作失败')
-  }
 
- finally {
-    liking.value = false
-  }
-}
-
-// 收藏
-const toggleBookmark = async () => {
-  if (!tutorial.value) return
-  
-  bookmarking.value = true
-  
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    tutorial.value.isBookmarked = !tutorial.value.isBookmarked
-    
-    ElMessage.success(tutorial.value.isBookmarked ? '收藏成功' : '取消收藏')
-  } catch (error) {
-    ElMessage.error('操作失败')
-  }
-
- finally {
-    bookmarking.value = false
-  }
-}
-
-// 分享文章
-const shareArticle = () => {
-  if (navigator.share) {
-    navigator.share({
-      title: tutorial.value?.title,
-      text: tutorial.value?.description,
-      url: window.location.href
-    })
-  }
-
- else {
-    // 复制链接到剪贴板
-    navigator.clipboard.writeText(window.location.href)
-    ElMessage.success('链接已复制到剪贴板')
-  }
-}
 
 // 根据标签搜索
 const searchByTag = (tag: string) => {
@@ -649,113 +398,7 @@ const searchByTag = (tag: string) => {
   })
 }
 
-// 提交评论
-const submitComment = async () => {
-  if (!newComment.value.trim()) return
-  
-  commenting.value = true
-  
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    const comment = {
-      id: Date.now().toString(),
-      user: {
-        name: '当前用户',
-        avatar: '/avatar.svg'
-      },
-      content: newComment.value,
-      likes: 0,
-      isLiked: false,
-      createdAt: new Date(),
-      replies: []
-    }
-    
-    comments.value.unshift(comment)
-    newComment.value = ''
-    
-    ElMessage.success('评论发表成功')
-  } catch (error) {
-    ElMessage.error('评论发表失败')
-  }
 
- finally {
-    commenting.value = false
-  }
-}
-
-// 点赞评论
-const toggleCommentLike = async (comment: any) => {
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 300))
-    
-    comment.isLiked = !comment.isLiked
-    comment.likes += comment.isLiked ? 1 : -1
-    
-    // 模拟API调用
-    await new Promise(resolve => {
-      setTimeout(() => {
-        comment.isLiked = !comment.isLiked
-        comment.likes += comment.isLiked ? 1 : -1
-        resolve(undefined)
-      }, 500)
-    })
-  } catch (error) {
-    ElMessage.error('操作失败')
-  }
-}
-
-// 回复评论
-const replyToComment = (comment: any) => {
-  ElMessageBox.prompt('请输入回复内容', '回复评论', {
-    confirmButtonText: '发送',
-    cancelButtonText: '取消',
-    inputType: 'textarea'
-  }).then(({ value }) => {
-    if (value) {
-      const reply = {
-        id: Date.now().toString(),
-        user: {
-          name: '当前用户',
-          avatar: '/avatar.svg'
-        },
-        content: value,
-        createdAt: new Date()
-      }
-      
-      if (!comment.replies) {
-        comment.replies = []
-      }
-      comment.replies.push(reply)
-      
-      ElMessage.success('回复成功')
-    }
-  }).catch(() => {
-    // 用户取消
-  })
-}
-
-// 加载更多评论
-const loadMoreComments = async () => {
-  loadingComments.value = true
-  
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // 模拟没有更多评论
-    hasMoreComments.value = false
-    ElMessage.info('没有更多评论了')
-  } catch (error) {
-    ElMessage.error('加载失败')
-  }
-
- finally {
-    loadingComments.value = false
-  }
-}
 
 // 监听滚动，更新当前活跃章节
 const handleScroll = () => {
@@ -1379,192 +1022,5 @@ watch(() => route.fullPath, () => {
   }
 }
 
-// 评论区域
-.comments-section {
-  background: var(--bg-secondary);
-  padding: 60px 0;
-  
-  .comments-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .comments-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 30px;
-  }
-  
-  .comment-form {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 30px;
-    
-    .form-header {
-      display: flex;
-      gap: 16px;
-      
-      .user-avatar {
-        flex-shrink: 0;
-        
-        img {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-      }
-      
-      .form-content {
-        flex: 1;
-        
-        .form-actions {
-          margin-top: 12px;
-          text-align: right;
-        }
-      }
-    }
-  }
-  
-  .comments-list {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: 30px;
-  }
-  
-  .comment-item {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    gap: 16px;
-    
-    .comment-avatar {
-      flex-shrink: 0;
-      
-      img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-    }
-    
-    .comment-content {
-      flex: 1;
-      
-      .comment-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 8px;
-        
-        .comment-author {
-          font-weight: 500;
-          color: var(--text-color);
-        }
-        
-        .comment-date {
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-        }
-      }
-      
-      .comment-text {
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 12px;
-      }
-      
-      .comment-actions {
-        display: flex;
-        gap: 16px;
-        
-        .action-btn {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-          background: none;
-          border: none;
-          color: var(--text-secondary);
-          font-size: 0.875rem;
-          cursor: pointer;
-          transition: color 0.3s ease;
-          
-          &:hover {
-            color: var(--primary-color);
-          }
-          
-          &.liked {
-            color: var(--primary-color);
-          }
-        }
-      }
-      
-      .replies-list {
-        margin-top: 16px;
-        padding-left: 20px;
-        border-left: 2px solid var(--border-color);
-        
-        .reply-item {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 16px;
-          
-          &:last-child {
-            margin-bottom: 0;
-          }
-          
-          .reply-avatar {
-            flex-shrink: 0;
-            
-            img {
-              width: 32px;
-              height: 32px;
-              border-radius: 50%;
-              object-fit: cover;
-            }
-          }
-          
-          .reply-content {
-            flex: 1;
-            
-            .reply-header {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              margin-bottom: 4px;
-              
-              .reply-author {
-                font-weight: 500;
-                color: var(--text-color);
-                font-size: 0.875rem;
-              }
-              
-              .reply-date {
-                font-size: 0.75rem;
-                color: var(--text-secondary);
-              }
-            }
-            
-            .reply-text {
-              color: var(--text-secondary);
-              font-size: 0.875rem;
-              line-height: 1.5;
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  .load-more {
-    text-align: center;
-  }
-}
+
 </style>

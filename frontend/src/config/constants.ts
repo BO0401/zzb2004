@@ -3,13 +3,7 @@
  * 统一管理项目中使用的常量
  */
 
-// API 相关常量
-export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api',
-  TIMEOUT: 10000,
-  RETRY_COUNT: 3,
-  RETRY_DELAY: 1000
-} as const
+
 
 // 路由常量
 export const ROUTES = {
@@ -29,7 +23,7 @@ export const STORAGE_KEYS = {
   THEME: 'theme',
   LANGUAGE: 'language',
   TUTORIAL_PROGRESS: 'tutorial_progress',
-  BOOKMARKS: 'bookmarks',
+
   RECENT_VIEWS: 'recent_views'
 } as const
 
@@ -80,13 +74,7 @@ export const PROJECT_STATUS = {
 } as const
 
 // 文件类型常量
-export const FILE_TYPES = {
-  IMAGE: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'],
-  VIDEO: ['mp4', 'webm', 'ogg'],
-  AUDIO: ['mp3', 'wav', 'ogg'],
-  DOCUMENT: ['pdf', 'doc', 'docx', 'txt', 'md'],
-  CODE: ['js', 'ts', 'vue', 'html', 'css', 'scss', 'json']
-} as const
+
 
 // 分页常量
 export const PAGINATION = {
@@ -132,26 +120,9 @@ export const REGEX_PATTERNS = {
   SLUG: /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 } as const
 
-// 错误代码常量
-export const ERROR_CODES = {
-  NETWORK_ERROR: 'NETWORK_ERROR',
-  TIMEOUT: 'TIMEOUT',
-  UNAUTHORIZED: 'UNAUTHORIZED',
-  FORBIDDEN: 'FORBIDDEN',
-  NOT_FOUND: 'NOT_FOUND',
-  SERVER_ERROR: 'SERVER_ERROR',
-  VALIDATION_ERROR: 'VALIDATION_ERROR'
-} as const
 
-// 事件名称常量
-export const EVENTS = {
-  THEME_CHANGED: 'theme:changed',
-  LANGUAGE_CHANGED: 'language:changed',
-  USER_LOGIN: 'user:login',
-  USER_LOGOUT: 'user:logout',
-  TUTORIAL_COMPLETED: 'tutorial:completed',
-  PROJECT_UPDATED: 'project:updated'
-} as const
+
+
 
 // 默认值常量
 export const DEFAULTS = {
@@ -162,15 +133,7 @@ export const DEFAULTS = {
   AUTHOR: 'ZZB2004'
 } as const
 
-// 限制常量
-export const LIMITS = {
-  MAX_FILE_SIZE: 10 * 1024 * 1024, // 10MB
-  MAX_TITLE_LENGTH: 100,
-  MAX_DESCRIPTION_LENGTH: 500,
-  MAX_CONTENT_LENGTH: 50000,
-  MAX_TAGS: 10,
-  MAX_COMMENTS_PER_PAGE: 50
-} as const
+
 
 // 缓存时间常量（毫秒）
 export const CACHE_DURATION = {

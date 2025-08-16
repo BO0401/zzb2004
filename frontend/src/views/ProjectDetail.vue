@@ -52,12 +52,7 @@
 
  浏览</span>
                 </div>
-                <div class="stat-item">
-                  <el-icon><Star /></el-icon>
-                  <span>{{ formatNumber(project.stars) }}
 
- 点赞</span>
-                </div>
                 <div class="stat-item">
                   <el-icon><Download /></el-icon>
                   <span>{{ formatNumber(project.downloads) }}
@@ -101,14 +96,7 @@
                   下载源码
                 </el-button>
                 
-                <el-button 
-                  size="large"
-                  @click="toggleStar"
-                  :loading="starring"
-                >
-                  <el-icon><Star /></el-icon>
-                  {{ project.isStarred ? '已点赞' : '点赞' }}
-                </el-button>
+
               </div>
             </div>
           </div>
@@ -395,10 +383,7 @@
                         <span class="related-category">{{ related.category }}
 
 </span>
-                        <span class="related-stars">
-                          <el-icon><Star /></el-icon>
-                          {{ formatNumber(related.stars) }}
-                        </span>
+
                       </div>
                     </div>
                   </div>
@@ -443,7 +428,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage, ElImageViewer } from 'element-plus'
 import {
-  View, Star, Download, Calendar, Link, TopRight,
+  View, Download, Calendar, Link, TopRight,
   Document, DocumentCopy
 } from '@element-plus/icons-vue'
 
@@ -457,7 +442,6 @@ const currentImageIndex = ref(0)
 const showImageViewer = ref(false)
 
 // 交互状态
-const starring = ref(false)
 // 新增：错误状态
 const hasError = ref(false)
 const errorMessage = ref('')
@@ -482,17 +466,15 @@ const fetchProjectDetail = async () => {
       status: 'completed',
       featured: true,
       views: 8420,
-      stars: 156,
       downloads: 89,
-      isStarred: false,
       createdAt: new Date('2025-07-29'),
       updatedAt: new Date('2025-07-29'),
       developmentTime: '2个月',
       license: 'MIT',
-      demoUrl: 'https://blog-demo.example.com',
+
       githubUrl: 'https://github.com/zzb2004/blog-system',
-      documentUrl: 'https://docs.example.com',
-      downloadUrl: 'https://github.com/zzb2004/blog-system/archive/main.zip',
+
+
       images: [
         '/logo.svg',
         '/logo.svg',
@@ -525,32 +507,32 @@ const fetchProjectDetail = async () => {
       technologies: [
         {
           name: 'Vue 3',
-          icon: '/tech-vue.svg',
+          icon: '/logo.svg',
           description: '渐进式 JavaScript 框架'
         },
         {
           name: 'TypeScript',
-          icon: '/tech-typescript.svg',
+          icon: '/logo.svg',
           description: 'JavaScript 的超集，提供类型安全'
         },
         {
           name: 'Element Plus',
-          icon: '/tech-element.svg',
+          icon: '/logo.svg',
           description: 'Vue 3 组件库'
         },
         {
           name: 'Pinia',
-          icon: '/tech-pinia.svg',
+          icon: '/logo.svg',
           description: 'Vue 状态管理库'
         },
         {
           name: 'Vite',
-          icon: '/tech-vite.svg',
+          icon: '/logo.svg',
           description: '下一代前端构建工具'
         },
         {
           name: 'Sass',
-          icon: '/tech-sass.svg',
+          icon: '/logo.svg',
           description: 'CSS 预处理器'
         }
       ],
@@ -589,12 +571,18 @@ const fetchProjectDetail = async () => {
       installation: {
         steps: [
           {
+            title: '克隆项目',
+            description: '从 GitHub 克隆项目到本地',
             code: 'git clone https://github.com/zzb2004/blog-system.git'
           },
           {
+            title: '安装依赖',
+            description: '进入项目目录并安装依赖包',
             code: 'cd blog-system\nnpm install'
           },
           {
+            title: '配置环境',
+            description: '复制并配置环境变量文件',
             code: 'cp config/.env.example .env\n# 编辑 .env 文件，配置数据库等信息'
           },
           {
@@ -606,6 +594,8 @@ const fetchProjectDetail = async () => {
       },
       changelog: [
         {
+          version: '2.0.0',
+          date: '2025-07-29',
           changes: [
             '新增暗黑模式支持',
             '优化移动端体验',
@@ -614,6 +604,8 @@ const fetchProjectDetail = async () => {
           ]
         },
         {
+          version: '1.8.0',
+          date: '2025-07-29',
           changes: [
             '重构前端架构，升级到 Vue 3',
             '新增 TypeScript 支持',
@@ -641,22 +633,19 @@ const fetchProjectDetail = async () => {
         id: '2',
         title: 'Vue 组件库',
         cover: '/logo.svg',
-        category: '组件库',
-        stars: 89
+        category: '组件库'
       },
       {
         id: '3',
         title: '在线代码编辑器',
         cover: '/logo.svg',
-        category: 'Web应用',
-        stars: 67
+        category: 'Web应用'
       },
       {
         id: '4',
         title: '数据可视化大屏',
         cover: '/logo.svg',
-        category: '可视化',
-        stars: 45
+        category: '可视化'
       }
     ]
     
@@ -735,27 +724,7 @@ const downloadProject = () => {
   }
 }
 
-// 点赞项目
-const toggleStar = async () => {
-  if (!project.value) return
-  
-  starring.value = true
-  
-  try {
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 500))
 
-    // 切换点赞状态
-    project.value.isStarred = !project.value.isStarred
-    project.value.stars += project.value.isStarred ? 1 : -1
-
-    ElMessage.success(project.value.isStarred ? '点赞成功' : '取消点赞')
-  } catch (error) {
-    ElMessage.error('操作失败')
-  } finally {
-    starring.value = false
-  }
-}
 
 // 打开图片查看器
 const openImageViewer = () => {
@@ -1451,11 +1420,7 @@ onMounted(() => {
         font-size: 0.75rem;
         color: var(--text-secondary);
         
-        .related-stars {
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
+
       }
     }
   }

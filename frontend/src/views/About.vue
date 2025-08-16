@@ -20,7 +20,7 @@
                 </svg>
                 GitHub
               </a>
-              <a href="mailto:zzb2004@example.com" class="social-link email">
+              <a href="#" class="social-link email">
                 <el-icon><Message /></el-icon>
                 邮箱
               </a>
@@ -305,8 +305,7 @@ const skillCategories = ref([
     skills: [
       { name: 'Node.js', level: 65 },
       { name: 'Express', level: 60 },
-      { name: 'MySQL', level: 55 },
-      { name: 'MongoDB', level: 50 },
+      
       { name: 'RESTful API', level: 70 },
       { name: 'GraphQL', level: 45 }
     ]
@@ -403,9 +402,9 @@ const contactMethods = ref([
   {
     type: 'email',
     label: '邮箱',
-    value: 'zzb2004@example.com',
+    value: '',
     icon: 'Message',
-    link: 'mailto:zzb2004@example.com'
+    link: '#'
   },
   {
     type: 'github',

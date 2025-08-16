@@ -20,7 +20,7 @@ export const useAppStore = defineStore('app', () => {
     author: 'ZZB2004',
     avatar: '/avatar.svg',
     github: 'https://github.com/zzb2004',
-    email: 'your-email@example.com'
+    email: ''
   })
   
   // 统计数据

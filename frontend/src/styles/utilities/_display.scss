@@ -8,34 +8,21 @@
 .d-inline { display: inline !important; }
 .d-inline-block { display: inline-block !important; }
 .d-block { display: block !important; }
-.d-table { display: table !important; }
-.d-table-row { display: table-row !important; }
-.d-table-cell { display: table-cell !important; }
 .d-flex { display: flex !important; }
 .d-inline-flex { display: inline-flex !important; }
 .d-grid { display: grid !important; }
-.d-inline-grid { display: inline-grid !important; }
 
 // Position 工具类
 .position-static { position: static !important; }
 .position-relative { position: relative !important; }
 .position-absolute { position: absolute !important; }
 .position-fixed { position: fixed !important; }
-.position-sticky { position: sticky !important; }
 
 // Top, Right, Bottom, Left
 .top-0 { top: 0 !important; }
-.top-50 { top: 50% !important; }
-.top-100 { top: 100% !important; }
 .bottom-0 { bottom: 0 !important; }
-.bottom-50 { bottom: 50% !important; }
-.bottom-100 { bottom: 100% !important; }
 .left-0 { left: 0 !important; }
-.left-50 { left: 50% !important; }
-.left-100 { left: 100% !important; }
 .right-0 { right: 0 !important; }
-.right-50 { right: 50% !important; }
-.right-100 { right: 100% !important; }
 
 // Transform 工具类
 .translate-middle {
@@ -51,12 +38,8 @@
 // Flex 工具类
 .flex-row { flex-direction: row !important; }
 .flex-column { flex-direction: column !important; }
-.flex-row-reverse { flex-direction: row-reverse !important; }
-.flex-column-reverse { flex-direction: column-reverse !important; }
-
 .flex-wrap { flex-wrap: wrap !important; }
 .flex-nowrap { flex-wrap: nowrap !important; }
-.flex-wrap-reverse { flex-wrap: wrap-reverse !important; }
 
 .flex-fill { flex: 1 1 auto !important; }
 .flex-grow-0 { flex-grow: 0 !important; }
@@ -110,34 +93,7 @@
 .align-self-baseline { align-self: baseline !important; }
 .align-self-stretch { align-self: stretch !important; }
 
-// Order
-.order-first { order: -1 !important; }
-.order-0 { order: 0 !important; }
-.order-1 { order: 1 !important; }
-.order-2 { order: 2 !important; }
-.order-3 { order: 3 !important; }
-.order-4 { order: 4 !important; }
-.order-5 { order: 5 !important; }
-.order-last { order: 6 !important; }
-
 // Gap
-.gap-0 { gap: 0 !important; }
 .gap-1 { gap: 0.25rem !important; }
 .gap-2 { gap: 0.5rem !important; }
 .gap-3 { gap: 1rem !important; }
-.gap-4 { gap: 1.5rem !important; }
-.gap-5 { gap: 3rem !important; }
-
-.row-gap-0 { row-gap: 0 !important; }
-.row-gap-1 { row-gap: 0.25rem !important; }
-.row-gap-2 { row-gap: 0.5rem !important; }
-.row-gap-3 { row-gap: 1rem !important; }
-.row-gap-4 { row-gap: 1.5rem !important; }
-.row-gap-5 { row-gap: 3rem !important; }
-
-.column-gap-0 { column-gap: 0 !important; }
-.column-gap-1 { column-gap: 0.25rem !important; }
-.column-gap-2 { column-gap: 0.5rem !important; }
-.column-gap-3 { column-gap: 1rem !important; }
-.column-gap-4 { column-gap: 1.5rem !important; }
-.column-gap-5 { column-gap: 3rem !important; }

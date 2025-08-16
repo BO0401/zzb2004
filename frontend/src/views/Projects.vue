@@ -91,7 +91,7 @@
               <div class="project-overlay">
                 <div class="project-actions">
                   <a 
-                    :href="project.demo" 
+                    href="#" 
                     target="_blank" 
                     class="action-btn demo-btn"
                     title="在线预览"
@@ -177,7 +177,7 @@
                 </div>
                 
                 <div class="project-actions-inline">
-                  <a :href="project.demo" target="_blank" class="btn btn-primary">
+                  <a href="#" class="btn btn-primary">
                     <el-icon><View /></el-icon>
                     在线预览
                   </a>
@@ -231,14 +231,13 @@ interface Project {
   category: string;
   categoryId: string;
   technologies: string[];
-  features?: string[];
+  features: string[];
   date: Date;
   views: number;
-  stars?: number;
-  forks?: number;
-  demo: string;
+  stars: number;
+  forks: number;
   github: string;
-  status: 'completed' | 'in-progress' | 'planning'
+  status: 'completed' | 'in-progress' | 'planning';
 }
 
 interface Category {
@@ -284,7 +283,7 @@ const projects = ref<Project[]>([
     views: 2340,
     stars: 128,
     forks: 45,
-    demo: 'https://blog-demo.example.com',
+    
     github: 'https://github.com/zzb2004/blog-system',
     status: 'completed'
   },
@@ -301,7 +300,7 @@ const projects = ref<Project[]>([
     views: 1890,
     stars: 89,
     forks: 32,
-    demo: 'https://todo-demo.example.com',
+    
     github: 'https://github.com/zzb2004/todo-app',
     status: 'completed'
   },
@@ -312,13 +311,13 @@ const projects = ref<Project[]>([
     image: '/logo.svg',
     category: 'Web应用',
     categoryId: 'web',
-    technologies: ['Vue 3', 'Axios', 'Chart.js', 'CSS3'],
+    technologies: ['Vue 3', 'Chart.js', 'CSS3'],
     features: ['实时天气', '多城市支持', '历史数据', '趋势图表', '位置定位'],
     date: new Date('2025-07-29'),
     views: 1560,
     stars: 76,
     forks: 28,
-    demo: 'https://weather-demo.example.com',
+    
     github: 'https://github.com/zzb2004/weather-app',
     status: 'completed'
   },
@@ -335,7 +334,7 @@ const projects = ref<Project[]>([
     views: 2100,
     stars: 156,
     forks: 67,
-    demo: 'https://music-demo.example.com',
+    
     github: 'https://github.com/zzb2004/music-player',
     status: 'in-progress'
   },
@@ -352,7 +351,7 @@ const projects = ref<Project[]>([
     views: 1780,
     stars: 92,
     forks: 38,
-    demo: 'https://shop-demo.example.com',
+    
     github: 'https://github.com/zzb2004/mobile-shop',
     status: 'completed'
   },
@@ -369,7 +368,7 @@ const projects = ref<Project[]>([
     views: 1340,
     stars: 234,
     forks: 89,
-    demo: 'https://ui-demo.example.com',
+    
     github: 'https://github.com/zzb2004/ui-components',
     status: 'in-progress'
   },
@@ -386,7 +385,7 @@ const projects = ref<Project[]>([
     views: 980,
     stars: 67,
     forks: 23,
-    demo: 'https://generator-demo.example.com',
+    
     github: 'https://github.com/zzb2004/code-generator',
     status: 'planning'
   },
@@ -403,7 +402,7 @@ const projects = ref<Project[]>([
     views: 2890,
     stars: 189,
     forks: 78,
-    demo: 'https://screen-demo.example.com',
+    
     github: 'https://github.com/zzb2004/data-screen',
     status: 'completed'
   },
@@ -420,7 +419,7 @@ const projects = ref<Project[]>([
     views: 1450,
     stars: 112,
     forks: 45,
-    demo: 'https://draw-demo.example.com',
+    
     github: 'https://github.com/zzb2004/drawing-tool',
     status: 'in-progress'
   }

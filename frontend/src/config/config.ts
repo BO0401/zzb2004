@@ -6,8 +6,8 @@ export const config = {
   site: {
     title: import.meta.env.VITE_SITE_TITLE || '个人博客',
     author: import.meta.env.VITE_SITE_AUTHOR || '博主',
-    domain: import.meta.env.VITE_SITE_DOMAIN || 'localhost',
-    email: import.meta.env.VITE_SITE_EMAIL || 'contact@example.com'
+    domain: import.meta.env.VITE_SITE_DOMAIN || '',
+  email: import.meta.env.VITE_SITE_EMAIL || ''
   },
 
   // GitHub 配置
@@ -20,13 +20,13 @@ export const config = {
   // 社交媒体链接
   social: {
     github: import.meta.env.VITE_SOCIAL_GITHUB || 'https://github.com/username',
-    email: import.meta.env.VITE_SOCIAL_EMAIL || 'mailto:contact@example.com',
-    blog: import.meta.env.VITE_SOCIAL_BLOG || 'https://blog.example.com'
+    email: import.meta.env.VITE_SOCIAL_EMAIL || '',
+  blog: import.meta.env.VITE_SOCIAL_BLOG || ''
   },
 
   // 联系方式
   contact: {
-    email: import.meta.env.VITE_CONTACT_EMAIL || 'contact@example.com',
+    email: import.meta.env.VITE_CONTACT_EMAIL || '',
     wechat: import.meta.env.VITE_CONTACT_WECHAT || 'wechat-id',
     phone: import.meta.env.VITE_CONTACT_PHONE || '+86-xxx-xxxx-xxxx'
   },
