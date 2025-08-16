@@ -43,9 +43,9 @@ blog-frontend/
 - 配置文件支持开发和生产环境
 
 ## 部署说明
-- 参考 `/scripts/deploy.example.sh`
+- 参考 `/examples/deploy.example.sh`
 - 配置 webhook 自动部署
-- 环境变量配置参考 `.env.example`
+- 环境变量配置参考 `config/.env.example`
 
 ## 安全措施
 - 所有敏感信息使用环境变量

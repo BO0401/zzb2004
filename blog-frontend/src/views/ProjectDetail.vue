@@ -595,7 +595,7 @@ const fetchProjectDetail = async () => {
             code: 'cd blog-system\nnpm install'
           },
           {
-            code: 'cp .env.example .env\n# 编辑 .env 文件，配置数据库等信息'
+            code: 'cp config/.env.example .env\n# 编辑 .env 文件，配置数据库等信息'
           },
           {
             title: '启动项目',

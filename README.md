@@ -34,9 +34,15 @@ zzb2004/
 │   ├── html-tutorials/    # HTML 学习教程
 │   └── development/       # 开发文档
 ├── scripts/               # 部署和配置脚本
+│   ├── monitor.sh         # 系统监控脚本
+│   └── optimize-system.sh # 系统优化脚本
+├── config/                # 配置文件目录
+│   ├── .env.example       # 环境变量模板
+│   └── .hintrc           # 代码提示配置
+├── examples/              # 示例文件目录
 │   ├── deploy.example.sh  # 部署脚本模板
+│   ├── nginx.example.conf # Nginx 配置模板
 │   └── webhook.example.php # Webhook 模板
-├── .env.example           # 环境变量模板
 ├── SECURITY.md            # 安全配置指南
 └── README.md              # 项目说明
 ```
@@ -50,7 +56,7 @@ zzb2004/
 1. **环境配置 | Environment Setup**
    ```bash
    # 复制环境变量模板
-   cp .env.example .env
+   cp config/.env.example .env
    
    # 编辑配置文件，填入你的真实信息
    # Edit the config file with your real information
@@ -60,8 +66,8 @@ zzb2004/
 2. **部署配置 | Deployment Setup**
    ```bash
    # 复制部署脚本模板
-   cp scripts/deploy.example.sh scripts/deploy.sh
-   cp scripts/webhook.example.php scripts/webhook.php
+   cp examples/deploy.example.sh scripts/deploy.sh
+cp examples/webhook.example.php scripts/webhook.php
    
    # 根据你的服务器环境修改配置
    # Modify according to your server environment
