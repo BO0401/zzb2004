@@ -265,7 +265,7 @@ main() {
     echo ""
     echo "优化后建议:"
     echo "1. 重启系统"
-    echo "2. 运行 ./scripts/monitor.sh 检查系统状态"
+    echo "2. 运行 ./tools/monitor.sh 检查系统状态"
     echo "3. 配置nginx使用 ./examples/nginx.example.conf"
     echo "4. 查看 docs/PERFORMANCE.md 了解更多优化建议"
 }

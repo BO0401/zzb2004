@@ -26,14 +26,17 @@
 
 ```
 zzb2004/
-├── blog-frontend/          # Vue.js 前端应用
+├── frontend/               # Vue.js 前端应用
 │   ├── src/               # 源代码
 │   ├── public/            # 静态资源
 │   └── dist/              # 构建输出
 ├── docs/                  # 文档和教程
-│   ├── html-tutorials/    # HTML 学习教程
-│   └── development/       # 开发文档
-├── scripts/               # 部署和配置脚本
+│   ├── tutorials/         # 学习教程
+│   │   ├── html/          # HTML 教程
+│   │   └── css/           # CSS 教程
+│   └── guides/            # 指南文档
+│       └── development/   # 开发文档
+├── tools/                 # 工具脚本
 │   ├── monitor.sh         # 系统监控脚本
 │   └── optimize-system.sh # 系统优化脚本
 ├── config/                # 配置文件目录
@@ -66,8 +69,8 @@ zzb2004/
 2. **部署配置 | Deployment Setup**
    ```bash
    # 复制部署脚本模板
-   cp examples/deploy.example.sh scripts/deploy.sh
-cp examples/webhook.example.php scripts/webhook.php
+   cp examples/deploy.example.sh tools/deploy.sh
+cp examples/webhook.example.php tools/webhook.php
    
    # 根据你的服务器环境修改配置
    # Modify according to your server environment
@@ -76,14 +79,14 @@ cp examples/webhook.example.php scripts/webhook.php
 3. **性能优化 | Performance Optimization**
    ```bash
    # 前端构建优化（已配置代码分割、压缩等）
-   cd blog-frontend
+   cd frontend
    npm run build
    
    # 服务器监控
-   ./scripts/monitor.sh monitor
+   ./tools/monitor.sh monitor
    
    # 快速状态检查
-   ./scripts/monitor.sh quick
+   ./tools/monitor.sh quick
    ```
 
 4. **查看详细指南 | Detailed Guide**

@@ -1,7 +1,7 @@
 # CSS 教学文档集合
 
 ## 项目概述
-该集合系统化覆盖 CSS 从入门到进阶到实战的核心知识点，保持与 `html-tutorials` 相同的结构与品质，仅使用 HTML + CSS 进行教学与演示。
+该集合系统化覆盖 CSS 从入门到进阶到实战的核心知识点，保持与 HTML 教程相同的结构与品质，仅使用 HTML + CSS 进行教学与演示。
 
 ## 文件索引（计划与进度）
 - 基础语法类：css-basics.html，selectors.html，units.html，colors.html，typography.html

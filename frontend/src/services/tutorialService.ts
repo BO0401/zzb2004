@@ -229,7 +229,7 @@ const allTutorials = [...htmlTutorials, ...cssTutorials]
 export async function loadTutorialContent(category: string, id: string): Promise<string> {
   try {
     // 构建文件路径
-    const filePath = `/docs/${category === 'html' ? 'html-tutorials' : 'css-tutorials'}/${id}.html`
+    const filePath = `/docs/tutorials/${category === 'html' ? 'html' : 'css'}/${id}.html`
     
     // 使用 fetch 加载文件内容
     const response = await fetch(filePath)

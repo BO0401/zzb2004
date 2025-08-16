@@ -1,6 +1,29 @@
 {
+  "name": "zzb2004-project",
+  "version": "1.0.0",
+  "description": "A comprehensive web development project with tutorials and examples",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend"
+  },
   "devDependencies": {
     "sass": "^1.90.0",
     "sass-embedded": "^1.90.0"
-  }
+  },
+  "keywords": [
+    "web-development",
+    "tutorials",
+    "css",
+    "html",
+    "vue",
+    "frontend"
+  ],
+  "author": "zzb2004",
+  "license": "MIT"
 }

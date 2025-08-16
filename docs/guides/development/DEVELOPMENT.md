@@ -11,7 +11,7 @@
 
 ## 项目结构
 ```
-blog-frontend/
+frontend/
 ├── src/
 │   ├── components/     # 可复用组件
 │   ├── views/         # 页面组件
