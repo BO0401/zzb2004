@@ -10,7 +10,7 @@ export {
   formatRelativeTime,
   formatFileSize,
   formatPercentage
-} from './format'
+} from './format.js'
 
 // 文本处理工具
 export {
@@ -22,7 +22,7 @@ export {
   kebabToCamel,
   generateRandomString,
   highlightKeyword
-} from './text'
+} from './text.js'
 
 // 验证工具
 export {
@@ -33,7 +33,7 @@ export {
   validateRequired,
   validateLength,
   validatePattern
-} from './validation'
+} from './validation.js'
 
 // 存储工具
 export {
@@ -45,7 +45,7 @@ export {
   getSessionStorage,
   removeSessionStorage,
   clearSessionStorage
-} from './storage'
+} from './storage.js'
 
 // DOM 工具
 export {
@@ -56,4 +56,4 @@ export {
   throttle,
   copyToClipboard,
   downloadFile
-} from './dom'
+} from './dom.js'
