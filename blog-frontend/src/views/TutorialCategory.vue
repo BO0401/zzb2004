@@ -225,7 +225,7 @@ interface Tutorial {
   tags: string[];
   views: number;
   likes: number;
-  createdAt: string;
+  createdAt: Date;
   category: string
 }
 
@@ -339,7 +339,7 @@ const filteredTutorials = computed(() => {
         return (difficultyOrder[a.difficulty as keyof typeof difficultyOrder] || 0) - 
                (difficultyOrder[b.difficulty as keyof typeof difficultyOrder] || 0)
       default:
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        return b.createdAt.getTime() - a.createdAt.getTime()
     }
   })
 
@@ -382,7 +382,7 @@ const fetchTutorials = async () => {
         tags: ['Vue3', '组件', '前端'],
         views: 1250,
         likes: 89,
-        createdAt: '2025-07-29',
+        createdAt: new Date('2025-07-29'),
         category: 'frontend'
       },
       {
@@ -394,7 +394,7 @@ const fetchTutorials = async () => {
         tags: ['TypeScript', 'JavaScript', '类型系统'],
         views: 2100,
         likes: 156,
-        createdAt: '2025-07-29',
+        createdAt: new Date('2025-07-29'),
         category: 'frontend'
       },
       {
@@ -406,7 +406,7 @@ const fetchTutorials = async () => {
         tags: ['Vite', '构建工具', '性能优化'],
         views: 890,
         likes: 67,
-        createdAt: '2025-07-29',
+        createdAt: new Date('2025-07-29'),
         category: 'frontend'
       }
     ].filter(tutorial => tutorial.category === category)
@@ -469,24 +469,13 @@ const formatNumber = (num: number) => {
   return num.toString()
 }
 
-const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr)
-  const now = new Date()
-  const diff = now.getTime() - date.getTime()
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  
-  if (days === 0) return '今天'
-  if (days === 1) return '昨天'
-  if (days < 7) return `${days}
-
-天前`
-  if (days < 30) return `${Math.floor(days / 7)}
-
-周前`
-  if (days < 365) return `${Math.floor(days / 30)}
-
-个月前`
-  return `${Math.floor(days / 365)}年前`
+const formatDate = (dateStr: Date | string) => {
+  const date = typeof dateStr === 'string' ? new Date(dateStr) : dateStr
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
 
 // 生命周期

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 伪类与伪元素 pseudo-classes & pseudo-elements</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#22c55e;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .btn{display:inline-block;padding:8px 14px;border:1px solid #1f2937;border-radius:10px;background:#0b1220;color:#e5e7eb;text-decoration:none}
+    .btn:hover{background:#132033}
+    .list li{padding:6px 8px;border-bottom:1px dashed #23324b}
+    .list li:first-child{color:#93c5fd}
+    .list li:last-child{color:#34d399}
+    .list li:nth-child(odd){background:#0a1327}
+    .tooltip{position:relative;display:inline-block}
+    .tooltip::after{content:attr(data-tip);position:absolute;bottom:120%;left:50%;transform:translateX(-50%);white-space:nowrap;background:#0b1220;border:1px solid #1f2937;padding:6px 8px;border-radius:8px;color:#e5e7eb;opacity:0;pointer-events:none;transition:opacity .2s}
+    .tooltip:hover::after{opacity:1}
+    .line::before{content:"★ ";color:#fbbf24}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 伪类与伪元素</h1>
+    <p>掌握交互伪类（:hover/:focus/:active）、结构伪类（:first-child/:nth-child 等）与伪元素（::before/::after/::first-line/::first-letter）。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 交互伪类</h2>
+      <div class="card">
+        <a class="btn" href="#">按钮</a>
+        <pre><code>a:hover{ background:#132033; }
+a:active{ transform: translateY(1px); }
+a:focus{ outline:2px solid #22d3ee; outline-offset:2px; }</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 结构伪类</h2>
+      <div class="card">
+        <ul class="list">
+          <li>项目 1</li>
+          <li>项目 2</li>
+          <li>项目 3</li>
+          <li>项目 4</li>
+        </ul>
+        <pre><code>li:first-child{ color:#93c5fd }
+li:last-child{ color:#34d399 }
+li:nth-child(odd){ background:#0a1327 }</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 伪元素</h2>
+      <div class="card">
+        <p class="line">使用 ::before/::after 注入装饰内容或结构辅助。</p>
+        <div class="tooltip" data-tip="这是一段提示">悬停我</div>
+        <pre><code>.tooltip::after{ content: attr(data-tip); position:absolute; opacity:0; }
+.tooltip:hover::after{ opacity:1; }</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>制作一个仅用 CSS 的 tooltip（如本页示例）。</li>
+        <li>使用 nth-child 实现斑马条表格。</li>
+        <li>为段落首字添加装饰性的首字下沉效果（::first-letter）。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

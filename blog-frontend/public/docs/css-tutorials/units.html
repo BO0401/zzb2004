@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS 单位详解</title>
+  <style>
+    :root{ --primary:#2563eb; --text:#111827; --muted:#f3f4f6; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:#fafafa; }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+    .card{ background:#fff; border:1px solid #e5e7eb; border-radius:10px; padding:14px; }
+    .code{ background:#0b1220; color:#e5e7eb; padding:10px; border-radius:6px; font-family:ui-monospace,Consolas,monospace; }
+    .demo{ padding:12px; background:#f8fafc; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 单位详解</h1>
+    <p>掌握 px、em、rem、%、vw、vh、vmin、vmax、ch 等单位的含义与使用场景。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 绝对单位 vs 相对单位</h2>
+      <div class="grid">
+        <div class="card">
+          <strong>绝对单位</strong>
+          <p>px（像素）在屏幕上是最常用的单位，通常作为基准。pt、cm、mm 在屏幕场景较少使用。</p>
+        </div>
+        <div class="card">
+          <strong>相对单位</strong>
+          <p>em、rem 相对于字体大小；% 相对于父元素相关属性；vw/vh 相对于视口。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 字体相关单位：em 与 rem</h2>
+      <div class="grid">
+        <div class="card">
+          <p><strong>em</strong>：相对于元素自身（或最近祖先）字体大小。嵌套可能导致累积放大。</p>
+          <div class="code">.parent{ font-size:16px; }
+.child{ font-size:1.5em; } /* 24px */</div>
+        </div>
+        <div class="card">
+          <p><strong>rem</strong>：相对于根元素 html 的字体大小，常用于建立全局比例体系。</p>
+          <div class="code">html{ font-size:16px; }
+.title{ font-size:2rem; } /* 32px */</div>
+        </div>
+      </div>
+      <div class="demo" style="font-size:16px">
+        <p>示例（父 font-size:16px）</p>
+        <div style="font-size:1.5em;background:#e0f2fe;padding:8px;border-radius:6px;">1.5em 区块</div>
+        <div style="font-size:1.5rem;background:#d1fae5;padding:8px;border-radius:6px;margin-top:6px;">1.5rem 区块</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 视口单位：vw / vh / vmin / vmax</h2>
+      <div class="grid">
+        <div class="card">
+          <p><strong>vw</strong>：1vw 等于视口宽度的 1%。</p>
+          <p><strong>vh</strong>：1vh 等于视口高度的 1%。</p>
+          <p><strong>vmin/vmax</strong>：取宽高中较小/较大的那个维度。</p>
+        </div>
+        <div class="card">
+          <div class="code">.hero{ height:50vh; font-size:5vw; }</div>
+          <p>适合做全屏头图、高度自适应模块与响应式大标题。</p>
+        </div>
+      </div>
+      <div class="demo" style="height:18vh; background:linear-gradient(90deg,#93c5fd,#a7f3d0); display:grid; place-items:center; border-radius:8px;">响应式标题（试着缩放窗口）</div>
+    </section>
+
+    <section>
+      <h2>4. 宽度与百分比</h2>
+      <div class="card">
+        <p>% 对不同属性的参照不同：width 相对包含块的宽度，padding 相对自身宽度，line-height 的 % 相对元素字体大小。</p>
+        <div class="code">.col{ width:33.33%; padding:2%; }</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 其他有用单位</h2>
+      <ul>
+        <li><strong>ch</strong>：大约等于“0”字符的宽度，适合限制文本宽度（如 60ch）。</li>
+        <li><strong>ex</strong>：相对当前字体的 x 高度（较少用）。</li>
+        <li><strong>clamp(min, preferred, max)</strong> 常与视口单位结合做响应式字号。</li>
+      </ul>
+      <div class="code">.title{ font-size:clamp(18px, 4vw, 36px); }</div>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>用 rem 建立 8pt 间距体系（如 0.5rem、1rem、1.5rem、2rem）。</li>
+        <li>创建一个响应式 hero 模块，使用 vh 设置高度，标题使用 clamp。</li>
+        <li>对比 em 与 rem 在嵌套组件中的差异。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

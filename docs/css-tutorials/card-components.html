@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>卡片组件设计（Card Components）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee;--radius:14px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+    .media{position:relative;height:160px;background:#0b1220;overflow:hidden}
+    .media img{position:absolute;inset:-4% -4%;width:108%;height:108%;object-fit:cover;transition:transform .5s ease}
+    .body{padding:14px}
+    .title{font-size:18px;margin:0 0 6px}
+    .desc{color:var(--muted);font-size:14px;margin:0 0 10px}
+    .meta{display:flex;gap:8px;align-items:center;color:#9ca3af;font-size:12px}
+    .actions{display:flex;gap:10px;padding:14px;border-top:1px solid var(--border);margin-top:auto}
+    .btn{flex:1;text-align:center;padding:10px;border-radius:8px;border:1px solid #243041;background:#0b1220;color:#e5e7eb;text-decoration:none}
+    .btn.primary{background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;color:#0b1220;font-weight:600}
+    .badge{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #23324b;background:#0b1220;color:#c7d2fe}
+    .card:hover .media img{transform:scale(1.06)}
+    .card.lift{transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s}
+    .card.lift:hover{transform:translateY(-6px);box-shadow:0 16px 36px rgba(2,6,23,.55)}
+    .list{display:grid;gap:10px}
+    .list-item{display:grid;grid-template-columns:80px 1fr;gap:12px;border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+    .list-item .thumb{height:80px;background:#0b1220}
+    .list-item .thumb img{width:100%;height:100%;object-fit:cover}
+    .list-item .content{padding:10px}
+    .stats{display:flex;gap:10px}
+    .stat{flex:1;padding:12px;border-radius:10px;background:linear-gradient(180deg,#0b1220,#0b1324);border:1px solid #1f2937;text-align:center}
+    .stat .num{font-size:22px;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>卡片组件设计（Card Components）</h1>
+    <p>提炼常见卡片变体：媒体卡、提升卡、列表卡、统计卡；关注信息层级、交互反馈与响应式。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 媒体卡（基础版）</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="media">
+            <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3Crect width='800' height='500' fill='url(%23g)'/%3E%3C/svg%3E"/>
+            <span class="badge" style="position:absolute;left:10px;bottom:10px">新上架</span>
+          </div>
+          <div class="body">
+            <h3 class="title">渐变主题卡片</h3>
+            <p class="desc">用于展示文章、商品、项目等资源，包含封面、标题、描述与部分元信息。</p>
+            <div class="meta"><span>12 min read</span><span>•</span><span>UI/UX</span></div>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#">预览</a>
+            <a class="btn primary" href="#">开始使用</a>
+          </div>
+        </article>
+        <article class="card lift">
+          <div class="media">
+            <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3ClinearGradient id='g2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23f472b6'/%3E%3Cstop offset='1' stop-color='%23f59e0b'/%3E%3C/linearGradient%3E%3Crect width='800' height='500' fill='url(%23g2)'/%3E%3C/svg%3E"/>
+          </div>
+          <div class="body">
+            <h3 class="title">提升卡（Hover Lift）</h3>
+            <p class="desc">悬停产生升起与阴影加深，适合可点击的卡片入口。</p>
+          </div>
+          <div class="actions">
+            <a class="btn" href="#">更多</a>
+            <a class="btn primary" href="#">打开</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 列表卡（密度信息）</h2>
+      <div class="list">
+        <div class="list-item">
+          <div class="thumb"><img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%2322d3ee'/%3E%3C/svg%3E"></div>
+          <div class="content">
+            <h4 style="margin:0 0 6px">现代 CSS 模块化</h4>
+            <p style="margin:0;color:#9ca3af">以组件为单位的 CSS 架构，配合变量和约定实现风格统一。</p>
+          </div>
+        </div>
+        <div class="list-item">
+          <div class="thumb"><img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%23a78bfa'/%3E%3C/svg%3E"></div>
+          <div class="content">
+            <h4 style="margin:0 0 6px">微交互与动效</h4>
+            <p style="margin:0;color:#9ca3af">合理使用过渡与动画，突出层级与状态变化。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 统计卡（Dashboard）</h2>
+      <div class="grid">
+        <div class="stat">
+          <div class="num">12.4k</div>
+          <div class="muted">月活跃</div>
+        </div>
+        <div class="stat">
+          <div class="num">98.3%</div>
+          <div class="muted">成功率</div>
+        </div>
+        <div class="stat">
+          <div class="num">642</div>
+          <div class="muted">新增用户</div>
+        </div>
+      </div>
+      <pre><code>.stat{ background:linear-gradient(180deg,#0b1220,#0b1324); border:1px solid #1f2937; border-radius:10px }</code></pre>
+    </section>
+
+    <section>
+      <h2>4. 设计要点与实践</h2>
+      <ul>
+        <li>图片使用 overflow + 缩放，避免布局抖动。</li>
+        <li>交互使用过渡与阴影提升，限定在 compositing 层。</li>
+        <li>通过变量统一圆角、间距、边框等视觉基线。</li>
+        <li>移动端优先，使用 auto-fit + minmax 构建自适应网格。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

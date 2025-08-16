@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "ZZB2004个人博客前端 - 基于Vue3的前端教学与项目展示平台",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview",
-    "serve": "vite preview",
+    "dev": "cross-env SASS_SILENCE_DEPRECATIONS=legacy-js-api vite",
+    "build": "vue-tsc && cross-env SASS_SILENCE_DEPRECATIONS=legacy-js-api vite build",
+    "preview": "cross-env SASS_SILENCE_DEPRECATIONS=legacy-js-api vite preview",
+    "serve": "cross-env SASS_SILENCE_DEPRECATIONS=legacy-js-api vite preview",
     "lint:style": "stylelint \"src/**/*.{vue,css,scss}\" --fix"
   },
   "dependencies": {
@@ -25,8 +25,10 @@
     "@types/node": "^20.10.5",
     "@types/nprogress": "^0.2.3",
     "@vitejs/plugin-vue": "^4.5.2",
+    "cross-env": "^10.0.0",
     "postcss-html": "^1.8.0",
-    "sass": "^1.69.5",
+    "sass": "^1.90.0",
+    "sass-embedded": "^1.90.0",
     "stylelint": "^16.23.0",
     "stylelint-config-standard": "^39.0.0",
     "terser": "^5.24.0",

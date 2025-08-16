@@ -94,7 +94,7 @@
 
 </p>
               <div class="tutorial-meta">
-                <span class="tutorial-date">{{ formatDate(tutorial.date) }}
+                <span class="tutorial-date">{{ formatDate(tutorial.createdAt) }}
 
 </span>
                 <span class="tutorial-views">
@@ -227,7 +227,7 @@ const latestTutorials = ref([
     description: '深入了解Vue 3的Composition API，掌握现代Vue开发方式',
     cover: '/tutorial-covers/vue3.jpg',
     category: 'Vue',
-    date: new Date('2025-07-29'),
+    createdAt: new Date('2025-07-29'),
     views: 1234
   },
   {
@@ -236,7 +236,7 @@ const latestTutorials = ref([
     description: '全面学习CSS Grid布局，轻松实现复杂的网页布局',
     cover: '/tutorial-covers/css-grid.jpg',
     category: 'CSS',
-    date: new Date('2025-07-29'),
+    createdAt: new Date('2025-07-29'),
     views: 856
   },
   {
@@ -245,7 +245,7 @@ const latestTutorials = ref([
     description: '掌握JavaScript最新特性，提升代码质量和开发效率',
     cover: '/tutorial-covers/es6.jpg',
     category: 'JavaScript',
-    date: new Date('2025-07-29'),
+    createdAt: new Date('2025-07-29'),
     views: 2341
   }
 ])

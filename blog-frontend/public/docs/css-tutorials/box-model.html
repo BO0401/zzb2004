@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>盒模型详解</title>
+  <style>
+    :root{ --primary:#ea580c; --bg:#fff7ed; --border:#fed7aa; --text:#111827; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:var(--bg); }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; }
+    .card{ background:#fff; border:1px solid var(--border); border-radius:10px; padding:14px; }
+    .stage{ display:grid; place-items:center; height:220px; background:#fff; border:1px dashed #ddd; border-radius:8px; }
+    .demo{ background:#fb923c; padding:20px; border:10px solid #f97316; margin:20px; color:#fff; }
+    .legend{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+    .badge{ font-size:12px; padding:2px 8px; border-radius:999px; }
+    .b1{ background:#fef9c3; } .b2{ background:#fde68a; } .b3{ background:#fdba74; } .b4{ background:#fca5a5; }
+    .code{ background:#0b1220; color:#e5e7eb; padding:10px; border-radius:6px; font-family:ui-monospace,Consolas,monospace; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>盒模型详解</h1>
+    <p>理解 content、padding、border、margin 四层结构，以及 box-sizing 对计算的影响。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 结构与可视化</h2>
+      <div class="row">
+        <div class="card">
+          <div class="stage">
+            <div class="demo">content 区域</div>
+          </div>
+          <div class="legend">
+            <span class="badge b1">content</span>
+            <span class="badge b2">padding</span>
+            <span class="badge b3">border</span>
+            <span class="badge b4">margin</span>
+          </div>
+        </div>
+        <div class="card">
+          <strong>计算规则</strong>
+          <div class="code">元素总宽度 = content-width + padding-left + padding-right + border-left + border-right + margin-left + margin-right</div>
+          <p>同理可得总高度。注意：margin 不参与背景绘制，且上下外边距可能发生折叠。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. box-sizing</h2>
+      <div class="row">
+        <div class="card">
+          <p><strong>content-box（默认）</strong>：width/height 仅指 content，不包含内边距与边框。</p>
+          <div class="code">.a{ box-sizing: content-box; width:200px; padding:20px; border:10px solid; }</div>
+        </div>
+        <div class="card">
+          <p><strong>border-box</strong>：width/height 包含 content + padding + border，更易于布局。</p>
+          <div class="code">.b{ box-sizing: border-box; width:200px; padding:20px; border:10px solid; }</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 外边距折叠（Margin Collapsing）</h2>
+      <div class="card">
+        <p>相邻块级元素的上下 margin 可能合并为一个，取较大的值。清除方案包括：
+        </p>
+        <ul>
+          <li>父元素添加边框/内边距；</li>
+          <li>父元素建立格式化上下文（如 overflow:hidden 或 display:flow-root）；</li>
+          <li>在元素之间添加边界（如边框或空内容）。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 练习</h2>
+      <ol>
+        <li>创建两个相邻的 div，分别设置 margin-top 和 margin-bottom，观察是否折叠。</li>
+        <li>将 box-sizing 从 content-box 改为 border-box，比较两者在布局上的差异。</li>
+        <li>使用不同的 padding 与 border 组合，计算元素的实际总宽度。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

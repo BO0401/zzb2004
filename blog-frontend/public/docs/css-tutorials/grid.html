@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS Grid 网格布局完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#38bdf8;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1000px;margin:0 auto;padding:28px 18px;line-height:1.6}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .stage{display:grid;gap:8px;background:#0b1220;border:1px dashed #23324b;border-radius:10px;padding:8px}
+    .cell{background:#1e293b;color:#93c5fd;border-radius:8px;display:flex;align-items:center;justify-content:center;height:60px;font-weight:700}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS Grid 网格布局完全指南</h1>
+    <p class="note">掌握容器属性（grid-template-rows/columns/areas/gap/auto-*/justify/align）与项目属性（grid-row/column/area/justify-self/align-self），配 flex 构建复杂布局。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 快速上手</h2>
+      <div class="card">
+        <pre><code>.container{ display:grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; gap: 12px; }</code></pre>
+        <div class="stage" style="grid-template-columns:repeat(3,1fr)">
+          <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          <div class="cell">4</div><div class="cell">5</div><div class="cell">6</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 自动填充与最小最大</h2>
+      <div class="card">
+        <pre><code>.auto-grid{ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }</code></pre>
+        <div class="stage" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+          <div class="cell">A</div><div class="cell">B</div><div class="cell">C</div><div class="cell">D</div><div class="cell">E</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 跨行跨列与区域</h2>
+      <div class="grid">
+        <div class="card">
+          <pre><code>.layout{ grid-template-columns: 2fr 1fr; grid-template-rows: 80px 1fr 80px; gap:10px; }
+.header{ grid-column: 1 / -1; }
+.sidebar{ grid-row: 2 / 3; }
+.main{ grid-row: 2 / 3; }</code></pre>
+          <div class="stage" style="grid-template-columns:2fr 1fr;grid-template-rows:80px 1fr 80px;height:260px">
+            <div class="cell header" style="grid-column:1/-1">Header</div>
+            <div class="cell main" style="grid-row:2/3">Main</div>
+            <div class="cell sidebar" style="grid-row:2/3">Aside</div>
+            <div class="cell footer" style="grid-column:1/-1">Footer</div>
+          </div>
+        </div>
+        <div class="card">
+          <pre><code>.areas{ grid-template:
+  "hd hd" 60px
+  "sd mn" 1fr
+  "ft ft" 60px / 220px 1fr; }
+.header{ grid-area: hd } .sidebar{ grid-area: sd } .main{ grid-area: mn } .footer{ grid-area: ft }</code></pre>
+          <div class="stage" style="grid-template: "hd hd" 60px "sd mn" 1fr "ft ft" 60px / 220px 1fr;height:260px">
+            <div class="cell" style="grid-area:hd">Header</div>
+            <div class="cell" style="grid-area:sd">Sidebar</div>
+            <div class="cell" style="grid-area:mn">Main</div>
+            <div class="cell" style="grid-area:ft">Footer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 实战建议</h2>
+      <ul>
+        <li>组件内部优先使用 Flex；页面级或二维布局优先使用 Grid。</li>
+        <li>auto-fit/auto-fill + minmax 构建自适应卡片网格。</li>
+        <li>使用 grid-template-areas 提升可读性与维护性。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>实现「头/主/侧/脚」四区布局，侧栏固定 240px，其余自适应。</li>
+        <li>构建自适应卡片网格，最小列宽 200px。</li>
+        <li>使用区域语法重排布局顺序以适配窄屏。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

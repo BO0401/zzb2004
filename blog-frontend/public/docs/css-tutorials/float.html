@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 浮动 float 与清除 clearfix</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#34d399;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text)}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px;line-height:1.6}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .stage{background:#0b1220;border:1px dashed #23324b;border-radius:10px;padding:14px;min-height:140px}
+    .box{width:120px;height:80px;border-radius:8px;color:#052e1a;display:flex;align-items:center;justify-content:center;font-weight:700}
+    .l{background:#34d399}
+    .r{background:#60a5fa}
+    .clearfix::after{content:"";display:block;clear:both}
+    .article p{margin:0 0 10px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 浮动 float 与清除 clearfix</h1>
+    <p>理解 float 的历史用途、常见问题与现代替代方案，并掌握清除浮动的多种方法。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本概念</h2>
+      <div class="card">
+        <p>float 最初用于实现文字环绕图片的排版。浮动元素会脱离正常文档流，紧贴其包含块的左/右侧，后续块元素会忽略它的高度。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 典型问题：父元素高度塌陷</h2>
+      <div class="card">
+        <div class="stage article">
+          <div style="float:left" class="box l">L</div>
+          <div style="float:right" class="box r">R</div>
+          <p>父容器没有包含浮动的高度，背景会被“穿透”。</p>
+        </div>
+      </div>
+      <p>解决：清除浮动 clear 或触发 BFC（如 overflow:auto/hidden，display: flow-root）。</p>
+    </section>
+
+    <section>
+      <h2>3. 清除浮动的三种方式</h2>
+      <div class="card">
+        <h3>3.1 额外元素 clear: both</h3>
+        <div class="stage">
+          <div style="float:left" class="box l">L</div>
+          <p>一些文本……</p>
+          <div style="clear:both"></div>
+        </div>
+        <pre><code>.clearfix{ clear: both; }</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>3.2 伪元素 clearfix（推荐）</h3>
+        <div class="stage clearfix">
+          <div style="float:left" class="box l">L</div>
+          <div style="float:left" class="box r">R</div>
+          <p>父元素通过 ::after 清除浮动。</p>
+        </div>
+        <pre><code>.clearfix::after{ content:""; display:block; clear:both; }</code></pre>
+      </div>
+
+      <div class="card">
+        <h3>3.3 触发 BFC</h3>
+        <div class="stage" style="overflow:auto">
+          <div style="float:left" class="box l">L</div>
+          <div style="float:left" class="box r">R</div>
+          <p>overflow:auto/hidden 或 display: flow-root 可以包含浮动。</p>
+        </div>
+        <pre><code>.container{ overflow:auto; /* 或者 */ display: flow-root; }</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 现代替代方案</h2>
+      <ul>
+        <li>布局尽量使用 Flexbox 或 CSS Grid。</li>
+        <li>float 适合图文环绕等局部排版，而非通用布局。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>实现图文环绕：左侧图片 float:left，右侧文字自然环绕。</li>
+        <li>对比 clearfix 与 overflow:auto 的差异，说明各自适用场景。</li>
+        <li>使用 display: flow-root 重写第 1 题容器，观察语义与可维护性。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>表格样式与响应式（Tables）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px;overflow:auto}
+
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;background:#0b1220;z-index:1}
+    th,td{padding:10px 12px;border-bottom:1px solid #1f2937;text-align:left}
+    tbody tr:hover{background:#0b1220}
+    tbody tr:nth-child(odd){background:#0b1324}
+
+    .badge{font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid #23324b;background:#0b1220;color:#c7d2fe}
+
+    /* 响应式：小屏转列表样式 */
+    @media (max-width:720px){
+      table thead{display:none}
+      table,tbody,tr,td{display:block;width:100%}
+      tr{border:1px solid #1f2937;border-radius:10px;margin-bottom:10px;overflow:hidden}
+      td{border:none;border-bottom:1px solid #1f2937}
+      td:last-child{border-bottom:none}
+      td::before{content:attr(data-th);display:block;font-size:12px;color:#94a3b8;margin-bottom:4px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>表格样式与响应式（Tables）</h1>
+    <p>统一表格视觉与交互：粘性表头、斑马纹、悬停高亮；在小屏降级为可读的列表样式。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 标准表格</h2>
+      <div class="demo">
+        <table role="table" aria-label="示例数据">
+          <thead>
+            <tr>
+              <th scope="col">名称</th>
+              <th scope="col">状态</th>
+              <th scope="col">更新时间</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-th="名称">Alpha</td>
+              <td data-th="状态"><span class="badge">进行中</span></td>
+              <td data-th="更新时间">2025-01-18</td>
+              <td data-th="操作"><a href="#">编辑</a></td>
+            </tr>
+            <tr>
+              <td data-th="名称">Beta</td>
+              <td data-th="状态"><span class="badge" style="color:#bbf7d0;border-color:#1a2f1a">已完成</span></td>
+              <td data-th="更新时间">2025-01-16</td>
+              <td data-th="操作"><a href="#">编辑</a></td>
+            </tr>
+            <tr>
+              <td data-th="名称">Gamma</td>
+              <td data-th="状态"><span class="badge" style="color:#fecaca;border-color:#3b1a1a">异常</span></td>
+              <td data-th="更新时间">2025-01-14</td>
+              <td data-th="操作"><a href="#">编辑</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 要点与实践</h2>
+      <ul>
+        <li>使用 border-collapse: separate + border-spacing 控制分隔质感。</li>
+        <li>表头设置 sticky 实现滚动时固定。</li>
+        <li>小屏通过 data-th + 伪元素构造标签，增强可读性。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -133,9 +133,11 @@
               <!-- Markdown 内容 -->
               <div 
                 class="markdown-content"
-                v-html="tutorial.content"
                 ref="contentRef"
-              ></div>
+              >
+                <div v-if="!error" v-html="content"></div>
+                <div v-else class="text-red-400">加载失败，请稍后重试。</div>
+              </div>
               
               <!-- 标签 -->
               <div v-if="tutorial.tags && tutorial.tags.length > 0" class="article-tags">
@@ -156,7 +158,7 @@
               <div class="article-navigation">
                 <div class="nav-item prev" v-if="prevTutorial">
                   <span class="nav-label">上一篇</span>
-                  <router-link :to="`/tutorials/${prevTutorial.id}`" class="nav-link">
+                  <router-link :to="`/tutorials/${prevTutorial.category}/${prevTutorial.id}`" class="nav-link">
                     <el-icon><ArrowLeft /></el-icon>
                     {{ prevTutorial.title }}
                   </router-link>
@@ -164,7 +166,7 @@
                 
                 <div class="nav-item next" v-if="nextTutorial">
                   <span class="nav-label">下一篇</span>
-                  <router-link :to="`/tutorials/${nextTutorial.id}`" class="nav-link">
+                  <router-link :to="`/tutorials/${nextTutorial.category}/${nextTutorial.id}`" class="nav-link">
                     {{ nextTutorial.title }}
 
                     <el-icon><ArrowRight /></el-icon>
@@ -397,6 +399,16 @@ import { ref, reactive, onMounted, nextTick, watch }
 import { useRoute, useRouter }
 
  from 'vue-router'
+import { 
+  loadTutorialContent, 
+  getTutorialById, 
+  getRelatedTutorials,
+  formatNumber,
+  formatDate,
+  getDifficultyText,
+  getStatusText,
+  type Tutorial
+} from '../services/tutorialService'
 import { ElMessage, ElMessageBox }
 
  from 'element-plus'
@@ -410,7 +422,9 @@ const router = useRouter()
 
 // 响应式数据
 const loading = ref(true)
-const tutorial = ref<any>(null)
+const tutorial = ref<Tutorial | null>(null)
+const content = ref('')
+const error = ref(false)
 const tableOfContents = ref<any[]>([])
 const activeSection = ref('')
 const contentRef = ref<HTMLElement>()
@@ -437,84 +451,53 @@ const authorStats = reactive({
 })
 
 // 获取教程详情
-const fetchTutorialDetail = async () => {
+const loadTutorial = async () => {
   try {
     loading.value = true
+    error.value = false
     
-    // 模拟API调用
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    const tutorialId = route.params.id as string
+    const categoryId = route.params.category as string
     
-    // 模拟教程数据
-    tutorial.value = {
-      id: route.params.id,
-      title: 'Vue 3 Composition API 完全指南',
-      description: '深入学习 Vue 3 的 Composition API，掌握现代 Vue 开发的核心技能',
-      category: 'Vue.js',
-      difficulty: 'intermediate',
-      status: 'published',
-      views: 15420,
-      likes: 892,
-      readTime: 15,
-      isLiked: false,
-      isBookmarked: false,
-      createdAt: '2025-07-29',
-      updatedAt: '2025-07-29',
-      tags: ['Vue 3', 'Composition API', 'JavaScript', 'Frontend'],
-      content: `
-        <h2 id="introduction">介绍</h2>
-        <p>vue 3 的 composition api 是一个全新的 api 设计，它提供了更灵活的组件逻辑组织方式...</p>
-        
-        <h2 id="setup-function">setup 函数</h2>
-        <p>setup 函数是 composition api 的入口点...</p>
-        
-        <h3 id="reactive-data">响应式数据</h3>
-        <p>在 composition api 中，我们使用 ref 和 reactive 来创建响应式数据...</p>
-        
-        <h2 id="lifecycle-hooks">生命周期钩子</h2>
-        <p>composition api 提供了对应的生命周期钩子函数...</p>
-        
-        <h2 id="computed-watch">计算属性和监听器</h2>
-        <p>computed 和 watch 在 composition api 中的使用方式...</p>
-        
-        <h2 id="conclusion">总结</h2>
-        <p>通过本教程，你应该已经掌握了 vue 3 composition api 的核心概念...</p>
-      `
+    // 从服务中获取教程数据
+    const tutorialData = getTutorialById(tutorialId)
+    if (!tutorialData) {
+      error.value = true
+      return
     }
     
-    // 模拟相关教程
-    relatedTutorials.value = [
-      {
-        id: '2',
-        title: 'Vue 3 响应式原理深度解析',
-        cover: '/tutorial-2.jpg',
-        views: 8900,
-        createdAt: '2025-07-29'
-      },
-      {
-        id: '3',
-        title: 'Pinia 状态管理实战指南',
-        cover: '/tutorial-3.jpg',
-        views: 6700,
-        createdAt: '2025-07-29'
-      },
-      {
-        id: '4',
-        title: 'Vue Router 4 路由配置详解',
-        cover: '/tutorial-4.jpg',
-        views: 5400,
-        createdAt: '2025-07-29'
+    tutorial.value = tutorialData
+    
+    // 加载教程内容
+    content.value = await loadTutorialContent(tutorialData.category, tutorialId)
+    
+    // 获取相关教程
+    relatedTutorials.value = getRelatedTutorials(tutorialData, 3)
+    
+    // 动态获取上一篇/下一篇教程
+    const allTutorials = getAllTutorials()
+    const currentIndex = allTutorials.findIndex(t => t.id === tutorialId)
+    
+    if (currentIndex > 0) {
+      const prev = allTutorials[currentIndex - 1]
+      prevTutorial.value = {
+        id: prev.id,
+        title: prev.title,
+        category: prev.category
       }
-    ]
-    
-    // 模拟上一篇/下一篇
-    prevTutorial.value = {
-      id: '0',
-      title: 'Vue 3 基础入门教程'
+    } else {
+      prevTutorial.value = null
     }
     
-    nextTutorial.value = {
-      id: '2',
-      title: 'Vue 3 响应式原理深度解析'
+    if (currentIndex < allTutorials.length - 1) {
+      const next = allTutorials[currentIndex + 1]
+      nextTutorial.value = {
+        id: next.id,
+        title: next.title,
+        category: next.category
+      }
+    } else {
+      nextTutorial.value = null
     }
     
     // 模拟评论数据
@@ -525,10 +508,10 @@ const fetchTutorialDetail = async () => {
           name: '张三',
           avatar: '/user-1.jpg'
         },
-        content: '这篇教程写得很详细，对我理解 Composition API 很有帮助！',
+        content: '这篇教程写得很详细，对我理解很有帮助！',
         likes: 12,
         isLiked: false,
-        createdAt: '2025-07-29',
+        createdAt: new Date('2025-01-29'),
         replies: [
           {
             id: '1-1',
@@ -537,7 +520,7 @@ const fetchTutorialDetail = async () => {
               avatar: '/avatar.jpg'
             },
             content: '谢谢你的反馈！很高兴这篇教程对你有帮助。',
-            createdAt: '2025-07-29'
+            createdAt: new Date('2025-01-29')
           }
         ]
       },
@@ -547,10 +530,10 @@ const fetchTutorialDetail = async () => {
           name: '李四',
           avatar: '/user-2.jpg'
         },
-        content: '能否再详细讲解一下 computed 和 watch 的区别？',
+        content: '能否再详细讲解一下相关的实践应用？',
         likes: 8,
         isLiked: false,
-        createdAt: '2025-07-29',
+        createdAt: new Date('2025-01-29'),
         replies: []
       }
     ]
@@ -559,26 +542,35 @@ const fetchTutorialDetail = async () => {
     await nextTick()
     generateTableOfContents()
     
-  } catch (error) {
-    console.error('获取教程详情失败:', error)
-    tutorial.value = null
-  }
-
- finally {
+  } catch (err) {
+    // 处理错误但不输出调试信息
+    loading.value = false
+    showError.value = true
+    errorMessage.value = '获取教程详情失败'
+    }
+  } finally {
     loading.value = false
   }
 }
 
 // 生成目录
 const generateTableOfContents = () => {
-  if (!contentRef.value) return
+  if (!content.value) return
   
-  const headings = contentRef.value.querySelectorAll('h2, h3, h4')
-  tableOfContents.value = Array.from(headings).map(heading => ({
-    id: heading.id,
-    text: heading.textContent,
-    level: parseInt(heading.tagName.charAt(1))
-  }))
+  const headings = content.value.match(/<h[1-6][^>]*id="([^"]*)"[^>]*>([^<]*)<\/h[1-6]>/g)
+  if (headings) {
+    tableOfContents.value = headings.map(heading => {
+      const matches = heading.match(/<h([1-6])[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h[1-6]>/)
+      if (matches) {
+        return {
+          id: matches[2],
+          title: matches[3],
+          level: parseInt(matches[1])
+        }
+      }
+      return null
+    }).filter(Boolean) as Array<{id: string, title: string, level: number}>
+  }
 }
 
 // 滚动到指定章节
@@ -600,8 +592,13 @@ const formatNumber = (num: number) => {
 }
 
 // 格式化日期
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('zh-CN')
+const formatDate = (date: Date | string) => {
+  const d = typeof date === 'string' ? new Date(date) : date
+  return d.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
 
 // 获取难度文本
@@ -634,19 +631,11 @@ const toggleLike = async () => {
     // 模拟API调用
     await new Promise(resolve => setTimeout(resolve, 500))
     
-    tutorial.value.isLiked = !tutorial.value.isLiked
-    tutorial.value.likes += tutorial.value.isLiked ? 1 : -1
+    const isLiked = !tutorial.value.isLiked
+    tutorial.value.isLiked = isLiked
+    tutorial.value.likes += isLiked ? 1 : -1
     
-    ElMessage.success(tutorial.value.isLiked ? '点赞成功' : '取消点赞')
-    
-    // 模拟API调用
-    await new Promise(resolve => {
-      setTimeout(() => {
-        tutorial.value.isLiked = !tutorial.value.isLiked
-        tutorial.value.likes += tutorial.value.isLiked ? 1 : -1
-        resolve(undefined)
-      }, 500)
-    })
+    ElMessage.success(isLiked ? '点赞成功' : '取消点赞')
   } catch (error) {
     ElMessage.error('操作失败')
   }
@@ -722,7 +711,7 @@ const submitComment = async () => {
       content: newComment.value,
       likes: 0,
       isLiked: false,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
       replies: []
     }
     
@@ -776,7 +765,7 @@ const replyToComment = (comment: any) => {
           avatar: '/avatar.jpg'
         },
         content: value,
-        createdAt: new Date().toISOString()
+        createdAt: new Date()
       }
       
       if (!comment.replies) {
@@ -829,13 +818,18 @@ const handleScroll = () => {
 // 监听路由变化
 watch(() => route.params.id, () => {
   if (route.params.id) {
-    fetchTutorialDetail()
+    loadTutorial()
   }
 }, { immediate: true })
 
 // 组件挂载
 onMounted(() => {
+  loadTutorial()
   window.addEventListener('scroll', handleScroll)
+})
+
+watch(() => route.fullPath, () => {
+  loadTutorial()
 })
 
 // 组件卸载时清理事件监听

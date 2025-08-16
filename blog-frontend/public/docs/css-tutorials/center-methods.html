@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 居中方案大全：水平/垂直/双轴/未知尺寸</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#34d399;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .demo{height:140px;border:1px dashed #23324b;border-radius:10px;background:#0b1220;position:relative}
+    .box{width:80px;height:40px;border-radius:8px;background:linear-gradient(135deg,#22d3ee,#93c5fd);display:flex;align-items:center;justify-content:center;color:#05212b;font-weight:700}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 居中方案大全</h1>
+    <p>涵盖 inline/line-height、margin auto、absolute+transform、Flexbox、Grid、未知尺寸、多行文本与图文混排等场景。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 水平居中</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>块级元素：margin:auto</h3>
+          <div class="demo" style="display:flex;align-items:center">
+            <div class="box" style="margin:0 auto">box</div>
+          </div>
+          <pre><code>.container{ width:600px; margin: 0 auto; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>内联内容：text-align:center</h3>
+          <div class="demo" style="text-align:center;line-height:140px">
+            <span class="box" style="display:inline-block;line-height:40px;vertical-align:middle">box</span>
+          </div>
+          <pre><code>.container{ text-align:center; }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 垂直居中</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>单行文本：line-height 等于高度</h3>
+          <div class="demo" style="line-height:140px;text-align:center">
+            <span>单行文本</span>
+          </div>
+          <pre><code>.title{ height:40px; line-height:40px; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>未知高度：absolute + transform</h3>
+          <div class="demo">
+            <div class="box" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">box</div>
+          </div>
+          <pre><code>.box{ position:absolute; top:50%; left:50%; transform: translate(-50%,-50%); }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 双轴居中</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Flexbox</h3>
+          <div class="demo" style="display:flex;align-items:center;justify-content:center">
+            <div class="box">box</div>
+          </div>
+          <pre><code>.center{ display:flex; align-items:center; justify-content:center; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>Grid</h3>
+          <div class="demo" style="display:grid;place-items:center">
+            <div class="box">box</div>
+          </div>
+          <pre><code>.center{ display:grid; place-items:center; }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 多行文本与图文混排</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>多行文本垂直居中</h3>
+          <div class="demo" style="display:flex">
+            <p style="margin:auto;color:#cbd5e1">多行文本\n多行文本\n垂直居中</p>
+          </div>
+          <pre><code>.container{ display:flex; } .container p{ margin:auto; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>图文对齐</h3>
+          <div class="demo" style="display:flex;align-items:center;gap:12px;padding:12px">
+            <img alt="" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Ccircle cx='24' cy='24' r='24' fill='%2393c5fd'/%3E%3C/svg%3E"/>
+            <div>
+              <strong>标题</strong>
+              <p style="margin:4px 0 0;color:#cbd5e1">副标题与图标垂直对齐</p>
+            </div>
+          </div>
+          <pre><code>.media{ display:flex; align-items:center; gap:12px; }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 实战建议</h2>
+      <ul>
+        <li>优先使用 Flex/Grid 的居中能力；未知尺寸时用 absolute+transform。</li>
+        <li>表单内联元素对齐可使用 <code>vertical-align: middle</code> 或 <code>align-items</code>。</li>
+        <li>复杂布局可抽象为“媒体对象模式”（media object）。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>实现一个未知尺寸对话框在视口正中的居中方案，并在小屏时自适应。</li>
+        <li>实现一个卡片列表，要求：图片与文本在垂直方向对齐，标题与按钮在两端对齐。</li>
+        <li>实现一个全屏 Loading 层：中心有转圈动画，背景半透明遮罩。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

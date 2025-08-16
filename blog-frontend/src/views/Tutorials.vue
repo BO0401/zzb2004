@@ -57,8 +57,8 @@
           >
             <div class="tutorial-cover">
               <img :src="tutorial.cover" :alt="tutorial.title" />
-              <div class="tutorial-level" :class="tutorial.level">
-                {{ getLevelText(tutorial.level) }}
+              <div class="tutorial-level" :class="tutorial.difficulty">
+                {{ getDifficultyText(tutorial.difficulty) }}
 
               </div>
               <div class="tutorial-category">{{ tutorial.category }}
@@ -86,13 +86,12 @@
                 <div class="meta-left">
                   <span class="tutorial-date">
                     <el-icon><Calendar /></el-icon>
-                    {{ formatDate(tutorial.date) }}
+                    {{ formatDate(tutorial.createdAt) }}
 
                   </span>
                   <span class="tutorial-duration">
                     <el-icon><Clock /></el-icon>
-                    {{ tutorial.duration }}
-
+                    {{ tutorial.readTime }}分钟
                   </span>
                 </div>
                 <div class="meta-right">
@@ -137,28 +136,18 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   Search, Calendar, Clock, View, Document
 } from '@element-plus/icons-vue'
-
-interface Tutorial {
-  id: number;
-  title: string;
-  description: string;
-  cover: string;
-  category: string;
-  categoryId: string;
-  level: 'beginner' | 'intermediate' | 'advanced';
-  tags: string[];
-  date: Date;
-  duration: string;
-  views: number;
-  content?: string
-}
-
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  count: number
-}
+import { ElInput } from 'element-plus'
+import { 
+  getAllTutorials, 
+  getTutorialsByCategory, 
+  searchTutorials,
+  getCategories,
+  formatNumber,
+  formatDate,
+  getDifficultyText,
+  type Tutorial,
+  type TutorialCategory
+} from '../services/tutorialService'
 
 const router = useRouter()
 const route = useRoute()
@@ -170,173 +159,10 @@ const currentPage = ref<number>(1)
 const pageSize = ref<number>(9)
 
 // 分类数据
-const categories = ref<Category[]>([
-  { id: 'all', name: '全部', icon: 'Grid', count: 0 },
-  { id: 'html', name: 'HTML', icon: 'Monitor', count: 0 },
-  { id: 'css', name: 'CSS', icon: 'Code', count: 0 },
-  { id: 'javascript', name: 'JavaScript', icon: 'Cpu', count: 0 },
-  { id: 'vue', name: 'Vue', icon: 'Trophy', count: 0 }
-])
+const categories = ref<TutorialCategory[]>(getCategories())
 
 // 教程数据
-const tutorials = ref<Tutorial[]>([
-  {
-    id: 1,
-    title: 'HTML5 基础入门',
-    description: '从零开始学习HTML5，掌握网页结构的基本知识和语义化标签的使用',
-    cover: '/tutorial-covers/html-basic.jpg',
-    category: 'HTML',
-    categoryId: 'html',
-    level: 'beginner',
-    tags: ['HTML5', '语义化', '基础'],
-    date: new Date('2025-07-29'),
-    duration: '2小时',
-    views: 1520
-  },
-  {
-    id: 2,
-    title: 'HTML 表单与表格',
-    description: '深入学习HTML表单元素和表格的创建，掌握数据收集和展示的方法',
-    cover: '/tutorial-covers/html-forms.jpg',
-    category: 'HTML',
-    categoryId: 'html',
-    level: 'intermediate',
-    tags: ['表单', '表格', '数据'],
-    date: new Date('2025-07-29'),
-    duration: '1.5小时',
-    views: 980
-  },
-  {
-    id: 3,
-    title: 'CSS3 样式基础',
-    description: '学习CSS3的基本语法、选择器和常用样式属性，让网页变得美观',
-    cover: '/tutorial-covers/css-basic.jpg',
-    category: 'CSS',
-    categoryId: 'css',
-    level: 'beginner',
-    tags: ['CSS3', '选择器', '样式'],
-    date: new Date('2025-07-29'),
-    duration: '3小时',
-    views: 2340
-  },
-  {
-    id: 4,
-    title: 'CSS Flexbox 布局',
-    description: '掌握Flexbox弹性布局，轻松实现各种复杂的页面布局效果',
-    cover: '/tutorial-covers/css-flexbox.jpg',
-    category: 'CSS',
-    categoryId: 'css',
-    level: 'intermediate',
-    tags: ['Flexbox', '布局', '响应式'],
-    date: new Date('2025-07-29'),
-    duration: '2.5小时',
-    views: 1890
-  },
-  {
-    id: 5,
-    title: 'CSS Grid 网格布局',
-    description: '学习CSS Grid网格布局系统，构建复杂的二维布局结构',
-    cover: '/tutorial-covers/css-grid.jpg',
-    category: 'CSS',
-    categoryId: 'css',
-    level: 'advanced',
-    tags: ['Grid', '网格', '二维布局'],
-    date: new Date('2025-07-29'),
-    duration: '3.5小时',
-    views: 1456
-  },
-  {
-    id: 6,
-    title: 'JavaScript 基础语法',
-    description: '学习JavaScript的基本语法、数据类型和控制结构，为编程打下基础',
-    cover: '/tutorial-covers/js-basic.jpg',
-    category: 'JavaScript',
-    categoryId: 'javascript',
-    level: 'beginner',
-    tags: ['JavaScript', '语法', '基础'],
-    date: new Date('2025-07-29'),
-    duration: '4小时',
-    views: 3210
-  },
-  {
-    id: 7,
-    title: 'JavaScript DOM 操作',
-    description: '掌握DOM操作技巧，学会动态修改网页内容和样式',
-    cover: '/tutorial-covers/js-dom.jpg',
-    category: 'JavaScript',
-    categoryId: 'javascript',
-    level: 'intermediate',
-    tags: ['DOM', '事件', '交互'],
-    date: new Date('2025-07-29'),
-    duration: '3小时',
-    views: 2780
-  },
-  {
-    id: 8,
-    title: 'JavaScript ES6+ 新特性',
-    description: '学习ES6及以上版本的新特性，提升JavaScript编程效率',
-    cover: '/tutorial-covers/js-es6.jpg',
-    category: 'JavaScript',
-    categoryId: 'javascript',
-    level: 'advanced',
-    tags: ['ES6', '箭头函数', '模块'],
-    date: new Date('2025-07-29'),
-    duration: '5小时',
-    views: 2156
-  },
-  {
-    id: 9,
-    title: 'Vue 3 快速入门',
-    description: '快速上手Vue 3框架，学习组件化开发和响应式数据绑定',
-    cover: '/tutorial-covers/vue-basic.jpg',
-    category: 'Vue',
-    categoryId: 'vue',
-    level: 'beginner',
-    tags: ['Vue3', '组件', '响应式'],
-    date: new Date('2025-07-29'),
-    duration: '4小时',
-    views: 4520
-  },
-  {
-    id: 10,
-    title: 'Vue 3 Composition API',
-    description: '深入学习Vue 3的Composition API，掌握现代Vue开发方式',
-    cover: '/tutorial-covers/vue-composition.jpg',
-    category: 'Vue',
-    categoryId: 'vue',
-    level: 'intermediate',
-    tags: ['Composition API', 'setup', 'hooks'],
-    date: new Date('2025-07-29'),
-    duration: '3.5小时',
-    views: 3890
-  },
-  {
-    id: 11,
-    title: 'Vue Router 路由管理',
-    description: '学习Vue Router进行单页应用的路由管理和页面导航',
-    cover: '/tutorial-covers/vue-router.jpg',
-    category: 'Vue',
-    categoryId: 'vue',
-    level: 'intermediate',
-    tags: ['Vue Router', '路由', 'SPA'],
-    date: new Date('2025-07-29'),
-    duration: '2.5小时',
-    views: 2340
-  },
-  {
-    id: 12,
-    title: 'Pinia 状态管理',
-    description: '使用Pinia进行Vue应用的状态管理，替代Vuex的现代方案',
-    cover: '/tutorial-covers/vue-pinia.jpg',
-    category: 'Vue',
-    categoryId: 'vue',
-    level: 'advanced',
-    tags: ['Pinia', '状态管理', 'Store'],
-    date: new Date('2025-07-29'),
-    duration: '3小时',
-    views: 1980
-  }
-])
+const tutorials = ref<Tutorial[]>(getAllTutorials())
 
 // 计算属性
 const filteredTutorials = computed(() => {
@@ -344,7 +170,7 @@ const filteredTutorials = computed(() => {
   
   // 按分类筛选
   if (activeCategory.value !== 'all') {
-    result = result.filter(tutorial => tutorial.categoryId === activeCategory.value)
+    result = result.filter(tutorial => tutorial.category === activeCategory.value)
   }
   
   // 按关键词搜索
@@ -357,7 +183,7 @@ const filteredTutorials = computed(() => {
     )
   }
   
-  return result.sort((a, b) => b.date.getTime() - a.date.getTime())
+  return result.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
 })
 
 const totalPages = computed(() => {
@@ -409,25 +235,10 @@ const handlePageChange = (page: number) => {
 }
 
 const goToTutorial = (tutorial: Tutorial) => {
-  router.push(`/tutorials/${tutorial.categoryId}/${tutorial.id}`)
+  router.push(`/tutorials/${tutorial.category}/${tutorial.id}`)
 }
 
-const getLevelText = (level: string): string => {
-  const levelMap = {
-    beginner: '入门',
-    intermediate: '进阶',
-    advanced: '高级'
-  }
-  return levelMap[level as keyof typeof levelMap] || level
-}
-
-const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
+// 移除本地重复的格式化函数定义，使用从 tutorialService 导入的版本
 
 // 更新分类计数
 const updateCategoryCounts = () => {
@@ -435,7 +246,7 @@ const updateCategoryCounts = () => {
     if (category.id === 'all') {
       category.count = tutorials.value.length
     } else {
-      category.count = tutorials.value.filter(t => t.categoryId === category.id).length
+      category.count = tutorials.value.filter(t => t.category === category.id).length
     }
   })
 }

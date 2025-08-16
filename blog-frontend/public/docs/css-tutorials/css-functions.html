@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>常用 CSS 函数：calc/min/max/clamp/filter/backdrop-filter</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#a78bfa;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .glass{backdrop-filter: blur(8px) saturate(120%); background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:14px}
+    .filter-demo img{width:100%;border-radius:10px;display:block;filter: saturate(1.1) contrast(1.05) brightness(1.02)}
+    .bar{--w:42%; width:var(--w); height:12px; background:linear-gradient(90deg,#22d3ee,#93c5fd); border-radius:999px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>常用 CSS 函数：calc / min / max / clamp / filter / backdrop-filter</h1>
+    <p>掌握尺寸计算、范围约束与图像滤镜，构建更灵活的自适应与视觉效果。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. calc：在 CSS 中做加减乘除</h2>
+      <pre><code>.sidebar{ width: calc(30% - 12px); }
+.main{ width: calc(70% - 12px); }
+.box{ height: calc(100vh - 64px); }</code></pre>
+      <p>可在不同单位间计算，注意运算符两侧需有空格。</p>
+    </section>
+
+    <section>
+      <h2>2. min / max / clamp：范围与响应式</h2>
+      <pre><code>/* 标题在 24px 到 40px 内，随视口变化 */
+h1{ font-size: clamp(24px, 4vw, 40px); }
+/* 容器宽度不超过 1200px，优先 90vw */
+.container{ width: min(90vw, 1200px); }
+/* 内容区最少 600px，优先 70vw */
+.main{ width: max(600px, 70vw); }</code></pre>
+      <p>与 CSS 变量组合，可实现“流式”排版与间距。</p>
+    </section>
+
+    <section>
+      <h2>3. filter：图像与元素滤镜</h2>
+      <div class="grid">
+        <div class="card filter-demo">
+          <img alt="demo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Cdefs/%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3Crect width='640' height='360' fill='url(%23g)'/%3E%3C/svg%3E"/>
+          <pre><code>.card img{ filter: saturate(1.1) contrast(1.05) brightness(1.02); }</code></pre>
+        </div>
+        <div class="card">
+          <h3>常见滤镜组合</h3>
+          <pre><code>.frosted{ filter: blur(6px) brightness(.9); }
+.gray{ filter: grayscale(1); }
+.pop{ filter: saturate(1.2) contrast(1.1); }</code></pre>
+        </div>
+      </div>
+      <p>滤镜可能影响性能，尽量用于小区域或在交互时适度使用。</p>
+    </section>
+
+    <section>
+      <h2>4. backdrop-filter：毛玻璃</h2>
+      <div class="grid">
+        <div class="card" style="background:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22640%22 height=%22180%22%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop stop-color=%22%2322d3ee%22/%3E%3Cstop offset=%221%22 stop-color=%22%23a78bfa%22/%3E%3C/linearGradient%3E%3Crect width=%22640%22 height=%22180%22 fill=%22url(%23g)%22/%3E%3C/svg%3E') center/cover no-repeat;padding:20px;border-radius:12px">
+          <div class="glass">
+            <strong>毛玻璃容器</strong>
+            <p style="margin:8px 0 0;color:#cbd5e1">借助 backdrop-filter 对“背后的内容”做模糊与饱和处理</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>兼容性提示</h3>
+          <p>需要半透明背景以看到效果，部分旧浏览器不支持，可优雅降级为纯色/半透明。</p>
+          <pre><code>.glass{ backdrop-filter: blur(8px); background: rgba(255,255,255,.06); }</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 进阶：函数嵌套与变量</h2>
+      <pre><code>:root{ --px: 16; }
+.container{ padding: calc(var(--px) * 1px * 1.5); width: min(92vw, 1200px); }
+.badge{ --h: 220; background: hsl(var(--h) 70% 60% / .15); color: hsl(var(--h) 80% 60%); }</code></pre>
+      <p>函数可以嵌套使用，配合 CSS 变量用于主题与动态设计令牌。</p>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>用 clamp() 定义响应式间距与标题字号，构建一个流式卡片网格。</li>
+        <li>使用 backdrop-filter 做一个透明固定导航栏，并提供不支持时的降级样式。</li>
+        <li>把颜色改为 HSL + 变量的形式，并提供一个调节色相的滑块（可用 input[type=range]）。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS 颜色系统详解</title>
+  <style>
+    :root{ --primary:#ef4444; --text:#111827; --bg:#fff1f2; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans,Helvetica,Arial; color:var(--text); background:var(--bg); }
+    header{ background:var(--primary); color:#fff; padding:24px 16px; }
+    main{ max-width:1100px; margin:0 auto; padding:24px 16px; }
+    h1{ margin:0 0 8px; font-size:28px; }
+    h2{ margin-top:32px; font-size:22px; border-left:4px solid var(--primary); padding-left:8px; }
+    p{ line-height:1.7; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+    .card{ background:#fff; border:1px solid #fecaca; border-radius:10px; padding:14px; }
+    .swatch{ height:60px; border-radius:8px; border:1px solid #e5e7eb; margin-bottom:8px; }
+    .code{ background:#0b1220; color:#e5e7eb; padding:10px; border-radius:6px; font-family:ui-monospace,Consolas,monospace; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 颜色系统详解</h1>
+    <p>掌握不同颜色表示方式与透明度应用，建立可维护的色彩体系。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 常见表示法</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="swatch" style="background:#10b981"></div>
+          <strong>十六进制</strong>
+          <div class="code">color: #10b981; /* #RGB #RRGGBB #RRGGBBAA */</div>
+        </div>
+        <div class="card">
+          <div class="swatch" style="background:rgb(59,130,246)"></div>
+          <strong>RGB / RGBA</strong>
+          <div class="code">color: rgb(59, 130, 246);
+color: rgba(59, 130, 246, 0.6);</div>
+        </div>
+        <div class="card">
+          <div class="swatch" style="background:hsl(262 83% 58% / 1)"></div>
+          <strong>HSL / HSLA</strong>
+          <div class="code">color: hsl(262 83% 58% / 1);
+color: hsl(262deg, 83%, 58%, .7);</div>
+          <p>HSL 更接近人类对颜色的理解，利于调整饱和度/明度。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 透明度</h2>
+      <div class="card">
+        <p>可通过 rgba/hsla 的 alpha 通道或使用 <code>opacity</code> 设置。注意：<code>opacity</code> 会影响子元素透明度；而颜色的 alpha 只作用于该属性。</p>
+        <div class="grid">
+          <div><div class="swatch" style="background:rgba(239,68,68,.5)"></div><small>rgba 半透明</small></div>
+          <div><div class="swatch" style="background:#ef4444; opacity:.5"></div><small>opacity 半透明（含子元素）</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 渐变（简单介绍）</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="swatch" style="background:linear-gradient(90deg,#60a5fa,#34d399)"></div>
+          <div class="code">background: linear-gradient(90deg, #60a5fa, #34d399);</div>
+        </div>
+        <div class="card">
+          <div class="swatch" style="background:radial-gradient(circle,#f472b6,#f59e0b)"></div>
+          <div class="code">background: radial-gradient(circle, #f472b6, #f59e0b);</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 实战策略</h2>
+      <ul>
+        <li>为项目建立色板：基础色、语义色（成功、警告、错误）、灰度。</li>
+        <li>使用 CSS 变量存储颜色，提高一致性与可维护性。</li>
+        <li>注意对比度（可访问性），确保文字与背景对比足够。</li>
+      </ul>
+      <div class="code">:root{
+  --color-primary:#3b82f6;
+  --color-success:#10b981;
+  --color-danger:#ef4444;
+}</div>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>用 HSL 构建一套按钮的颜色层级（hover/active）。</li>
+        <li>定义一组 CSS 变量管理项目色板，并在组件中使用。</li>
+        <li>将线性渐变用作卡片标题的底边高亮。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

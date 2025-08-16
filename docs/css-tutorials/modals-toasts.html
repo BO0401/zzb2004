@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>对话框与通知（Modals & Toasts）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px;position:relative;min-height:220px}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid #243041;background:#0b1220;color:#e5e7eb}
+    .btn.primary{background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;color:#0b1220;font-weight:700}
+
+    /* Modal（CSS-only，使用 :target） */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.6);opacity:0;pointer-events:none;transition:opacity .25s ease}
+    .modal{position:fixed;inset:0;display:grid;place-items:center;pointer-events:none}
+    .dialog{width:min(560px,92vw);border:1px solid #1f2937;border-radius:12px;background:#0b1220;transform:translateY(12px) scale(.98);opacity:0;transition:transform .25s ease, opacity .25s ease}
+    .dialog .hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #1f2937}
+    .dialog .bd{padding:14px}
+    .dialog .ft{display:flex;gap:10px;justify-content:flex-end;padding:12px 14px;border-top:1px solid #1f2937}
+
+    /* 通过 :target 激活 */
+    #open-modal:target ~ .modal-backdrop{opacity:1;pointer-events:auto}
+    #open-modal:target ~ .modal{pointer-events:auto}
+    #open-modal:target ~ .modal .dialog{transform:translateY(0) scale(1);opacity:1}
+
+    /* Toast */
+    .toasts{position:relative;min-height:160px}
+    .toast{position:absolute;right:12px;bottom:12px;display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid #1f2937;border-radius:12px;background:#0b1220;box-shadow:0 10px 28px rgba(2,6,23,.5);opacity:0;transform:translateY(8px);animation:toast-in .45s ease forwards}
+    .toast .icon{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#a78bfa)}
+    @keyframes toast-in{to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>对话框与通知（Modals & Toasts）</h1>
+    <p>使用纯 CSS 的 :target 与动画实现对话框/抽屉基础交互，并设计可堆叠的消息通知卡片。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. Modal（CSS-only）</h2>
+      <div class="demo">
+        <a id="open-modal" class="btn primary" href="#open-modal">打开对话框</a>
+        <div class="modal-backdrop"></div>
+        <div class="modal" aria-modal="true" role="dialog">
+          <article class="dialog" aria-labelledby="m-title" aria-describedby="m-desc">
+            <div class="hd">
+              <h3 id="m-title" style="margin:0">删除确认</h3>
+              <a class="btn" href="#">关闭</a>
+            </div>
+            <div class="bd" id="m-desc">此操作不可撤销，是否继续？</div>
+            <div class="ft">
+              <a class="btn" href="#">取消</a>
+              <a class="btn primary" href="#">确认删除</a>
+            </div>
+          </article>
+        </div>
+      </div>
+      <pre><code>/* 通过 :target 控制可见性 */
+#open-modal:target ~ .modal-backdrop{ opacity:1; pointer-events:auto }
+#open-modal:target ~ .modal .dialog{ opacity:1; transform:none }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. Toast（通知）</h2>
+      <div class="demo toasts">
+        <div class="toast" role="status" aria-live="polite">
+          <span class="icon"></span>
+          <div>保存成功</div>
+          <a class="btn" href="#" style="padding:6px 8px">撤销</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 设计要点</h2>
+      <ul>
+        <li>模态层需使用半透明遮罩并禁用底层交互；注意焦点管理（纯 CSS 方案受限）。</li>
+        <li>Toast 支持堆叠、自动消失与可操作按钮；使用阴影与圆角提升可读性。</li>
+        <li>在真实产品中，建议配合 JS 管理可访问性的焦点与键盘关闭行为。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

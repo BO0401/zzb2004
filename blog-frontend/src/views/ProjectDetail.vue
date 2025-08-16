@@ -482,8 +482,8 @@ const fetchProjectDetail = async () => {
       stars: 156,
       downloads: 89,
       isStarred: false,
-      createdAt: '2025-07-29',
-      updatedAt: '2025-07-29',
+      createdAt: new Date('2025-07-29'),
+      updatedAt: new Date('2025-07-29'),
       developmentTime: '2个月',
       license: 'MIT',
       demoUrl: 'https://blog-demo.example.com',
@@ -658,7 +658,11 @@ const fetchProjectDetail = async () => {
     ]
     
   } catch (error) {
-    console.error('获取项目详情失败:', error)
+-      console.error('获取项目详情失败:', error)
++      // 捕获错误，展示友好提示
+       hasError.value = true
+       errorMessage.value = '获取项目详情失败，请稍后重试'
+     }
     project.value = null
   }
 
@@ -678,8 +682,13 @@ const formatNumber = (num: number) => {
 }
 
 // 格式化日期
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('zh-CN')
+const formatDate = (date: Date | string) => {
+  const dateObj = typeof date === 'string' ? new Date(date) : date
+  return dateObj.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
 }
 
 // 获取状态文本
@@ -782,17 +791,15 @@ const searchByTag = (tag: string) => {
   })
 }
 
-// 统计事件
+// 页面跟踪（埋点统计）
 const trackEvent = (event: string) => {
-  console.log('Track event:', event)
-  // 这里可以集成统计服务
+  // 统计页面事件 - 接入埋点 SDK
+  // console.log('Track event:', event)
 }
 
-// 统计下载
 const trackDownload = () => {
-  console.log('Track download:', project.value?.title)
-  // 这里可以集成统计服务
-  ElMessage.success('下载开始')
+  // 统计下载事件 - 接入埋点 SDK
+  // console.log('Track download:', project.value?.title)
 }
 
 // 监听路由变化

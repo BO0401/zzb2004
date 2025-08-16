@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>按钮体系与状态（Buttons）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee;--radius:12px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .row{display:flex;flex-wrap:wrap;gap:10px}
+
+    .btn{--pad-y:.55rem;--pad-x:.9rem;--r:10px;--gap:.45rem;display:inline-flex;align-items:center;gap:var(--gap);padding:var(--pad-y) var(--pad-x);border-radius:var(--r);border:1px solid var(--border);background:#0b1220;color:#e5e7eb;text-decoration:none;cursor:pointer;user-select:none;transition:transform .12s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease}
+    .btn:hover{background:#0b1324}
+    .btn:active{transform:translateY(1px)}
+    .btn:focus-visible{outline:none;box-shadow:0 0 0 3px #22d3ee33}
+
+    .btn.primary{background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;color:#0b1220;font-weight:700}
+    .btn.outline{background:transparent;border-color:#243041}
+    .btn.ghost{background:transparent;border-color:transparent}
+    .btn.link{background:transparent;border-color:transparent;padding:0;color:#7dd3fc}
+    .btn.link:hover{text-decoration:underline}
+
+    .btn.sm{--pad-y:.4rem;--pad-x:.7rem;--gap:.35rem;font-size:14px;border-radius:8px}
+    .btn.lg{--pad-y:.75rem;--pad-x:1.1rem;--gap:.6rem;font-size:16px;border-radius:12px}
+    .btn.pill{border-radius:999px}
+
+    .icon{width:1.1em;height:1.1em;display:inline-block}
+    .icon.chv{border:solid currentColor;border-width:0 2px 2px 0;display:inline-block;padding:3px;transform:rotate(-45deg)}
+
+    .btn[disabled], .btn.is-loading{opacity:.55;cursor:not-allowed}
+    .btn.is-loading{position:relative}
+    .btn.is-loading::after{content:"";width:1em;height:1em;border-radius:50%;border:2px solid #e5e7eb;border-top-color:transparent;display:inline-block;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .group{display:inline-flex;border:1px solid #243041;border-radius:10px;overflow:hidden}
+    .group .btn{border:none;border-right:1px solid #243041;border-radius:0}
+    .group .btn:last-child{border-right:none}
+
+    .segment{display:inline-flex;padding:4px;border-radius:999px;background:#0b1220;border:1px solid #243041}
+    .segment .seg{padding:8px 12px;border-radius:999px;color:#cbd5e1;text-decoration:none}
+    .segment .seg[aria-pressed="true"]{background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#0b1220;font-weight:700}
+
+    .demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>按钮体系与状态（Buttons）</h1>
+    <p>覆盖按钮的变体（主按钮/描边/幽灵/链接）、尺寸、圆角、图标、分组/分段控件与加载/禁用状态。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基础变体</h2>
+      <div class="demo row">
+        <a class="btn primary" href="#">Primary</a>
+        <button class="btn" type="button">Default</button>
+        <button class="btn outline" type="button">Outline</button>
+        <button class="btn ghost" type="button">Ghost</button>
+        <a class="btn link" href="#">Link</a>
+      </div>
+      <pre><code>.btn.primary{ background:linear-gradient(135deg,#22d3ee,#a78bfa); }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. 尺寸与形状</h2>
+      <div class="demo row">
+        <button class="btn sm" type="button">Small</button>
+        <button class="btn" type="button">Medium</button>
+        <button class="btn lg" type="button">Large</button>
+        <button class="btn pill" type="button">Pill</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 图标按钮与加载状态</h2>
+      <div class="demo row">
+        <button class="btn" type="button"><span class="icon chv"></span>上一页</button>
+        <button class="btn" type="button">下一页<span class="icon chv" style="transform:rotate(135deg)"></span></button>
+        <button class="btn is-loading" type="button">加载中</button>
+        <button class="btn" type="button" disabled>已禁用</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 按钮组与分段控件</h2>
+      <div class="demo row">
+        <div class="group">
+          <button class="btn" type="button">左</button>
+          <button class="btn" type="button">中</button>
+          <button class="btn" type="button">右</button>
+        </div>
+        <div class="segment" role="group" aria-label="视图切换">
+          <a class="seg" aria-pressed="true" href="#">列表</a>
+          <a class="seg" aria-pressed="false" href="#">看板</a>
+          <a class="seg" aria-pressed="false" href="#">日历</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 实战建议</h2>
+      <ul>
+        <li>倾向使用 transition 与阴影/变换，避免布局抖动。</li>
+        <li>统一变量控制圆角、间距、边框；通过类名组合变体。</li>
+        <li>提供 :focus-visible 焦点态，确保键盘无障碍。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

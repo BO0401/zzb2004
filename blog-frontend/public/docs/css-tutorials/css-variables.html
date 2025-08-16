@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 变量（自定义属性）与主题切换指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#22d3ee;--border:#1f2937;--radius:12px;--gap:16px;--primary:#93c5fd}
+    [data-theme="light"]{--bg:#f8fafc;--card:#ffffff;--text:#0f172a;--muted:#475569;--accent:#0ea5e9;--border:#e2e8f0;--primary:#2563eb}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(2,6,23,.9),rgba(2,6,23,0))}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:10px;padding:14px;overflow:auto}
+    [data-theme="light"] pre{background:#f1f5f9;border-color:#e2e8f0}
+    .row{display:grid;gap:var(--gap,16px);grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);text-decoration:none;transition:.25s ease all}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(2,6,23,.45)}
+    .swatch{display:flex;gap:10px}
+    .dot{width:24px;height:24px;border-radius:999px;border:1px solid var(--border)}
+    .demo{--panel:#0b1220;--panel-text:#cbd5e1;background:var(--panel);color:var(--panel-text);border-radius:12px;padding:12px;border:1px dashed #23324b}
+    .demo.alt{--panel:#e2e8f0;--panel-text:#0f172a}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 变量（Custom Properties）与主题切换指南</h1>
+    <p>理解声明与使用、作用域与继承、回退值、与 calc/clamp 等函数联动，以及基于数据属性的主题切换实践。</p>
+    <div style="margin-top:10px;display:flex;gap:10px;align-items:center">
+      <button class="btn" id="toggleTheme">切换明/暗主题</button>
+      <small style="color:var(--muted)">当前主题由 <code>[data-theme]</code> 控制，可通过 JS/系统偏好进行切换。</small>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本语法与回退</h2>
+      <pre><code>:root{ --gap: 12px; --brand: #22d3ee; }
+.box{ padding: var(--gap, 16px); color: var(--brand, #0ea5e9); }</code></pre>
+      <p>使用 <code>var(--name, fallback)</code> 引用变量；当变量未定义时将使用回退值。</p>
+    </section>
+
+    <section>
+      <h2>2. 作用域与继承</h2>
+      <div class="row">
+        <div class="card">
+          <h3>组件基础变量</h3>
+          <div class="demo">默认面板（使用 demo 作用域变量）</div>
+          <pre><code>.demo{ --panel:#0b1220; --panel-text:#cbd5e1; background:var(--panel); color:var(--panel-text); }</code></pre>
+        </div>
+        <div class="card">
+          <h3>局部覆盖</h3>
+          <div class="demo alt">浅色面板（局部覆盖变量）</div>
+          <pre><code>.demo.alt{ --panel:#e2e8f0; --panel-text:#0f172a; }</code></pre>
+        </div>
+      </div>
+      <p>变量遵循层叠与继承规则：靠近元素、优先级更高的定义会覆盖全局。</p>
+    </section>
+
+    <section>
+      <h2>3. 与函数联动：响应式尺寸</h2>
+      <pre><code>:root{ --space: clamp(12px, 1.2vw, 24px); }
+.card{ padding: var(--space); gap: var(--space); border-radius: calc(var(--space) * .8); }</code></pre>
+      <p>通过 <code>calc()/clamp()</code> 组合变量实现随视口变化而平滑调整的间距与圆角。</p>
+    </section>
+
+    <section>
+      <h2>4. 主题切换（基于 data-attribute）</h2>
+      <div class="row">
+        <div class="card">
+          <h3>调色板</h3>
+          <div class="swatch">
+            <span class="dot" style="background:var(--primary)"></span>
+            <span class="dot" style="background:var(--accent)"></span>
+            <span class="dot" style="background:var(--card)"></span>
+          </div>
+          <pre><code>/* 暗色作为默认 */
+:root{ --bg:#0f172a; --text:#e5e7eb; --primary:#93c5fd; }
+/* 亮色主题覆盖 */
+[data-theme="light"]{ --bg:#f8fafc; --text:#0f172a; --primary:#2563eb; }</code></pre>
+        </div>
+        <div class="card">
+          <h3>按钮使用变量</h3>
+          <a class="btn" href="#" style="background:var(--primary);border-color:transparent;color:white">变量按钮</a>
+          <pre><code>.btn{ background: var(--primary); color:#fff; }</code></pre>
+        </div>
+      </div>
+      <p>提示：变量本身不可过渡，但引用变量的属性可以，因此推荐对 <code>color/background/transform/opacity</code> 等属性做过渡。</p>
+    </section>
+
+    <section>
+      <h2>5. 实战建议</h2>
+      <ul>
+        <li>在 <code>:root</code> 中定义设计令牌（颜色/间距/字号/阴影等），组件内只消费。</li>
+        <li>通过 <code>[data-theme]</code> 或 <code>.theme-*</code> 类切换主题，避免在组件内散布具体值。</li>
+        <li>结合系统偏好 <code>@media (prefers-color-scheme: dark)</code> 设置默认主题。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>定义一套色板与间距变量，制作卡片/按钮/标题三件套，并支持明/暗主题。</li>
+        <li>使用 <code>clamp()</code> 做“流式排版”：标题与段落字号随视口在区间内自适应。</li>
+        <li>将导航栏背景、阴影、圆角全部改为变量驱动，方便统一调整。</li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const key = 'css-theme';
+      const root = document.documentElement;
+      const saved = localStorage.getItem(key);
+      if(saved){ root.setAttribute('data-theme', saved); }
+      document.getElementById('toggleTheme').addEventListener('click', function(){
+        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        if(next === 'dark') root.removeAttribute('data-theme'); else root.setAttribute('data-theme','light');
+        localStorage.setItem(key, next);
+      });
+    })();
+  </script>
+</body>
+</html>

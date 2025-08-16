@@ -10,6 +10,14 @@ export default defineConfig({
       '@': resolve(__dirname, 'src')
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler',
+        silenceDeprecations: ['legacy-js-api']
+      }
+    }
+  },
   server: {
     port: 3000,
     open: true

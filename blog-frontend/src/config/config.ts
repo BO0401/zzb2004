@@ -40,7 +40,7 @@ export const config = {
 
 // 开发环境下的默认配置
 if (import.meta.env.DEV) {
-  console.log('当前配置:', config);
+  // 生产环境避免输出敏感配置
 }
 
 export default config;

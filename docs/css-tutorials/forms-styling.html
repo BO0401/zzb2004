@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>表单样式与可访问性（Forms Styling）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee;--radius:12px;--focus:#22d3ee66}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:16px}
+    .row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+    .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:14px;color:#cbd5e1}
+    input,select,textarea{background:#0b1220;border:1px solid #243041;border-radius:10px;padding:10px 12px;color:#e5e7eb;outline:none;transition:border-color .2s ease, box-shadow .2s ease}
+    input::placeholder,textarea::placeholder{color:#64748b}
+    input:focus,select:focus,textarea:focus{border-color:#22d3ee;box-shadow:0 0 0 3px var(--focus)}
+    .hint{font-size:12px;color:#94a3b8}
+    .error{font-size:12px;color:#fca5a5}
+    .inline{display:flex;gap:10px;align-items:center}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid #243041;background:#0b1220;color:#e5e7eb}
+    .btn.primary{background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;color:#0b1220;font-weight:700}
+
+    /* 自定义复选框与单选框（纯 CSS） */
+    .control{display:flex;gap:10px;align-items:center}
+    .control input[type="checkbox"], .control input[type="radio"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:1px solid #243041;border-radius:4px;background:#0b1220;display:grid;place-items:center;position:relative}
+    .control input[type="radio"]{border-radius:999px}
+    .control input[type="checkbox"]::after{content:"";width:10px;height:10px;background:linear-gradient(135deg,#22d3ee,#a78bfa);border-radius:2px;transform:scale(0);transition:transform .15s ease}
+    .control input[type="radio"]::after{content:"";width:10px;height:10px;background:linear-gradient(135deg,#22d3ee,#a78bfa);border-radius:999px;transform:scale(0);transition:transform .15s ease}
+    .control input:checked::after{transform:scale(1)}
+
+    /* 文件上传与范围滑块 */
+    input[type="file"]{border:none;background:transparent}
+    input[type="range"]{width:100%;height:6px;border-radius:999px;background:#0b1220;outline:none;-webkit-appearance:none}
+    input[type="range"]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#a78bfa);border:2px solid #0b1220}
+
+    @media (max-width:720px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>表单样式与可访问性（Forms Styling）</h1>
+    <p>从输入框、选择器到复选/单选、文件与范围控件，统一视觉与焦点态，提升可访问性。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 常规输入</h2>
+      <div class="demo">
+        <div class="row">
+          <div class="field">
+            <label for="name">名称</label>
+            <input id="name" placeholder="请输入名称" />
+            <div class="hint">用于展示在公开页面</div>
+          </div>
+          <div class="field">
+            <label for="email">邮箱</label>
+            <input id="email" type="email" placeholder="you@example.com" />
+          </div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <div class="field">
+            <label for="role">角色</label>
+            <select id="role">
+              <option>用户</option>
+              <option>管理员</option>
+              <option>访客</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bio">简介</label>
+            <textarea id="bio" rows="3" placeholder="一句话介绍自己"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 复选/单选 + 文件/范围</h2>
+      <div class="demo">
+        <div class="inline">
+          <label class="control"><input type="checkbox" checked />订阅周报</label>
+          <label class="control"><input type="checkbox" />接受协议</label>
+          <label class="control"><input type="radio" name="plan" checked />基础</label>
+          <label class="control"><input type="radio" name="plan" />专业</label>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <div class="field">
+            <label>头像</label>
+            <input type="file" />
+          </div>
+          <div class="field">
+            <label>音量</label>
+            <input type="range" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 错误态与帮助文案</h2>
+      <div class="demo">
+        <div class="row">
+          <div class="field">
+            <label for="u">用户名</label>
+            <input id="u" aria-invalid="true" style="border-color:#b91c1c;box-shadow:0 0 0 3px #ef44441a" />
+            <div class="error" id="u-err">用户名已存在</div>
+          </div>
+          <div class="field">
+            <label for="p">密码</label>
+            <input id="p" type="password" aria-describedby="p-hint" />
+            <div class="hint" id="p-hint">至少 8 个字符，包含数字与字母</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 可访问性要点</h2>
+      <ul>
+        <li>始终关联 label 与控件（for/id），或使用包裹关系。</li>
+        <li>提供 :focus 可见焦点环，确保键盘可用性。</li>
+        <li>利用 aria-invalid、aria-describedby 等属性传达状态与帮助信息。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

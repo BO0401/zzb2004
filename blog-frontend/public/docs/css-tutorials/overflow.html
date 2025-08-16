@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 溢出与滚动 overflow 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#22c55e;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .demo{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .box{height:120px;border-radius:8px;background:#0b1220;border:1px dashed #23324b;padding:10px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 溢出 overflow 完全指南</h1>
+    <p>理解 overflow/overflow-x/overflow-y、滚动轴行为、滚动截断、滚动条与触发 BFC 的作用。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 常用取值</h2>
+      <ul>
+        <li>visible（默认）：内容可能溢出容器边界。</li>
+        <li>hidden：裁剪超出部分，不出现滚动条。</li>
+        <li>scroll：强制显示滚动条（即便不溢出）。</li>
+        <li>auto：仅在需要时显示滚动条。</li>
+        <li>clip：类似 hidden，但不创建滚动容器。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. 对比示例</h2>
+      <div class="demo">
+        <div class="card">
+          <h3>hidden</h3>
+          <div class="box" style="overflow:hidden">
+            <p>超出内容被裁剪，不出现滚动条。超出内容被裁剪，不出现滚动条。超出内容被裁剪，不出现滚动条。超出内容被裁剪，不出现滚动条。</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>auto</h3>
+          <div class="box" style="overflow:auto">
+            <p>当内容超出时出现滚动条。当内容超出时出现滚动条。当内容超出时出现滚动条。当内容超出时出现滚动条。</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>scroll</h3>
+          <div class="box" style="overflow:scroll">
+            <p>无论是否超出都显示滚动条。无论是否超出都显示滚动条。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 轴向控制与滚动截断</h2>
+      <div class="card">
+        <pre><code>.x-only{ overflow-x:auto; overflow-y:hidden; }
+.y-only{ overflow-y:auto; overflow-x:hidden; }</code></pre>
+        <p>文本单行截断常用 <code>white-space: nowrap; overflow: hidden; text-overflow: ellipsis;</code>。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. BFC 与自适应高度</h2>
+      <div class="card">
+        <p>为父容器设置 <code>overflow:auto/hidden</code> 可触发 BFC，常用于包含浮动或避免外边距折叠。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>实现一个水平滚动的标签栏（只在 X 轴滚动）。</li>
+        <li>写一个多行文本容器，移动端仅允许纵向滚动。</li>
+        <li>实现标题单行省略号与两行省略号（-webkit-line-clamp）。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

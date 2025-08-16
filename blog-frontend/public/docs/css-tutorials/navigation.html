@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>导航与菜单（Navigation）</title>
+  <style>
+    :root{--bg:#0f172a;--surface:#111827;--elev:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--border:#1f2937;--accent:#22d3ee;--radius:12px}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:1100px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .demo{border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow:hidden}
+    /* 顶部导航 */
+    .topbar{display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid var(--border)}
+    .brand{font-weight:700}
+    .nav{display:flex;gap:10px;margin-left:auto}
+    .nav a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px}
+    .nav a:hover{background:#0b1220}
+    .nav a.active{background:linear-gradient(135deg,#22d3ee,#a78bfa);color:#0b1220;font-weight:700}
+
+    /* 侧边导航 */
+    .layout{display:grid;grid-template-columns:220px 1fr;min-height:220px}
+    .sidenav{border-right:1px solid var(--border);background:linear-gradient(180deg,#0b1220,#0b1324)}
+    .sidenav a{display:block;color:#cbd5e1;padding:10px 14px;text-decoration:none;border-left:3px solid transparent}
+    .sidenav a:hover{background:#0b1220}
+    .sidenav a.is-active{border-left-color:#22d3ee;background:#0b1220;color:#e5e7eb}
+
+    /* 面包屑 */
+    .breadcrumb{display:flex;gap:6px;align-items:center;padding:10px 14px;border-top:1px solid var(--border)}
+    .crumb{color:#94a3b8;text-decoration:none}
+    .crumb:hover{color:#e5e7eb}
+    .sep{opacity:.4}
+
+    /* 标签页 */
+    .tabs{display:flex;gap:8px;border-top:1px solid var(--border);padding:10px 14px}
+    .tab{padding:8px 10px;border-radius:8px;border:1px solid #243041;background:#0b1220;color:#e5e7eb;text-decoration:none}
+    .tab[aria-selected="true"]{background:linear-gradient(135deg,#22d3ee,#a78bfa);border:none;color:#0b1220;font-weight:700}
+
+    /* 响应式 */
+    @media (max-width:720px){
+      .nav{display:none}
+      .layout{grid-template-columns:1fr}
+      .sidenav{display:flex;overflow:auto}
+      .sidenav a{white-space:nowrap;border-left:none;border-bottom:2px solid transparent}
+      .sidenav a.is-active{border-bottom-color:#22d3ee}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>导航与菜单（Navigation）</h1>
+    <p>常见的站点导航模式：顶部导航、侧栏导航、面包屑与标签页；强调语义、层级与响应式。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 顶部导航（Topbar）</h2>
+      <div class="demo">
+        <div class="topbar">
+          <div class="brand">Z-Docs</div>
+          <nav class="nav" aria-label="Primary">
+            <a href="#">首页</a>
+            <a href="#" class="active">教程</a>
+            <a href="#">组件</a>
+            <a href="#">关于</a>
+          </nav>
+        </div>
+      </div>
+      <pre><code>.nav a.active{ background:linear-gradient(135deg,#22d3ee,#a78bfa); }</code></pre>
+    </section>
+
+    <section>
+      <h2>2. 侧边导航（Sidenav）</h2>
+      <div class="demo">
+        <div class="layout">
+          <aside class="sidenav" aria-label="Secondary">
+            <a href="#" class="is-active">概览</a>
+            <a href="#">快速上手</a>
+            <a href="#">API</a>
+            <a href="#">指南</a>
+            <a href="#">FAQ</a>
+          </aside>
+          <div style="padding:12px">主内容区域</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 面包屑（Breadcrumb）</h2>
+      <div class="demo">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a class="crumb" href="#">首页</a>
+          <span class="sep">/</span>
+          <a class="crumb" href="#">教程</a>
+          <span class="sep">/</span>
+          <span>CSS</span>
+        </nav>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 标签页（Tabs）</h2>
+      <div class="demo">
+        <div class="tabs" role="tablist" aria-label="示例标签页">
+          <a class="tab" role="tab" aria-selected="true" href="#">概览</a>
+          <a class="tab" role="tab" aria-selected="false" href="#">版本记录</a>
+          <a class="tab" role="tab" aria-selected="false" href="#">依赖</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 设计要点</h2>
+      <ul>
+        <li>保证可访问性：为导航设置语义化标签与 ARIA 属性。</li>
+        <li>明确活动态与悬停态：颜色、下划线或背景变化。</li>
+        <li>响应式布局：顶部导航在小屏隐藏，侧边导航改为横向滚动。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

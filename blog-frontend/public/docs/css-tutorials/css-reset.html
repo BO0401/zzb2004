@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS Reset 与基础样式规范（现代实践）</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#f59e0b;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .demo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .pane{border:1px dashed #23324b;border-radius:10px;padding:12px;background:#0b1220}
+    .btn{display:inline-block;padding:8px 12px;background:#0b1220;border:1px solid #1f2937;border-radius:10px;color:#e5e7eb;text-decoration:none;transition:.25s ease all}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(2,6,23,.45)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS Reset 与基础样式规范（现代实践）</h1>
+    <p>理解 Reset 与 Normalize 的差异，采用“现代 Reset + 合理默认值”的组合，建立稳定的样式基线。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. Reset vs Normalize</h2>
+      <ul>
+        <li>Reset：尽量清空浏览器默认样式，提供“无差异”的起点。</li>
+        <li>Normalize：在保留合理默认的同时，统一各浏览器差异。</li>
+        <li>现代实践：采用“轻量 Reset + 语义化默认值”的折中方案。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. 现代 Reset（推荐基线）</h2>
+      <pre><code>/* 盒模型与 margin 清零 */
+*,*::before,*::after{ box-sizing:border-box }
+*{ margin:0 }
+/* 高度与文字渲染 */
+html,body{ height:100% }
+body{ line-height:1.5; -webkit-font-smoothing:antialiased }
+/* 媒体元素 */
+img,picture,video,canvas,svg{ display:block; max-width:100% }
+/* 表单元素继承字体 */
+input,button,textarea,select{ font:inherit }
+/* 断词与容器隔离 */
+p,h1,h2,h3,h4,h5,h6{ overflow-wrap:break-word }
+#root,#__next{ isolation:isolate }</code></pre>
+      <p>这套规则在保持简单的同时，解决了大多数项目起步时的兼容性问题。</p>
+    </section>
+
+    <section>
+      <h2>3. 合理默认与可访问性</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>列表与链接</h3>
+          <pre><code>ul[role="list"],ol[role="list"]{ list-style:none; padding-left:0 }
+a{ color:inherit; text-decoration:inherit }
+:focus{ outline:2px solid var(--accent); outline-offset:2px }
+:focus:not(:focus-visible){ outline:none }</code></pre>
+          <p>列表默认去掉圆点需配合 <code>role="list"</code>，便于语义与可访问性。</p>
+        </div>
+        <div class="card">
+          <h3>图片与版式</h3>
+          <pre><code>img{ height:auto }
+article p + p{ margin-top:1em }
+small{ font-size:.875em; color:#94a3b8 }</code></pre>
+          <p>在排版容器内定义合理的段落间距，而不是全局。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 示例：应用前后对比</h2>
+      <div class="demo">
+        <div class="pane">
+          <h4 style="margin:16px 0">默认浏览器样式</h4>
+          <ul>
+            <li>项目 A</li>
+            <li>项目 B</li>
+          </ul>
+          <a class="btn" href="#">按钮</a>
+          <p>段落文字</p>
+        </div>
+        <div class="pane" style="all:unset;display:block;padding:12px;border-radius:10px;border:1px dashed #334155;background:#0b1220">
+          <style>
+            /* 内联演示 reset 效果（仅示例区） */
+            .pane *,.pane *::before,.pane *::after{ box-sizing:border-box }
+            .pane *{ margin:0 }
+            .pane img{ display:block; max-width:100% }
+            .pane a{ color:inherit; text-decoration:inherit }
+            .pane :focus{ outline:2px solid var(--accent); outline-offset:2px }
+            .pane ul{ list-style:none; padding-left:0 }
+          </style>
+          <h4 style="margin:16px 0">应用现代 Reset 后</h4>
+          <ul role="list">
+            <li>项目 A</li>
+            <li>项目 B</li>
+          </ul>
+          <a class="btn" href="#">按钮</a>
+          <p>段落文字</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 实战建议</h2>
+      <ul>
+        <li>将 Reset 作为项目最先加载的样式（如 base.css），并在其后引入组件样式。</li>
+        <li>不要过度清空所有样式，保留语义元素的合理默认（如 strong/em）。</li>
+        <li>为 <code>:focus-visible</code> 提供清晰的焦点样式，既可访问又不打扰鼠标用户。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. 练习</h2>
+      <ol>
+        <li>基于本页的 Reset，建立你自己的 <code>base.css</code>，并扩展段落/标题/代码的基础排版。</li>
+        <li>为表单元素设计一致的聚焦样式，考虑颜色对比度与可访问性。</li>
+        <li>为文章内容区域（article）添加语义化的段落间距与图片样式。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

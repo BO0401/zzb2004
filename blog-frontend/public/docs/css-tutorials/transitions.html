@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CSS 过渡 transitions 完全指南</title>
+  <style>
+    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#94a3b8;--accent:#22d3ee;--border:#1f2937}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--text);line-height:1.6}
+    header{padding:28px 20px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#0b1324,#0f172a)}
+    main{max-width:980px;margin:0 auto;padding:28px 18px}
+    h1{margin:0;font-size:28px}
+    h2{margin-top:28px;border-left:3px solid var(--accent);padding-left:10px}
+    p{color:var(--muted)}
+    pre{background:#0b1220;border:1px solid #0f1b2d;border-radius:8px;padding:14px;overflow:auto}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:10px}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .btn{display:inline-block;padding:10px 16px;background:#0b1220;border:1px solid #1f2937;border-radius:10px;color:#e5e7eb;text-decoration:none;transition:transform .25s ease, background-color .25s ease, box-shadow .25s ease}
+    .btn:hover{transform:translateY(-2px);background:#111b2e;box-shadow:0 10px 24px rgba(2,6,23,.45)}
+    .tile{height:120px;border-radius:10px;border:1px dashed #23324b;background:#0b1220;display:flex;align-items:center;justify-content:center;transition:all .6s cubic-bezier(.22,1,.36,1)}
+    .tile:hover{transform:translateY(-6px) scale(1.03);border-color:#334155}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CSS 过渡 transitions 完全指南</h1>
+    <p>掌握 transition-property/duration/timing-function/delay 与简写，理解哪些属性可动画化，配合变换与颜色制作顺滑交互。</p>
+  </header>
+  <main>
+    <section>
+      <h2>1. 基本语法</h2>
+      <pre><code>/* 完整写法 */
+selector{ transition-property: transform, background-color; transition-duration:.3s; transition-timing-function:ease; transition-delay:0s; }
+/* 简写 */
+selector{ transition: transform .3s ease 0s, background-color .3s; }</code></pre>
+      <p>常见缓动函数：ease、linear、ease-in、ease-out、ease-in-out、cubic-bezier(x1,y1,x2,y2)。</p>
+    </section>
+
+    <section>
+      <h2>2. 示例：按钮悬停</h2>
+      <div class="card">
+        <a class="btn" href="#">悬停试试</a>
+        <pre><code>.btn{ transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease; }
+.btn:hover{ transform: translateY(-2px); background:#111b2e; box-shadow:0 10px 24px rgba(2,6,23,.45); }</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 示例：卡片动效</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="tile">Hover 我</div>
+        </div>
+        <div class="card">
+          <h3>自定义缓动</h3>
+          <div class="tile" style="transition-timing-function:cubic-bezier(.68,-.55,.27,1.55)">弹性感</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. 实战建议</h2>
+      <ul>
+        <li>优先对 transform/opacity 做过渡，性能更佳。</li>
+        <li>动画时间 150–300ms 更易被接受，具体视场景而定。</li>
+        <li>避免为所有属性写 transition: all，可能导致意外过渡。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. 练习</h2>
+      <ol>
+        <li>为导航链接添加下划线「由左到右滑入」的过渡。</li>
+        <li>为卡片添加「悬浮+阴影」组合过渡，并优化缓动。</li>
+        <li>实现图片悬停「轻微放大+变暗」的过渡效果。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
