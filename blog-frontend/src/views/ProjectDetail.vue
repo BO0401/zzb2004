@@ -458,6 +458,9 @@ const showImageViewer = ref(false)
 
 // 交互状态
 const starring = ref(false)
+// 新增：错误状态
+const hasError = ref(false)
+const errorMessage = ref('')
 
 // 相关数据
 const relatedProjects = ref<any[]>([])
@@ -491,10 +494,10 @@ const fetchProjectDetail = async () => {
       documentUrl: 'https://docs.example.com',
       downloadUrl: 'https://github.com/zzb2004/blog-system/archive/main.zip',
       images: [
-        '/project-1-1.jpg',
-        '/project-1-2.jpg',
-        '/project-1-3.jpg',
-        '/project-1-4.jpg'
+        '/logo.svg',
+        '/logo.svg',
+        '/logo.svg',
+        '/logo.svg'
       ],
       content: `
         <p>这是一个功能完整的个人博客系统，采用现代化的前端技术栈开发。系统具有良好的用户体验和管理界面，支持响应式设计，适配各种设备。</p>
@@ -637,36 +640,32 @@ const fetchProjectDetail = async () => {
       {
         id: '2',
         title: 'Vue 组件库',
-        cover: '/project-2.jpg',
+        cover: '/logo.svg',
         category: '组件库',
         stars: 89
       },
       {
         id: '3',
         title: '在线代码编辑器',
-        cover: '/project-3.jpg',
+        cover: '/logo.svg',
         category: 'Web应用',
         stars: 67
       },
       {
         id: '4',
         title: '数据可视化大屏',
-        cover: '/project-4.jpg',
+        cover: '/logo.svg',
         category: '可视化',
         stars: 45
       }
     ]
     
   } catch (error) {
--      console.error('获取项目详情失败:', error)
-+      // 捕获错误，展示友好提示
-       hasError.value = true
-       errorMessage.value = '获取项目详情失败，请稍后重试'
-     }
+    // 捕获错误，展示友好提示
+    hasError.value = true
+    errorMessage.value = '获取项目详情失败，请稍后重试'
     project.value = null
-  }
-
- finally {
+  } finally {
     loading.value = false
   }
 }
@@ -745,25 +744,15 @@ const toggleStar = async () => {
   try {
     // 模拟API调用
     await new Promise(resolve => setTimeout(resolve, 500))
-    
+
+    // 切换点赞状态
     project.value.isStarred = !project.value.isStarred
     project.value.stars += project.value.isStarred ? 1 : -1
-    
+
     ElMessage.success(project.value.isStarred ? '点赞成功' : '取消点赞')
-    
-    // 模拟API调用
-    await new Promise(resolve => {
-      setTimeout(() => {
-        project.value.isStarred = !project.value.isStarred
-        project.value.stars += project.value.isStarred ? 1 : -1
-        resolve(undefined)
-      }, 500)
-    })
   } catch (error) {
     ElMessage.error('操作失败')
-  }
-
- finally {
+  } finally {
     starring.value = false
   }
 }
@@ -792,7 +781,7 @@ const searchByTag = (tag: string) => {
 }
 
 // 页面跟踪（埋点统计）
-const trackEvent = (event: string) => {
+const trackEvent = (_event: string) => {
   // 统计页面事件 - 接入埋点 SDK
   // console.log('Track event:', event)
 }

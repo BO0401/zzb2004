@@ -136,13 +136,9 @@ import { useRouter, useRoute } from 'vue-router'
 import {
   Search, Calendar, Clock, View, Document
 } from '@element-plus/icons-vue'
-import { ElInput } from 'element-plus'
 import { 
   getAllTutorials, 
-  getTutorialsByCategory, 
-  searchTutorials,
   getCategories,
-  formatNumber,
   formatDate,
   getDifficultyText,
   type Tutorial,

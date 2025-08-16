@@ -180,7 +180,7 @@
               <!-- 作者信息 -->
               <div class="author-card">
                 <div class="author-avatar">
-                  <img src="/avatar.jpg" alt="ZZB2004" />
+                  <img src="/avatar.svg" alt="ZZB2004" />
                 </div>
                 <div class="author-info">
                   <h4 class="author-name">ZZB2004</h4>
@@ -273,7 +273,7 @@
             <div class="comment-form">
               <div class="form-header">
                 <div class="user-avatar">
-                  <img src="/avatar.jpg" alt="用户头像" />
+                  <img src="/avatar.svg" alt="用户头像" />
                 </div>
                 <div class="form-content">
                   <el-input
@@ -393,25 +393,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, nextTick, watch }
-
- from 'vue'
-import { useRoute, useRouter }
-
- from 'vue-router'
+import { ref, reactive, onMounted, nextTick, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { 
   loadTutorialContent, 
   getTutorialById, 
   getRelatedTutorials,
+  getAllTutorials,
   formatNumber,
   formatDate,
   getDifficultyText,
   getStatusText,
   type Tutorial
 } from '../services/tutorialService'
-import { ElMessage, ElMessageBox }
-
- from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import {
   View, Star, Clock, Calendar, Collection, Share,
   ArrowLeft, ArrowRight, Plus, ChatDotRound
@@ -435,6 +430,8 @@ const bookmarking = ref(false)
 const commenting = ref(false)
 const loadingComments = ref(false)
 const hasMoreComments = ref(true)
+const showError = ref(false)
+const errorMessage = ref('')
 
 // 评论相关
 const newComment = ref('')
@@ -457,7 +454,7 @@ const loadTutorial = async () => {
     error.value = false
     
     const tutorialId = route.params.id as string
-    const categoryId = route.params.category as string
+    // const categoryId = route.params.category as string
     
     // 从服务中获取教程数据
     const tutorialData = getTutorialById(tutorialId)
@@ -506,7 +503,7 @@ const loadTutorial = async () => {
         id: '1',
         user: {
           name: '张三',
-          avatar: '/user-1.jpg'
+          avatar: '/avatar.svg'
         },
         content: '这篇教程写得很详细，对我理解很有帮助！',
         likes: 12,
@@ -517,7 +514,7 @@ const loadTutorial = async () => {
             id: '1-1',
             user: {
               name: 'ZZB2004',
-              avatar: '/avatar.jpg'
+              avatar: '/avatar.svg'
             },
             content: '谢谢你的反馈！很高兴这篇教程对你有帮助。',
             createdAt: new Date('2025-01-29')
@@ -528,7 +525,7 @@ const loadTutorial = async () => {
         id: '2',
         user: {
           name: '李四',
-          avatar: '/user-2.jpg'
+          avatar: '/avatar.svg'
         },
         content: '能否再详细讲解一下相关的实践应用？',
         likes: 8,
@@ -547,7 +544,6 @@ const loadTutorial = async () => {
     loading.value = false
     showError.value = true
     errorMessage.value = '获取教程详情失败'
-    }
   } finally {
     loading.value = false
   }
@@ -581,45 +577,6 @@ const scrollToSection = (id: string) => {
   }
 }
 
-// 格式化数字
-const formatNumber = (num: number) => {
-  if (num >= 10000) {
-    return (num / 10000).toFixed(1) + 'w'
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'k'
-  }
-  return num.toString()
-}
-
-// 格式化日期
-const formatDate = (date: Date | string) => {
-  const d = typeof date === 'string' ? new Date(date) : date
-  return d.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-// 获取难度文本
-const getDifficultyText = (difficulty: string) => {
-  const map: Record<string, string> = {
-    beginner: '入门',
-    intermediate: '中级',
-    advanced: '高级'
-  }
-  return map[difficulty] || difficulty
-}
-
-// 获取状态文本
-const getStatusText = (status: string) => {
-  const map: Record<string, string> = {
-    draft: '草稿',
-    published: '已发布',
-    updated: '已更新'
-  }
-  return map[status] || status
-}
 
 // 点赞
 const toggleLike = async () => {
@@ -706,7 +663,7 @@ const submitComment = async () => {
       id: Date.now().toString(),
       user: {
         name: '当前用户',
-        avatar: '/avatar.jpg'
+        avatar: '/avatar.svg'
       },
       content: newComment.value,
       likes: 0,
@@ -762,7 +719,7 @@ const replyToComment = (comment: any) => {
         id: Date.now().toString(),
         user: {
           name: '当前用户',
-          avatar: '/avatar.jpg'
+          avatar: '/avatar.svg'
         },
         content: value,
         createdAt: new Date()

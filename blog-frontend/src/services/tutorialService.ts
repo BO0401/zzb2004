@@ -1,5 +1,4 @@
 // 教程服务 - 用于加载和管理教程内容
-import { ref } from 'vue'
 
 export interface Tutorial {
   id: string;
@@ -43,7 +42,7 @@ const htmlTutorials: Tutorial[] = [
     readTime: 15,
     views: 1520,
     likes: 89,
-    cover: '/tutorial-covers/html-basic.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -58,7 +57,7 @@ const htmlTutorials: Tutorial[] = [
     readTime: 8,
     views: 880,
     likes: 45,
-    cover: '/tutorial-covers/html-doctype.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -73,7 +72,7 @@ const htmlTutorials: Tutorial[] = [
     readTime: 12,
     views: 1200,
     likes: 67,
-    cover: '/tutorial-covers/html-head.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -88,7 +87,7 @@ const htmlTutorials: Tutorial[] = [
     readTime: 20,
     views: 980,
     likes: 56,
-    cover: '/tutorial-covers/html-forms.jpg',
+    cover: '/logo.svg',
     status: 'published'
   }
 ]
@@ -107,7 +106,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 18,
     views: 2340,
     likes: 142,
-    cover: '/tutorial-covers/css-basic.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -122,7 +121,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 25,
     views: 1850,
     likes: 98,
-    cover: '/tutorial-covers/css-selectors.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -137,7 +136,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 30,
     views: 1890,
     likes: 134,
-    cover: '/tutorial-covers/css-flexbox.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -152,7 +151,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 35,
     views: 1456,
     likes: 89,
-    cover: '/tutorial-covers/css-grid.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -167,7 +166,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 22,
     views: 1320,
     likes: 78,
-    cover: '/tutorial-covers/css-variables.jpg',
+    cover: '/logo.svg',
     status: 'published'
   },
   {
@@ -182,7 +181,7 @@ const cssTutorials: Tutorial[] = [
     readTime: 28,
     views: 1150,
     likes: 65,
-    cover: '/tutorial-covers/css-functions.jpg',
+    cover: '/logo.svg',
     status: 'published'
   }
 ]
@@ -241,10 +240,8 @@ export async function loadTutorialContent(category: string, id: string): Promise
     const content = await response.text()
     return content
   } catch (error) {
--    console.error('Error loading tutorial content:', error)
--    throw error
-+    // 统一由上层捕获处理
-+    throw error
+    // 统一由上层捕获处理
+    throw error
   }
 }
 

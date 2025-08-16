@@ -18,7 +18,7 @@ export const useAppStore = defineStore('app', () => {
     subtitle: '前端开发者的学习之路',
     description: '分享前端开发技术、项目经验和学习心得',
     author: 'ZZB2004',
-    avatar: '/avatar.jpg',
+    avatar: '/avatar.svg',
     github: 'https://github.com/zzb2004',
     email: 'your-email@example.com'
   })

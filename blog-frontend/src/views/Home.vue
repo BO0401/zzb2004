@@ -225,7 +225,7 @@ const latestTutorials = ref([
     id: 1,
     title: 'Vue 3 Composition API 详解',
     description: '深入了解Vue 3的Composition API，掌握现代Vue开发方式',
-    cover: '/tutorial-covers/vue3.jpg',
+    cover: '/logo.svg',
     category: 'Vue',
     createdAt: new Date('2025-07-29'),
     views: 1234
@@ -234,7 +234,7 @@ const latestTutorials = ref([
     id: 2,
     title: 'CSS Grid 布局完全指南',
     description: '全面学习CSS Grid布局，轻松实现复杂的网页布局',
-    cover: '/tutorial-covers/css-grid.jpg',
+    cover: '/logo.svg',
     category: 'CSS',
     createdAt: new Date('2025-07-29'),
     views: 856
@@ -243,7 +243,7 @@ const latestTutorials = ref([
     id: 3,
     title: 'JavaScript ES6+ 新特性',
     description: '掌握JavaScript最新特性，提升代码质量和开发效率',
-    cover: '/tutorial-covers/es6.jpg',
+    cover: '/logo.svg',
     category: 'JavaScript',
     createdAt: new Date('2025-07-29'),
     views: 2341
@@ -256,7 +256,7 @@ const featuredProjects = ref([
     id: 1,
     title: '个人博客系统',
     description: '基于Vue 3和TypeScript开发的现代化博客系统',
-    image: '/project-images/blog.jpg',
+    image: '/logo.svg',
     technologies: ['Vue 3', 'TypeScript', 'Vite'],
     demo: 'https://demo.example.com',
     github: 'https://github.com/zzb2004/blog'
@@ -265,7 +265,7 @@ const featuredProjects = ref([
     id: 2,
     title: '任务管理应用',
     description: '简洁高效的任务管理工具，支持拖拽排序和分类管理',
-    image: '/project-images/todo.jpg',
+    image: '/logo.svg',
     technologies: ['Vue 3', 'Element Plus', 'Pinia'],
     demo: 'https://demo.example.com',
     github: 'https://github.com/zzb2004/todo'
@@ -274,7 +274,7 @@ const featuredProjects = ref([
     id: 3,
     title: '天气预报应用',
     description: '实时天气查询应用，支持多城市天气预报和历史数据',
-    image: '/project-images/weather.jpg',
+    image: '/logo.svg',
     technologies: ['Vue 3', 'Axios', 'Chart.js'],
     demo: 'https://demo.example.com',
     github: 'https://github.com/zzb2004/weather'

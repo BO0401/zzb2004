@@ -6,7 +6,7 @@
         <div class="header-content">
           <div class="avatar-section">
             <div class="avatar-container">
-              <img src="/avatar.jpg" alt="ZZB2004" class="avatar-img" />
+              <img src="/avatar.svg" alt="ZZB2004" class="avatar-img" />
               <div class="avatar-ring"></div>
             </div>
           </div>
