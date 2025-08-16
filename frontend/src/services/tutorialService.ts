@@ -1,5 +1,8 @@
 // 教程服务 - 用于加载和管理教程内容
 
+// 从 utils 导入工具函数
+import { formatNumber, formatDate, getDifficultyText, getStatusText } from '@/utils'
+
 export interface Tutorial {
   id: string;
   title: string;
@@ -298,38 +301,5 @@ export function getCategoryWithCount(categoryId: string): TutorialCategory | und
   return category
 }
 
-// 格式化数字
-export function formatNumber(num: number): string {
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'k'
-  }
-  return num.toString()
-}
-
-// 格式化日期
-export function formatDate(date: Date): string {
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-// 获取难度文本
-export function getDifficultyText(difficulty: string): string {
-  const difficultyMap: Record<string, string> = {
-    'beginner': '入门',
-    'intermediate': '中级',
-    'advanced': '高级'
-  }
-  return difficultyMap[difficulty] || difficulty
-}
-
-// 获取状态文本
-export function getStatusText(status: string): string {
-  const statusMap: Record<string, string> = {
-    'published': '已发布',
-    'draft': '草稿'
-  }
-  return statusMap[status] || status
-}
+// 重新导出，保持向后兼容
+export { formatNumber, formatDate, getDifficultyText, getStatusText }

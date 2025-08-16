@@ -1,0 +1,209 @@
+/**
+ * 重置样式
+ * 统一浏览器默认样式
+ */
+
+// 引入 Sass 数学模块
+@use 'sass:math';
+
+// 基础重置
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// HTML 和 Body
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: var(--el-text-color-primary);
+  background-color: var(--el-bg-color-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// 标题重置
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+// 段落重置
+p {
+  margin-bottom: 1em;
+}
+
+// 链接重置
+a {
+  color: var(--el-color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--el-color-primary-dark-2);
+}
+
+a:focus {
+  outline: 2px solid var(--el-color-primary);
+  outline-offset: 2px;
+}
+
+// 列表重置
+ul, ol {
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+// 图片重置
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// 表格重置
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+th, td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+}
+
+th {
+  font-weight: 600;
+  background-color: var(--el-fill-color-light);
+}
+
+// 表单重置
+input, button, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+// 代码重置
+code, pre {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.875em;
+}
+
+code {
+  padding: 0.125em 0.25em;
+  background-color: var(--el-fill-color-light);
+  border-radius: 0.25rem;
+}
+
+pre {
+  padding: 1rem;
+  background-color: var(--el-fill-color-light);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+
+pre code {
+  padding: 0;
+  background: none;
+}
+
+// 引用重置
+blockquote {
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  border-left: 4px solid var(--el-color-primary);
+  background-color: var(--el-fill-color-light);
+  font-style: italic;
+}
+
+// 分割线重置
+hr {
+  border: none;
+  height: 1px;
+  background: var(--el-border-color-lighter);
+  margin: 1.5rem 0;
+}
+
+// 选择文本样式
+::selection {
+  background: var(--el-color-primary-light-7);
+  color: var(--el-color-primary-dark-2);
+}
+
+::-moz-selection {
+  background: var(--el-color-primary-light-7);
+  color: var(--el-color-primary-dark-2);
+}
+
+// 滚动条样式
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--el-bg-color-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--el-border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--el-border-color-dark);
+}
+
+// 无障碍样式
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 焦点样式
+.focus-visible:focus-visible {
+  outline: 2px solid var(--el-color-primary);
+  outline-offset: 2px;
+}

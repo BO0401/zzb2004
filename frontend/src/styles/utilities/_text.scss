@@ -1,0 +1,130 @@
+/**
+ * 文本工具类
+ * 提供文本对齐、大小、颜色等工具类
+ */
+
+// 文本对齐
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+.text-center { text-align: center !important; }
+.text-justify { text-align: justify !important; }
+.text-start { text-align: start !important; }
+.text-end { text-align: end !important; }
+
+// 文本换行
+.text-wrap { white-space: normal !important; }
+.text-nowrap { white-space: nowrap !important; }
+.text-break {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+// 文本省略
+.text-ellipsis {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.text-ellipsis-2 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+.text-ellipsis-3 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+// 文本转换
+.text-lowercase { text-transform: lowercase !important; }
+.text-uppercase { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+// 字体粗细
+.fw-light { font-weight: 300 !important; }
+.fw-lighter { font-weight: lighter !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+.fw-bolder { font-weight: bolder !important; }
+
+// 字体样式
+.fst-normal { font-style: normal !important; }
+.fst-italic { font-style: italic !important; }
+
+// 字体大小
+.fs-1 { font-size: 2.5rem !important; }
+.fs-2 { font-size: 2rem !important; }
+.fs-3 { font-size: 1.75rem !important; }
+.fs-4 { font-size: 1.5rem !important; }
+.fs-5 { font-size: 1.25rem !important; }
+.fs-6 { font-size: 1rem !important; }
+.fs-small { font-size: 0.875rem !important; }
+.fs-xs { font-size: 0.75rem !important; }
+
+// 行高
+.lh-1 { line-height: 1 !important; }
+.lh-sm { line-height: 1.25 !important; }
+.lh-base { line-height: 1.5 !important; }
+.lh-lg { line-height: 2 !important; }
+
+// 文本装饰
+.text-decoration-none { text-decoration: none !important; }
+.text-decoration-underline { text-decoration: underline !important; }
+.text-decoration-line-through { text-decoration: line-through !important; }
+
+// 垂直对齐
+.align-baseline { vertical-align: baseline !important; }
+.align-top { vertical-align: top !important; }
+.align-middle { vertical-align: middle !important; }
+.align-bottom { vertical-align: bottom !important; }
+.align-text-bottom { vertical-align: text-bottom !important; }
+.align-text-top { vertical-align: text-top !important; }
+
+// 文本颜色（基于 Element Plus 变量）
+.text-primary { color: var(--el-color-primary) !important; }
+.text-success { color: var(--el-color-success) !important; }
+.text-info { color: var(--el-color-info) !important; }
+.text-warning { color: var(--el-color-warning) !important; }
+.text-danger { color: var(--el-color-danger) !important; }
+.text-light { color: var(--el-text-color-regular) !important; }
+.text-dark { color: var(--el-text-color-primary) !important; }
+.text-muted { color: var(--el-text-color-placeholder) !important; }
+.text-white { color: #ffffff !important; }
+.text-black { color: #000000 !important; }
+
+// 背景颜色
+.bg-primary { background-color: var(--el-color-primary) !important; }
+.bg-success { background-color: var(--el-color-success) !important; }
+.bg-info { background-color: var(--el-color-info) !important; }
+.bg-warning { background-color: var(--el-color-warning) !important; }
+.bg-danger { background-color: var(--el-color-danger) !important; }
+.bg-light { background-color: var(--el-fill-color-light) !important; }
+.bg-dark { background-color: var(--el-text-color-primary) !important; }
+.bg-white { background-color: #ffffff !important; }
+.bg-transparent { background-color: transparent !important; }
+
+// 边框颜色
+.border-primary { border-color: var(--el-color-primary) !important; }
+.border-success { border-color: var(--el-color-success) !important; }
+.border-info { border-color: var(--el-color-info) !important; }
+.border-warning { border-color: var(--el-color-warning) !important; }
+.border-danger { border-color: var(--el-color-danger) !important; }
+.border-light { border-color: var(--el-border-color-light) !important; }
+.border-dark { border-color: var(--el-border-color-dark) !important; }
+.border-white { border-color: #ffffff !important; }
+
+// 用户选择
+.user-select-all { user-select: all !important; }
+.user-select-auto { user-select: auto !important; }
+.user-select-none { user-select: none !important; }
+
+// 指针事件
+.pe-none { pointer-events: none !important; }
+.pe-auto { pointer-events: auto !important; }

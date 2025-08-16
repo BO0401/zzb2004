@@ -27,9 +27,9 @@ import { computed }
 
  from 'vue'
 import { useAppStore } from '@/stores/app'
-import HeaderNav from '@/components/Header/HeaderNav.vue'
-import FooterMain from '@/components/Footer/FooterMain.vue'
-import BackToTop from '@/components/BackToTop.vue'
+import HeaderNav from '@/components/layout/Header/HeaderNav.vue'
+import FooterMain from '@/components/layout/Footer/FooterMain.vue'
+import BackToTop from '@/components/common/BackToTop.vue'
 
 const appStore = useAppStore()
 
