@@ -7,15 +7,15 @@
 export {
   formatNumber,
   formatDate
-} from './format.js'
+} from './format'
 
 // 文本处理工具
 export {
   getDifficultyText,
   getStatusText
-} from './text.js'
+} from './text'
 
 // DOM 工具
 export {
   scrollToTop
-} from './dom.js'
+} from './dom'

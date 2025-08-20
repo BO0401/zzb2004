@@ -23,9 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed }
-
- from 'vue'
+import { computed } from 'vue'
 import { useAppStore } from '@/stores/app'
 import HeaderNav from '@/components/layout/Header/HeaderNav.vue'
 import FooterMain from '@/components/layout/Footer/FooterMain.vue'
